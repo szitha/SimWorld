@@ -38,7 +38,7 @@ Alternatively, a single dish survey can be complemented by an array of small rad
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.45\textwidth]{images/Rint.png}
-    \caption{Two antenna interferometer diagram}
+    \caption{Two antenna interferometer diagram [National Radio Astronomy Observatory]}
   \label{images/Rint.png}
 \end{figure}
 
@@ -71,7 +71,7 @@ R&= <V_1V_2> = \frac{V^2}{2}  \cos (\omega\tau_{g})\\
    \overrightarrow{b} \cdot \widehat{s} \right). 
 \end{align}
 
-The amplitudes $V1$ and $V2$ are proportional to the electric field produced by the  source multiplied by the the voltage gains of antennas 1 and 2.  Thus the output amplitude $\frac{V^2}{2}$ is proportional to the point-source flux density $S$ multiplied by $\sqrt{(A_1, A_2)}$, where $A_1$ and $A_2$ are the effective collecting areas of the two antennas.
+The amplitudes $V1$ and $V2$ are proportional to the electric field produced by the  source multiplied by the the voltage gains of antennas 1 and 2.  Thus the output amplitude $\frac{V^2}{2}$ is proportional to the point-source flux density $S$ multiplied by $\sqrt{(A_1, A_2)}$, where $A_1$ and $A_2$ are the effective collecting areas of the two antennas \citep{NRAO}.
 
 From \ref{eq111} 
 Radio interferometry has enable astronomers to make measurements of  of fine angular  details including parameters such as intensity, polarization and frequency spectrum \citep{thompson2001interferometry}.
@@ -84,9 +84,9 @@ In an interferometric array, the measured visibilities  which is the 2-dimension
 V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int A(l,m) I (l,m)e^{-2\pi i(ul+vm)} dl dm,
 \label{Vis}
 \end{align}
-where $(u,v)$ denotes the projected baseline coordinates in the 2D plane Fourier transform measured in wavelength along axes in the east-west and north south direction,  and changes with time as the earth rotates. $(l, m)$ are the orthogonal coordinates representing the position of a source or the phase reference position. In the 2D analysis $l$ and $m$ are defined as the cosines of the  angles between the direction $(l,m)$ and $(u, v)$. $I(l,m)$ is the intensity distribution of a source and its Fourier transform  ${F}\left\{I\right\}$ represents the amplitude and phase of sinusoidal component of the intensity profile with spatial frequency $u$ and $v$; and and $A(l, m)$ represents the effective collecting area of the antennas with respect to the direction of the incoming radiation.
+where $(u,v)$ denotes the projected baseline coordinates in the 2D plane Fourier transform measured in wavelength along axes in the east-west and north south direction,  and changes with time as the earth rotates  \citep{taylor1999synthesis}. $(l, m)$ are the orthogonal coordinates representing the position of a source or the phase reference position. In the 2D analysis $l$ and $m$ are defined as the cosines of the  angles between the direction $(l,m)$ and $(u, v)$. $I(l,m)$ is the intensity distribution of a source and its Fourier transform  ${F}\left\{I\right\}$ represents the amplitude and phase of sinusoidal component of the intensity profile with spatial frequency $u$ and $v$; $A(l, m)$ represents the effective collecting area of the antennas with respect to the direction of the incoming radiation \citep{thompson2001interferometry}.
 
-For simplicity of \ref{Vis}, the term $A(l,m)$ is most often assumed to be 1 such that the Van CittertZernike theorems states
+For simplicity of equation \ref{Vis}, the term $A(l,m)$ is most often assumed to be 1 such that the Van CittertZernike theorem states \citep{thompson2017interferometry}
 \begin{align}
 V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int I (l,m)e^{-2\pi i(ul+vm)} dl dm.
 \label{V}
@@ -94,7 +94,7 @@ V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int I (l,m)e^{-2\pi i(ul+vm
 The measured visibilities $V(u,v)$ and the sky brightness I $(l,m)$ are Fourier pairs $V(u,v) \rightleftharpoons I(l,m)$, where $\rightleftharpoons$ is the Fourier transformation. The sky
 brightness can readily be recovered from the measured visibilities by an inverse Fourier transform such that we have 
 \begin{align}
-I(l,m)\approx \mathcal{F}^{-1}\left\{V\right\}(l,m)=\int \int V (u,v)e^{-2\pi i(ul+vm)} du dv.
+I(l,m)\approx \mathcal{F}^{-1}\left\{V\right\}(l,m)=\int \int V (u,v)e^{-2\pi i(ul+vm)} du dv .
 \end{align}
 Since for every sky's brightness $I$ $\exists$ visibility function $V(u,v)$, the array of an antennas with baseline $b=(u_i,v_i)$  measures only a certain values in the $\textbf{Set}$ of continuous  $(u,v)$ in the visibility function $V(u,v)$. This measured set of values is called \emph{Sampling function} denoted by \citep{taylor1999synthesis} \[ S(u,v) =
   \begin{cases}
@@ -119,7 +119,7 @@ where
 \begin{align}
 PSF(l,m) = \int \int S(u,v)e^{-2\pi i(ul+vm)} du dv,
 \end{align}
-represents a point spread function  corresponding to the sampling function $S(u,v)$.
+represents a point spread function  corresponding to the sampling function $S(u,v)$ \citep{taylor1999synthesis}.
 
 
 \subsection{Calibration}
