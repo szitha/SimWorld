@@ -193,7 +193,7 @@ to form calibrated data.
 
 \subsection{Second generation calibration(2GC)}
 
-Once the calibrated data is obtained by performing the first generation calibration and the first model image is computed. A process called self calibration can be performed to obtain more accurate images by making additional corrections to the antenna gains as a function of time. It is very similar to the basic calibration. The main difference is that the model of the source is generally more complex than just assuming its a point source at the phase centre and also the observed field is used to calibrate itself \citep{wieringa1992investigation}. The self-calibration technique finds antenna gains, $g_i$, which minimise the difference between the measured visibilities, $V_{i,j}$, and the model visibilities $\hat{V}_{i,j}$ \citep{grobler2016calibration}, 
+Once the calibrated data is obtained by performing the first generation calibration and the first model image is computed. A process called self calibration can be performed to obtain more accurate images by making additional corrections to the antenna gains as a function of time. It is very similar to the basic calibration. The main difference is that the model of the source is generally more complex than just assuming its a point source at the phase centre and also the observed field is used to calibrate itself \citep{wieringa1992investigation}. The self-calibration technique finds antenna gains $g_i$, which minimise the difference between the measured visibilities $V_{i,j}$, and the model visibilities $\hat{V}_{i,j}$ \citep{grobler2016calibration}, 
 
 \begin{align}
 \epsilon^2 = \sum |V_{i,j}-g_i g_j^* V^{obs}_{i,j}|^2

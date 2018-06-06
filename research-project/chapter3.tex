@@ -140,7 +140,7 @@ All components are interfaced to the CAM system via the Karoo Array Telescope Co
 
 \subsection{Preparation of training data}\label{prep}
 The process of data collection encompasses all of the steps required to obtain the desired data in a digital format. Methods of data collection include acquiring and archiving new observations, querying existing databases according to the science
-problem at hand, and performing as necessary any cross-matching or data combining\citep{ball2010data}.
+problem at hand, and performing as necessary any cross-matching or data combining  \citep{ball2010data}.
 
 In this chapter we will look at modelling the behaviour patterns of individual antennas and calibration steps based on Karoo Array Telescope (KAT-7) \ref{images/kat7.png}.
 
@@ -278,7 +278,7 @@ Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
  
 The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where i,j represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this thesis we only focus on the 1GC calibration with an interest of obtaining the complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions G (amplitude \& phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and store in calibration tables.
  
-These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is approximately close to the center of the array and it was known to be particularly stable with no drop outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factor $J_{i,j}$ into antenna-based components, so we do not see a set of values for each baseline, but rather only one for each antenna ($J_i$)\citep{CosmoAIMS}. 
+These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is approximately close to the center of the array and it was known to be particularly stable with no drop outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factor $J_{i,j}$ into antenna-based components, so we do not see a set of values for each baseline, but rather only one for each antenna ($J_i$) \citep{CosmoAIMS}. 
 
 Since our phase calibrator PKS1613-586 have an unknown flux density, the obtained values of the antenna based amplitude solutions differ from the correct ones by a factor depending only on the true source flux density by 
 
