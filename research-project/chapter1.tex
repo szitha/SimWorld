@@ -47,10 +47,8 @@ Astronomical signals tend to be weak by the time it reach the ground. The need f
 \label{RvI}
 
 
-A single dish survey can be complemented by an array of small radio telescopes providing higher sensitivity signal and higher resolution images of features initially detected by a single dish survey \citep{wright2004single}. This technique is called radio interferometry. This technique provide high resolution images of astronomical sources, while as single dish technique is mostly considered as a tool for low spacial resolution, i.e  they allow the imaging of very large sources \citep{stanimirovic2002short}. Though these two techniques are quite different, they both provide measurements of the Fourier transform of  some region in the sky. In this thesis we focus on the interferometer which is basically an ensembles of two or more sub-apertures where the received signal in each sub-aperture telescope are combined for higher resolutions purposes \citep{verschuur2015invisible} as shown in Figure \ref{images/Rint.png}. Though the telescopes are separated by the the baseline distance $b$, the resulting output is treated as one telescope. For an interferometric array the angular resolution is $\theta \approx\frac{\lambda}{B}$ where $B$ is the maximum baseline. Single dishes and interferometers  perform similar operation, they provide measurements of the Fourier transform of some region of the sky.
+A single dish survey can be complemented by an array of small radio telescopes providing higher sensitivity and higher resolution images  \citep{wright2004single}. This technique is called radio interferometry. The radio interferometry is mostly used for to obtain high resolution images of astronomical sources, while as a single dish technique is mostly considered as a tool for low spacial resolution, i.e, they allow for imaging of very large sources \citep{stanimirovic2002short}. Though these two techniques are quite different, they both provide measurements of the Fourier transform of  some region in the sky \citep{cornwell1988radio}. In this thesis we focus on the interferometer which consist of two or more sub-apertures grouped together to form a large array \citep{verschuur2015invisible} as shown in Figure \ref{images/Rint.png}. Though the telescopes are placed at different positions separated by the distance $b$, the resulting power output from all the telescopes is combined. For an interferometric array, the angular resolution is defined as  $\theta \approx\frac{\lambda}{B}$, where $B$ represents the t maximum baseline in the array. 
 
-
-arrive at two or more radio telescopes slightly at different times
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.45\textwidth]{images/Rint.png}
@@ -58,7 +56,7 @@ arrive at two or more radio telescopes slightly at different times
   \label{images/Rint.png}
 \end{figure}
 
-The figure \ref{images/Rint.png} illustrates a simple two two-element interferometer (we will refer to the left antenna as antenna 1 and the right antenna as antenna 2). This can be extended to multi-antenna arrays by replicating the antenna based portions. For an array of N-elements, there are $\frac{N(N-1)}{2}$ pair of baselines \citep{zensus1995very}. From Figure \ref{images/Rint.png}, suppose a distant star is observed in the sky, If we have two radio telescopes pointing in a direction $\widehat{s}$ at an infinitely far away source, separated by a distance $\overrightarrow{b}$, a  baseline vector from antenna 1 to antenna 2. As the wave front arrives, it will reach antenna 2 at time $\tau_{g}=\frac{\overrightarrow{b}\cdot\widehat{s}}{c}$ before it reaches antenna 1. $\tau_{g}$ is called the geometric time delay to compensate for the antenna which is further away \citep{taylor1999synthesis}. The output voltages $V_1$ and $V_2$ from both antennas is  denoted by: 
+The Figure \ref{images/Rint.png} is illustrating a simple two two-element interferometer consisting of baseline $\overrightarrow{b}$ (we will refer to the left antenna as antenna 1 and the right antenna as antenna 2). This can be extended to multi-antenna arrays by adding more $N$ antennas in the array such that the number of baselines  $\frac{N(N-1)}{2}$  increases \citep{zensus1995very}. From Figure \ref{images/Rint.png}, suppose a distant star is in the direction $\widehat{s}$ observed, the incoming signal will arrive in each radio telescope slightly at different times. Now to compensate this time difference such that the signal arrives in each telescope at the same time, a time delay term $\tau_{g}=\frac{\overrightarrow{b}\cdot\widehat{s}}{c}$ is introduced to produce voltages $V_1$ and $V_2$ from antenna 1 and antenna 2 denoted by: 
 
 \begin{equation}\label{eq111}
 \begin{split}
@@ -67,7 +65,7 @@ V_2(t)&=V\cos(\omega\tau_{g})
 \end{split}
 \end{equation}
 
-$V_1$ and $V_2$ are then  multiplied and time averaged by the correlator to yield an output response whose amplitude R is proportional to the point-source flux density and whose phase depends on the time delay and the frequency.
+$V_1$ and $V_2$ are then  multiplied and time averaged by the correlator to yield an output response whose amplitude $R$ is proportional to the point-source flux density and whose phase depends on the time delay and the frequency.
 
 \begin{align}
 V_1 \times V_2 = V^2 \cos(\omega\tau_{g})\times \cos[\omega(t-\tau_{g})]
@@ -87,10 +85,10 @@ R&= <V_1V_2> = \frac{V^2}{2}  \cos (\omega\tau_{g})\\
    \overrightarrow{b} \cdot \widehat{s} \right). 
 \end{align}
 
-The amplitudes $V1$ and $V2$ are proportional to the electric field produced by the  source multiplied by the the voltage gains of antennas 1 and 2.  Thus the output amplitude $\frac{V^2}{2}$ is proportional to the point-source flux density $S$ multiplied by $\sqrt{(A_1, A_2)}$, where $A_1$ and $A_2$ are the effective collecting areas of the two antennas \citep{NRAO}.
+The amplitudes $V1$ and $V2$ are proportional to the electric field produced by the  source multiplied by the the voltage gains of antennas 1 and 2. Thus the output amplitude $\frac{V^2}{2}$ is proportional to the point-source flux density $S$ multiplied by $\sqrt{(A_1, A_2)}$, where $A_1$ and $A_2$ are the effective collecting areas of the two antennas \citep{NRAO}.
 
-From \ref{eq111} 
-Radio interferometry has enable astronomers to make measurements of  of fine angular  details including parameters such as intensity, polarization and frequency spectrum \citep{thompson2001interferometry}.
+From equation \ref{eq111} 
+Radio interferometry has enabled astronomers to make measurements of  of fine angular  details including parameters such as intensity, polarization and frequency spectrum \citep{thompson2001interferometry}.
 
 \section{Calibration in radio astronomy}
 \label{Calibr}
@@ -140,7 +138,7 @@ represents a point spread function  corresponding to the sampling function $S(u,
 
 \subsection{Calibration}
 \label{Calib}
-In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality case it is not as simple as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$ not only due to the instrument being discrete as shown in equation \ref{Samp}, but most importantly due to instrumental and environmental effects \citep{abebe2015study}. An example of these effects on the signal measured by a radio interferometry include antenna gains(slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies), Incorrect observation parameters (antenna pointing parameters). Signal effects are classified in two types; direction independent effects (affects signal from all direction of the sky) and direction dependent effects(which vary based on the sky position of the where a signal originated) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration boils down to minimizing the difference between observed and predicted(model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
+In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality case it is not as simple as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$ not only due to the instrument being discrete as shown in equation \ref{Samp}, but most importantly due to instrumental and environmental effects \citep{abebe2015study}. An example of these effects on the signal measured by a radio interferometry include antenna gains(slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and Incorrect observation parameters (antenna pointing parameters). Signal effects are classified in two types; direction independent effects (affects signal from all direction of the sky) and direction dependent effects(which vary based on the sky position of the where a signal originated) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration boils down to minimizing the difference between observed and predicted(model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
 
 Suppose for baseline pair $(i,j)$, the observed visibility is $V^{obs}_{i,j}(t)$ and the true visibility is $V^{True}_{i,j}(t)$ at observation time $t$. The basic calibration formula is written as 
 
@@ -188,18 +186,18 @@ With the improvement and complexities of the new radio astronomy instruments, va
 
 \subsection{First generation calibration(1GC)}
 
-This is the first step in data reduction process where in simple, the received signal in each baseline is compared to the signal from a known source (the calibrator sources) to address the following errors in the response of the instrument. 
+This is the first step in data reduction process where the received signal in each baseline is compared to the signal from a known source (the calibrator sources) to address the following errors in the response of the instrument. 
 
 \begin{itemize}
 
-\item Bandpass calibration B is used to solve for gain variations
+\item Bandpass calibration $B$ is used to solve for gain variations
 in frequency. Variation in frequency arises as a result of non-uniform filter passbands or other frequency dependent effects in signal transmission. It is usually the case that these frequency-dependent effects vary on timescales much longer than the time-dependent effects. The casa task which solves these frequency dependant complex gains is called $\textit{bandpass}$. This is done by observing a strong calibrator source with a known model visibilities and spectrum characteristics for sufficient time to reach the required accuracy \citep{taylor1999synthesis}.
 
-\item Delay calibration K is used to correct for the phase delay errors. Since the arriving signal does not propagate all the antennas at the same time. Delay calibration equalizes these propagation difference on individual signal path at the input of the correlator and removes the largest phase difference across the observing band \citep{taylor1999synthesis}.   
+\item Delay calibration $K$ is used to correct for the phase delay errors. Since the arriving signal does not propagate all the antennas at the same time. Delay calibration equalizes these propagation difference on individual signal path at the input of the correlator and removes the largest phase difference across the observing band \citep{taylor1999synthesis}.   
 
-\item Gain calibration G is used to solve for time dependant complex gain variation. These gain variations includes the relative amplitude and phase gain for each antenna, phase and amplitude drifts in the electronics of each antenna, amplitude response as a function of elevation (gain curve), and tropospheric amplitude and phase effects. Some of these calibrations are known beforehand (“a priori”)and others must be determined from observations of calibrator sources. The casa task used to solves for these antenna-based gains in each polarization in specified time solution intervals  is $\textit{gaincal}$ \citep{editioncasa}.  
+\item Gain calibration $G$ is used to solve for time dependant complex gain variation. These gain variations includes the relative amplitude and phase gain for each antenna, phase and amplitude drifts in the electronics of each antenna, amplitude response as a function of elevation (gain curve), and tropospheric amplitude and phase effects. Some of these calibrations are known beforehand (“a priori”)and others must be determined from observations of calibrator sources. The casa task used to solves for these antenna-based gains in each polarization in specified time solution intervals  is $\textit{gaincal}$ \citep{editioncasa}.  
 
-Note that it is not always possible to find a calibrator source that satisfies the requirements mentioned in \ref{Calib}, especially point number 2. In such cases it may be necessary to find a calibrator source that is a point source  close to the target source and the calibrate it against one of the more commonly used flux density reference calibrators such as PKS1934-638, 3C147, 3C286 \citep{thompson2001interferometry}. 
+Note that it is not always possible to find a calibrator source that satisfies the requirements mentioned in equation \ref{Calib}, especially point number 2. In such cases it may be necessary to find a calibrator source that is a point source  close to the target source and the calibrate it against one of the more commonly used flux density reference calibrators such as PKS1934-638, 3C147, 3C286 \citep{thompson2001interferometry}. 
 
 \item Flux calibration is used to calibrate the flux density of source calibrators with unknown flux densities. The flux density of the unknown calibrators is assumed to be 1Jy such that the complex gain solutions G of the reference flux density calibrator and one with unknown flux density are compared and scaled so that they match as much as possible. The casa task used to perform this scaling or bootstrapping is $\textit{fluxscale}$ \citep{editioncasa}.
 \end{itemize}

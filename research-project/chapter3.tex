@@ -1,15 +1,15 @@
 \chapter{ZCal-Calibrating radio interferometric data with machine learning}
 \label{c3}
-ZCal in full for "Zitha Calibration" is a new machine learning radio data calibration experiment whereby we make use of the KAT-7 telescope sensor data to find the relationship or correlation with the secondary calibrator solutions obtained with CASA. In Section \ref{Exp}, we further discuss the external parameters affection the observed radio interferometric data followed by a brief description of the KAT-7 telescope and how the sensor data  and calibration solutions are processed for training in  Section \ref{kat7}. In Section \ref{algo1} we define and describe the regression algorithms used for our experiment, and in Section \ref{TT} we describe the training and testing procedure of the algorithms leading to the output results of our experiment in Section \ref{sec3}. 
+ZCal in full for "Zitha Calibration" is a new machine learning radio data calibration experiment whereby we make use of the telescope sensor data to find the relationship with the secondary calibrator solutions obtained with CASA. In Section \ref{Exp}, we further discuss the external parameters affection the observed radio interferometric data followed by a brief description of the KAT-7 telescope and how the sensor data  and calibration solutions are processed for training in  Section \ref{kat7}. In Section \ref{algo1} we define and describe the regression algorithms used for our experiment, and in Section \ref{TT} we describe the training and testing procedure of the algorithms leading to the output results of our experiment in Section \ref{sec3}. 
 \section{External parameters affecting the data}
 \label{Exp}
 %%Each antenna in an array has a primary beam which is used for perfect resolution during an observation of a source. The resolution of each antenna is defined as =1.22 / D, where  ~ 21 cm is the  wavelength, D is the diameter of your dish and is the resolution angle. In an interferometric array of N antennas with baselines b, the resolution angle is defined as  =1.22  / d, where d is the maximum baseline in an array.   The beam of all the baselines is call a synthesised beam which is a multiplication of all the primary beams.
 
-Astronomical observations made with interferometric radio
+Astronomical observations done with interferometric radio
 telescopes suffer from variable gain effects which can be
-broadly classified as direction independent and direction dependent errors. The complex instrumental gains due to the electronic devices that follow the feed elements are directionally independent \citep{bhatnagar2008correcting}. Relative amplitude and phase gain for each antenna, phase and amplitude drifts in the electronics of each antenna, amplitude response as a function of elevation (gain curve), and tropospheric amplitude and phase effects.
+broadly classified as direction independent and direction dependent errors. The complex instrumental gains due to the electronic devices that follow the feed elements are directionally independent \citep{bhatnagar2008correcting}. Relative amplitude and phase gain for each antenna; phase and amplitude drifts in the electronics of each antenna; amplitude response as a function of elevation (gain curve) and tropospheric amplitude and phase effects.
 
-As defined in Chapter 1, \textit{calibration} is the process of correcting for the signal corrupted or distorted by various mechanisms. Some of these mechanisms includes the external parameters like fluctuations in air-temperature, weather conditions on site and the antenna pointing errors \citep{taylor1999synthesis}. Antenna pointing error is the difference between the actual pointing position and the requested(to go) position. Though an array consist of more than one antenna each with tracking centre, during request ("POINT"),  they all must follow the same required position. However this is not always accurate due to misalignment of elevation axis, atmospheric refraction, gravitational deformation of the structure, differential heating of the structure and wind loading \citep{taylor1999synthesis}. Wind loading is an effect which degrade the pointing accuracy , thus the design of the telescope structure plays  role interms of wind loads \citep{smithdynamic}. Telescope with large dish structure are subjected to large wind loads. The wind speed and the geometric dimensions are the cause of the highly turbulent flows around the antenna. These are violent shifts in airflow on a surface and around the antenna \citep{upnere2012characterization}. Large errors can reduce the sensitivity of the telescope in \ref{sens}:
+As defined in Chapter 1, \textit{calibration} is the process of correcting for the signal corrupted by various mechanisms. Some of these mechanisms includes the external parameters like fluctuations in air-temperature, weather conditions on site and the antenna pointing errors \citep{taylor1999synthesis}. Antenna pointing error is the difference between the actual pointing position and the requested(to go) position. Though an array consist of more than one antenna each with tracking centre, during request ("POINT"),  they all must follow the same required position. However this is not always accurate due to misalignment of elevation axis, atmospheric refraction, gravitational deformation of the structure, differential heating of the structure and wind loading \citep{taylor1999synthesis}. Wind loading is an effect which degrade the pointing accuracy, thus the design of the telescope structure plays  role interms of wind loads \citep{smithdynamic}. Telescope with large dish structure are subjected to large wind loads. The wind speed and the geometric dimensions are the cause of the highly turbulent flows around the antenna. These are violent shifts in airflow on a surface and around the antenna \citep{upnere2012characterization}. Large errors can reduce the sensitivity of the telescope in \ref{sens}:
 \begin{align}
 \left[\frac{2kT_{sys}}{A_{eff}\sqrt{N(N-1)\tau \Delta \nu}}\right]
 \label{sens},
@@ -24,12 +24,12 @@ As defined in Chapter 1, \textit{calibration} is the process of correcting for t
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.6\textwidth]{images/K7.png}
-    \caption{The seven-dish MeerKAT precursor array, KAT-7 [SKA, South Africa]}
+    \caption{The seven-dish MeerKAT precursor array, KAT-7 \citep{carignan2013kat}}
   \label{images/kat7.png}
 \end{figure}
 
 The Karoo Array (KAT-7) is a seven dish interferometry which was built as an engineering prototype for technologies and techniques testing purposes in preparation for the 64-dish Karoo Array Telescope (MeerKAT). These instruments are located in the Northern Cape Karoo desert region and is operated remotely from CapeTown. The construction of  KAT-7 began in
-2008 with the writing of the telescope requirements specification and was completed in 2010.  It was operated at an engineering mode until 2015  and became fully operational in 2016  \citep{foley2016engineering}. As seen in Figure \ref{images/kat7.png}, KAT-7 antennas are extremely close together with baseline ranging between 26-185m \citep{carignan2013kat}. More parameter specifications are presented in the following Figures \ref{K7 modes}, \ref{DSpec},\ref{DSpec}:
+2008 with the writing of the telescope requirements specification and was completed in 2010.  It was operated at an engineering mode until 2015  and became fully operational in 2016  \citep{foley2016engineering}. As seen in Table \ref{images/kat7.png}, KAT-7 antennas are extremely close together with baseline ranging between 26-185m \citep{carignan2013kat}. More parameter specifications are presented in the Tables \ref{K7 modes}, \ref{DSpec},\ref{DSpec}:
 
 \begin{table}[H]\centering
 \begin{tabular}{l l }
@@ -51,7 +51,7 @@ Digital back end & Roach \\
 Elevation & 1054m\\
 \bottomrule
 \end{tabular}
-\caption{KAT-7 key specifications \citep{foley2016engineering}}
+\caption{The 7 dish instrument each built with diameter 12m and linear polarization $H \& V$. The operational lower noise amplifier for each dish is $80K$  with system temperature $<35K$. The frequency range of this instrument is $1200-1950 MHz$ with bandwidth $256MHz$ \citep{foley2016engineering}.}
 \label{K7 spec}
 \end{table}
 
@@ -67,7 +67,10 @@ c16n25M4k& 	25&	4096& 	6.104\\
 c16n400M4k&  256& 	1024& 	390.625\\
 \bottomrule
 \end{tabular}
-\caption{ KAT-7 correlator modes \citep{carignan2013kat}}
+\caption{The table is showing different correlator modes for observations. The correlator is based
+on the so-called 'FX, architecture, i.e (Fourier transform 'F' followed
+by Cross-correlation 'X'). The F  which channelise the incoming data streams
+into spectral components and the X does the multiplication and accumulation of each and every product pair \citep{foley2016engineering}.}
 \label{K7 modes}
 \end{table}
 
@@ -78,7 +81,7 @@ c16n400M4k&  256& 	1024& 	390.625\\
 \toprule
 \textbf{Parameter} & \textbf{Value}\\
 \midrule
-Pointing accuracy & 25 $^{\prime}$ \\
+Pointing accuracy & 25 $^{\prime \prime}$ \\
 Wind (Operational) & 36 km/h\\
 Wind (Marginal Operation) km/h & 45 km/h\\
 Wind (Drive to Stow) & 55 km/h\\
@@ -90,14 +93,14 @@ Elevation limits & 0$^{\circ}$, 90 $^{\circ}$\\
 Feed/Cryo & Mass 75 kg\\
 \bottomrule
 \end{tabular}
-\caption{KAT-7 dish specification \citep{foley2016engineering}}
+\caption{The table is showing KAT-7 dish specification, each with pointing accuracy of 25 $^\prime \prime$. Each telescope is built with azimuth ranging from -175$^{\circ}$, +285 $^{\circ}$ and elevation drive ranging from 0$^{\circ}$, 90 $^{\circ}$. For protection of the dish from high wind conditions on site, the telescope is built to operate on 45 km/h windspeed and drive to protection mode at 55 km/h wind speed. \citep{foley2016engineering}.}
 \label{DSpec}
 \end{table}
 
 \subsection{Sensor data}
 
 
-During science observations, data indexed by time is continuously collected from instruments and  environment (atmospheric pressure, air temperature,  wind conditions, and relative humidity, wind direction, etc). Samples as a function of time are recorded from software and sensors attached to the telescopes with its adjoining instrumentation \citep{slabberICALEPCS2017}. Sampling strategies are set on sensors processed by the Control And Monitoring system (CAM), ranging from several updates per second to infrequent updates. The typical sample in KAT-7 CAM contains the attributes: a sensor name, sample timestamp, value timestamp, status and a value as shown in the following example where red represents the sensor sample and green is the sensor sample decsription \citep{slabber2015overview}. 
+During science observations, data indexed by time is continuously collected from instruments and  environment (atmospheric pressure, air temperature,  wind conditions, and relative humidity, wind direction, etc). Samples as a function of time are recorded from software and sensors attached to the telescopes with its adjoining instrumentation \citep{slabberICALEPCS2017}. Sampling strategies are set on sensors processed by the Control And Monitoring system (CAM), ranging from several updates per second to infrequent updates. The typical sample in KAT-7 CAM contains the following attributes: a sensor name, sample timestamp, value timestamp, status and a value as shown in the following example where red represents the sensor sample and green is the sensor sample description  \citep{slabber2015overview, slabber2015illustrate}. 
 
 \definecolor{keywords}{RGB}{255,0,90}
 \definecolor{comments}{RGB}{0,0,113}
@@ -134,19 +137,40 @@ During science observations, data indexed by time is continuously collected from
    #WARN, NOMINAL, FAILURE, INACTIVE, ERROR, UNREACHABLE. 
 \end{lstlisting}
 \end{tcolorbox}
-\citep{slabber2015illustrate}
 
 All components are interfaced to the CAM system via the Karoo Array Telescope Communication Protocol (KATCP), i.e KATCP is responsible for internal communication between CAM components and other subsystems (Science data processing, Correlator Beamformer, etc)\citep{slabber2015overview}. A KATCP interface exposes requests and sensors. To access the sensor information for analysis, users from different subsystems  would  connect to the CAM webserver using Python client and subscribe to sensor data of interest. 
 
 \subsection{Preparation of training data}\label{prep}
+
+The objective of this study is to find correlations between
+calibration solutions and sensor information on the telescope.
+Therefore the main dataset for the study is the time based
+sensor information of each antennae.
 The process of data collection encompasses all of the steps required to obtain the desired data in a digital format. Methods of data collection include acquiring and archiving new observations, querying existing databases according to the science
 problem at hand, and performing as necessary any cross-matching or data combining  \citep{ball2010data}.
 
-In this chapter we will look at modelling the behaviour patterns of individual antennas and calibration steps based on Karoo Array Telescope (KAT-7) \ref{images/kat7.png}.
+%In this chapter we will look at modelling the behaviour patterns of individual antennas and calibration steps based on Karoo Array Telescope (KAT-7) \ref{images/kat7.png}.
 
 In every observation, the collected data is stored by the data capturing system into the Hierarchical Data Format(HDF5), which is a set of file formats designed to store and organize large amounts of data. The HDF5 file is built into two concepts: meta data and observed visibilities. In meta data we find static information of the data set, including observer, dump rate and all the available subarrays and spectral windows in the data set selection criteria (antennas, channel frequencies, targets, scan information) and sensor data of interest as a function of time. The data observed by the radio telescope is in a form of complex numbers refereed to as visibilities ad described in Chapter 1. Each source observed contains its own visibilities as a function of time along with sensor data  which keep record of the the telescope activity and behaviour as it observe.
 
-In preparation of the training and testing dataset, we look at \textit{environmental sensors} :air temperature, wind speed, Wind direction, air pressure, relative humidity per antenna and \textit{instrumental sensors (pointing)}: actual refraction elevation, actual refraction azimuth, actual scan elevation, actual scan azimuth, actual pointing elevation, actual pointing azimuth data recorded during observations with a calibrator source PKS 1613-586. The environmental sensors measures the environmental conditions on site via the weather station installed around the telescope; and the instrumental sensors (pointing) record the pointing azimuth and elevation activities of a telescope. These are the examples of how each environmental and instrumental sensor are represented per antenna X.
+In preparation of the training and testing dataset, we look at environmental sensors and instrumental sensors
+recorded during observations with a phase calibrator source
+PKS1613-586 (Figure) listed in the following. 
+\begin{enumerate}
+
+\item Air temperature
+\item Wind speed
+\item Wind direction 
+\item Air pressure 
+\item Relative humidity 
+\item Actual refraction elevation
+\item Actual refraction azimuth
+\item Actual scan elevation
+\item Actual scan azimuth 
+\item Actual pointing elevation
+\item Actual pointing azimuth 
+\end{enumerate}
+The environmental sensors measures the environmental conditions on site via the weather station installed around the telescope; and the instrumental sensors (pointing) record the pointing azimuth and elevation activities of a telescope. These are the examples of how each environmental and instrumental sensor are represented per antenna X.
 
 \definecolor{keywords}{RGB}{255,0,90}
 \definecolor{comments}{RGB}{0,0,113}
@@ -236,7 +260,7 @@ In preparation of the training and testing dataset, we look at \textit{environme
 \end{lstlisting}
 \end{tcolorbox}
 
-We access this data from the HDF5 file using the KAT-7 data access library called katdal \citep{molenaar2017kern}. We select the sensor data of interest with time index during the telescope tracking of the flux calibrator and phase calibrator PKS1613-586. In following Python code, we show an example of how the sensor time index is selected from the observations for a specific calibrator.
+We access this data from the HDF5 file using the KAT-7 data access library called katdal \citep{molenaar2017kern}. We select the sensor data of interest with time index during the telescope tracking of the flux calibrator and phase calibrator PKS1613-586. The following is a Python code example showing how the sensor time index is selected from the observations for a specific calibrator.
 
 \begin{tcolorbox}
 \begin{lstlisting}
@@ -274,7 +298,7 @@ Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
 \end{lstlisting}
 \end{tcolorbox}
 
- This library can manipulate the HDF5 observation file in many ways including file format conversion from HDF5 to measurement sets. This option is useful for astronomers using CASA for data calibration and visualization.
+ The Katdal library can manipulate the HDF5 observation file in many ways including file format conversion from HDF5 to measurement sets. This option is useful for astronomers using CASA for data calibration and visualization.
  
 The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where i,j represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this thesis we only focus on the 1GC calibration with an interest of obtaining the complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions G (amplitude \& phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and store in calibration tables.
  
@@ -304,8 +328,8 @@ We then used one of the following flux-density calibrators with known flux model
  
  \begin{figure}[H]
  \centering
-    \includegraphics[ height=9cm, width=9cm]{images/1613.png}
-    \caption{A clean image of the calibrator PKS1613-586 located in the center of the primary beam, after calibration process and estimated solutions have been applied to the corrupted data.}
+    \includegraphics[ height=12cm, width=13cm]{images/16.png}
+    \caption{A clean image of the phase calibrator PKS1613-586 located at  RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. (freq=1.82688e+09 Hz) is: 4.59973 +/- 0.0146351. after calibration process and estimated solutions have been applied to the corrupted data.}
   \label{pks1613}
 \end{figure}
 \section{Regression algorithm} 
