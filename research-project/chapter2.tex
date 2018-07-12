@@ -173,7 +173,8 @@ discard the other $(d - k)$ dimensions. In feature extraction, we are interested
  
 During algorithm learning, a feature $x_i\in\mathbb{R}$ become relevant to a target concept $t$ (what is being learned) if there exists a pair of examples A and B in the instance space such that A and B differ only in their assignment to  $x_i$ \citep{blum1997selection}. This implies that twiddling the value of $x_i$ affects the desired output of the learning algorithm. Hence it is important to identifying the features that are most useful for the problem under examination. This invariably requires prior knowledge of the problem and the data. This is process is called feature selection.
 
-And selection 
+In any machine learning, algorithm technique selection is mostly driven by the structure of the dataset and type of the problem one wish to solve (regression or classification). Therefore it is important to have a better understanding of the dataset and which features are useful prior to the selection and splitting of the dataset as described in the previous paragraph. The output of our problem is real number, we therefore categorize our problem as regression. The identified algorithms that are applicable and practical to implement are multi-output regression algorithms to be discussed in more details on the next chapter. 
+
 
 \section{Tuning model complexity}
 \label{comp}

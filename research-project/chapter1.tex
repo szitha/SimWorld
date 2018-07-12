@@ -14,12 +14,12 @@ In this project, we make use of the data from the Karoo Array Telescope (KAT-7),
  
 \section{Introduction to radio astronomy}
 
-Radio astronomy is one of the most fascinating fields to study the Universe beyond the immediate vicinity of Earth. Astronomers capture and analyze the electromagnetic signals emitted by distant objects, such as stars and galaxies using a radio telescope. In Section \ref{Ra} we present a brief introduction in radio astronomy including the interferometry vs single dish in Section \ref{RvI}. In Section \ref{Calibr} we define calibration in radio astronomy and the different techniques used for data calibration in Section \ref{caltech}.
+Radio astronomy is one of the most fascinating fields to study about the Universe. Astronomers capture and analyze the electromagnetic signals emitted by distant objects, such as stars and galaxies using a radio telescope. In Section \ref{Ra} we present a brief introduction in radio astronomy including the interferometry vs single dish in Section \ref{RvI}. In Section \ref{Calibr} we define calibration in radio astronomy and the different techniques used for data calibration in Section \ref{caltech}.
 \label{Ra}
 \subsection{History}
 
 
-Radio astronomy is the study of celestial sources emitting radio waves \citep{verschuur2015invisible}. A wave is an oscillatory motion of any kind, the most familiar being waves on the surface of water, sound waves and vibrations of the air or of various material substances. There are also wave disturbances in electric and magnetic field\newtheorem{mydef}{Definition}s. Such waves are responsible for what we experience as X rays, visible light, or radio wave \citep{cassidy2002wave}. Traditional astronomy is based on observations at optical (i.e. visible) wavelengths, but astronomical sources emit radiation not only as visible light but
+Radio astronomy is the study of celestial sources emitting radio waves \citep{verschuur2015invisible}. A wave is an oscillatory motion of any kind, the most familiar being waves on the surface of water, sound waves and vibrations of the air or of various material substances. There are also wave disturbances in electric and magnetic field\newtheorem{mydef}{Definition}s. Such waves are responsible for what we experience as, e.g X rays, visible light, or radio waves \citep{cassidy2002wave}. Traditional astronomy is based on observations at optical (i.e. visible) wavelengths, but astronomical sources emit radiation not only as visible light but
 also across the electromagnetic spectrum from gamma rays at short wavelength$(\lambda)$ to radio at long wavelength (low frequency) as shown in Figure \ref{images/Electromagnetic-Spectrum.png} \citep{staats2016genetic}.
 
 \begin{figure}[h!]
@@ -29,19 +29,19 @@ also across the electromagnetic spectrum from gamma rays at short wavelength$(\l
   \label{images/Electromagnetic-Spectrum.png}
 \end{figure}
 
-Electromagnetic radiation is a group of waves created by fluctuations of electric and magnetic fields radiating/propagating through space at the speed of light ($c=3\times 10^{8} m/s$) carrying electromagnetic radiant energy \citep{staats2016genetic}.\;There are numerous emission mechanisms in the universe that generate radio waves.
-Each portion of the electromagnetic spectrum reveals a unique view of the universe and so modern astronomy employs various instruments to look at each portion of the spectrum.\;The Earth's atmosphere absorbs electromagnetic radiation at most infra-red, ultraviolet, X-ray, and gamma-ray wavelengths, so this allow us to only observe the universe from the ground in two windows namely the radio and visible wavebands.  Radio waves reveals objects that do not radiate in other parts of the electromagnetic spectrum and they are able to pass through galactic dust clouds that obscure the view in the optical range and able to penetrate through the earth's atmosphere (Subject to some limits depending on frequency) \citep{thompson2001interferometry}. After received by a radio telescope, the data is amplified and transferred to a computer (include figure) for further  data processing which is discussed in next chapter.
+Electromagnetic radiation is a group of waves created by fluctuations of electric and magnetic fields propagating through space at the speed of light ($c=3\times 10^{8} m/s$) carrying electromagnetic radiant energy \citep{staats2016genetic}.\;There are numerous emission mechanisms in the universe that generate radio waves.
+Each portion of the electromagnetic spectrum reveals a unique view of the universe and so modern astronomy employs various instruments to look at each portion of the spectrum.\;The Earth's atmosphere absorbs electromagnetic radiation at most infra-red, ultraviolet, X-ray, and gamma-ray wavelengths. This means we can only observe the Universe from the ground in two windows namely the radio and visible wavebands. Radio waves can reveal objects that do not radiate in other parts of the electromagnetic spectrum, and they are able to pass through galactic dust clouds that obscure the view in the optical range and they can penetrate through the Earth's atmosphere (subject to some limits depending on frequency) \citep{thompson2001interferometry}. After received by a radio telescope, the data is amplified and transferred to a computer (include figure) for further  data processing which is discussed in next chapter.
 
 
-Radio astronomy was accidentally discovered by a radio Engineer, Karl Jansky in the 1930s.
-Jansky was assigned the task of investigating the source of radio interference that might interfere with radio-telephone communication system at short wavelengths (10-20 meters) \citep{verschuur2015invisible}.
-The purpose of this task was to find out the direction of the radio wave interference so they could easily tune out the interference by using directional antennas pointed away from the direction of the interference. In the process of conducting this task, Jansky constructed an antenna designed to receive radio waves at a frequency of 20.5 MHz (wavelength about 14.5 meters) \citep{Jansky0}. The antenna was mounted of a circular train track so that it could be rotated in all possible angles along the ground and be able to detect radio signal in all possible directions. After several months of recording and analysing these radio signals from all directions, Jansky's investigation  successfully identified two known signals (from local and  distant thunderstorms) which were interfering with the radio-telecommunication system, and one unknown signal (faint steady hiss of unknown origin). Jansky continued to investigate the third signal for over a year and he eventually figured out that the radiation was coming from the Milky Way and was strongest in the direction of the center of our Milky Way
+Radio astronomy was discovered accidentally by a radio Engineer, Karl Jansky in the 1930s.
+Jansky was assigned the task of investigating sources of radio interference radio-telephone communication system at short wavelengths (10-20 meters) \citep{verschuur2015invisible}.
+The purpose of this task was to find out the direction of the radio wave interference so they could easily tune out the interference by using directional antennas pointed away from the direction of the interference. In the process of conducting this task, Jansky constructed an antenna designed to receive radio waves at a frequency of 20.5 MHz (a wavelength of about 14.5 meters) \citep{Jansky0}. The antenna was mounted on a circular train track so that it could be rotated in all possible angles along the ground and be able to detect radio signal in all possible directions. After several months of recording and analysing the radio signals from all directions, Jansky's investigation was successful and he identified two known signals (from local and  distant thunderstorms) which were interfering with the radio-telecommunication system, and one unknown signal (faint steady hiss). Jansky continued to investigate the unknown signal for over a year and eventually figured out that the radiation was coming from the Milky Way. The signal was the strongest in the direction of the center of our Milky Way
 galaxy, in the constellation of Sagittarius. This was the first detection of non-black body radiation at radio wavelengths from an extraterrestrial source. Black body radiation is the radiation given off by any object
 related to its temperature \citep{Jansky1}.
 
-After Jansky's project at Bell laboratory ended, Bell was not interested in studying astronomy any more. In 1937, an astronomer Grote Reber who was fascinated by Jansky's ground breaking discovery decided to continue where Jansky left off by further investigating the cosmic radio waves from the Milky way Galaxy. To pursue this research, Grote built the first single dish radio telescope with a receiver strong enough to detect radio cosmic signals at the back of his yard, and spent hours at night scanning the sky at different frequencies. He finally got successfully in detecting radio emission from the Milky Way Galaxy confirming Jansky's discovery \citep{verschuur2015invisible}.   
+After Jansky's project at Bell laboratory ended, Bell was not interested in studying astronomy any more. In 1937, an astronomer Grote Reber who was fascinated by Jansky's ground breaking discovery decided to continue where Jansky left off by further investigating the cosmic radio waves from the Milky Way Galaxy. To pursue this research, Grote built the first single dish radio telescope with a receiver strong enough to detect cosmic radio signals at the back of his yard. He spent hours at night scanning the sky at different frequencies. He was finally successful at detecting radio emission from the Milky Way Galaxy confirming Jansky's discovery \citep{verschuur2015invisible}.   
 
-Astronomical signals tend to be weak by the time it reach the ground. The need for greater sensitivity and higher resolution has resulted to the in the creation of telescopes that have larger collecting area for more radio energy to be focused on the receiver \citep{verschuur2015invisible}. However constructing a single dish telescope larger enough to achieve high angular resolution $\theta \approx\frac{\lambda}{D}$ (where $\lambda$ is the wavelength of electromagnetic radiation  being observed and $D$ is the aperture diameter of the radio telescope) is physically impossible due to the cost of the materials. The angular resolution of a radio telescope measures its ability to detect fine details in the structure of the observed celestial source. For example, to obtain angular resolution of 1 arc-second, this would require a single dish radio telescope diameter to be appropriately thousands of metres \citep{verschuur2015invisible}. 
+Astronomical signals tend to be weak by the time it reach the ground. The need for greater sensitivity and higher resolution has resulted to the in the creation of telescopes that have larger collecting area for more radio energy to be focused on the receiver \citep{verschuur2015invisible}. However constructing a single dish telescope larger enough i.e. $>500m$ to achieve high angular resolution $\theta \approx\frac{\lambda}{D}$ (where $\lambda$ is the wavelength of the electromagnetic radiation observed and $D$ is the aperture diameter of the radio telescope), is physically impossible due to the cost of the materials and structure being at high risk to collapse during high wind conditions. The angular resolution of a radio telescope measures its ability to detect fine details in the structure of the observed celestial source. For example, to obtain an angular resolution of 1 arc-second, would require a single dish radio telescope diameter to be appropriately thousands of metres \citep{verschuur2015invisible}. 
 
 \section{Single dish vs Interferometry}
 \label{RvI}
@@ -60,7 +60,7 @@ The Figure \ref{images/Rint.png} is illustrating a simple two two-element interf
 
 \begin{equation}\label{eq111}
 \begin{split}
-V_1(t)&=V\cos[\omega(t-\tau_{g})] \\
+V_1(t)&=V\cos[\omega(t-\tau_{g})], \text{where} \nu=\frac{\omega}{2\pi}\; \text{is the center frequency} \\
 V_2(t)&=V\cos(\omega\tau_{g})
 \end{split}
 \end{equation}
@@ -77,7 +77,7 @@ V_1 \times V_2&= \frac{V^2}{2} \left( \cos(\omega\tau_{g} + \omega t-\omega \tau
 &= \frac{V^2}{2} \left(\cos(2\omega t - \omega \tau_{g}) + \cos (\omega\tau_{g})\right)
 \end{align*}
 
-We then take the time average $<>$ to remove the high frequency term $\cos(2\omega t - \omega \tau_{g})$ such that we obtain the output 
+We then take the time average to remove the high frequency term $\cos(2\omega t - \omega \tau_{g})$, such that we obtain the output 
 \begin{align}
 R&= <V_1V_2> = \frac{V^2}{2}  \cos (\omega\tau_{g})\\
   &= \frac{V^2}{2}  \cos \left( \frac{\omega}{c} \overrightarrow{b} \cdot \widehat{s} \right)\\
@@ -88,34 +88,34 @@ R&= <V_1V_2> = \frac{V^2}{2}  \cos (\omega\tau_{g})\\
 The amplitudes $V1$ and $V2$ are proportional to the electric field produced by the  source multiplied by the the voltage gains of antennas 1 and 2. Thus the output amplitude $\frac{V^2}{2}$ is proportional to the point-source flux density $S$ multiplied by $\sqrt{(A_1, A_2)}$, where $A_1$ and $A_2$ are the effective collecting areas of the two antennas \citep{NRAO}.
 
 From equation \ref{eq111} 
-Radio interferometry has enabled astronomers to make measurements of  of fine angular  details including parameters such as intensity, polarization and frequency spectrum \citep{thompson2001interferometry}.
+Radio interferometry has enabled astronomers to make measurements of fine angular  details including parameters such as intensity, polarization and frequency spectrum \citep{thompson2001interferometry}.
 
 \section{Calibration in radio astronomy}
 \label{Calibr}
 \subsection{Interferometry Visibility}
-In an interferometric array, the measured visibilities  which is the 2-dimensional Fourier transform of the sky's intensity at different baseline coordinates is defined by
+In an interferometric array, the measured visibilities  which are the 2-dimensional Fourier transform of the sky's intensity at different baseline coordinates, are defined by
 \begin{align}
 V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int A(l,m) I (l,m)e^{-2\pi i(ul+vm)} dl dm,
 \label{Vis}
 \end{align}
-where $(u,v)$ denotes the projected baseline coordinates in the 2D plane Fourier transform measured in wavelength along axes in the east-west and north south direction,  and changes with time as the earth rotates  \citep{taylor1999synthesis}. $(l, m)$ are the orthogonal coordinates representing the position of a source or the phase reference position. In the 2D analysis $l$ and $m$ are defined as the cosines of the  angles between the direction $(l,m)$ and $(u, v)$. $I(l,m)$ is the intensity distribution of a source and its Fourier transform  ${F}\left\{I\right\}$ represents the amplitude and phase of sinusoidal component of the intensity profile with spatial frequency $u$ and $v$; $A(l, m)$ represents the effective collecting area of the antennas with respect to the direction of the incoming radiation \citep{thompson2001interferometry}.
+where $(u,v)$ denotes the projected baseline coordinates in the 2D Fourier transform plane  measured in wavelength along the axes in the east-west and north south direction, and changes with time as the earth rotates  \citep{taylor1999synthesis}. The orthogonal coordinates $(l, m)$ represent the position of a source or the phase reference position. In the 2D analysis $l$ and $m$ are defined as the cosines of the  angles between the direction $(l,m)$ and $(u, v)$. $I(l,m)$ is the intensity distribution of a source and its Fourier transform  ${F}\left\{I\right\}$ represents the amplitude and phase of a sinusoidal component of the intensity profile with spatial frequency $u$ and $v$; $A(l, m)$ represents the effective collecting area of the antennas with respect to the direction of the incoming radiation \citep{thompson2001interferometry}.
 
-For simplicity of equation \ref{Vis}, the term $A(l,m)$ is most often assumed to be 1 such that the Van CittertZernike theorem states \citep{thompson2017interferometry}
+For simplicity of equation \ref{Vis}, the term $A(l,m)$ is most often assumed to be 1 such that the Van Cittert Zernike theorem states, \citep{thompson2017interferometry}
 \begin{align}
 V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int I (l,m)e^{-2\pi i(ul+vm)} dl dm.
 \label{V}
 \end{align}
-The measured visibilities $V(u,v)$ and the sky brightness I $(l,m)$ are Fourier pairs $V(u,v) \rightleftharpoons I(l,m)$, where $\rightleftharpoons$ is the Fourier transformation. The sky
-brightness can readily be recovered from the measured visibilities by an inverse Fourier transform such that we have 
+The measured visibilities $V(u,v)$ and the sky brightness  $I(l,m)$ are Fourier pairs $V(u,v) \rightleftharpoons I(l,m)$, where $\rightleftharpoons$ is the Fourier transformation. The sky
+brightness can readily be recovered from the measured visibilities by an inverse Fourier transform such that we have, 
 \begin{align}
-I(l,m)\approx \mathcal{F}^{-1}\left\{V\right\}(l,m)=\int \int V (u,v)e^{-2\pi i(ul+vm)} du dv .
+I^{True}(l,m)\approx \mathcal{F}^{-1}\left\{V\right\}(l,m)=\int \int V (u,v)e^{-2\pi i(ul+vm)} du dv .
 \end{align}
-Since for every sky's brightness $I$ $\exists$ visibility function $V(u,v)$, the array of an antennas with baseline $b=(u_i,v_i)$  measures only a certain values in the $\textbf{Set}$ of continuous  $(u,v)$ in the visibility function $V(u,v)$. This measured set of values is called \emph{Sampling function} denoted by \citep{taylor1999synthesis} \[ S(u,v) =
+Since for every sky's brightness $I$ $\exists$ visibility function $V(u,v)$, the array of antennas with baselines $b=(u_i,v_i)$  measures only certain values in the set of continuous  $(u,v)$ coordinates in the visibility function $V(u,v)$. This measured set of values is called the \emph{Sampling function} denoted by \citep{taylor1999synthesis}, \[ S(u,v) =
   \begin{cases}
     1   & \quad    \text{at uv point}\\
     0  & \quad  \text{ otherwise}\\
   \end{cases}
-\], $\forall$ baselines. The actual data provided by the array is called  sampled visibilities denoted by  $S(u,v)\times V(u,v)$. The Fourier transform of this sampled visibilities is the dirty Image
+\], $\forall$ baselines. The actual data provided by the array is called  sampled visibilities denoted by  $S(u,v)\times V(u,v)$. The Fourier transform of these sampled visibilities is the dirty Image,
 \begin{align}
 I^{D}(l,m)=\int \int S(u,v)\times V(u,v) e^{-2\pi i(ul+vm)} du dv.
 \label{Samp}
@@ -125,7 +125,7 @@ Using the $\textit{convolution theorem}$ for Fourier transforms which states tha
 f*g\rightleftharpoons \mathcal{F} \mathcal{G},
 \end{align}
 where $f\rightleftharpoons \mathcal{F}$ and $g\rightleftharpoons \mathcal{G}$.
-From \ref{Samp}, we therefore have 
+From equation \ref{Samp}, we therefore have 
 \begin{align}
 I^{D}=PSF \circ I^{True},
 \end{align}
@@ -138,47 +138,47 @@ represents a point spread function  corresponding to the sampling function $S(u,
 
 \subsection{Calibration}
 \label{Calib}
-In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality case it is not as simple as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$ not only due to the instrument being discrete as shown in equation \ref{Samp}, but most importantly due to instrumental and environmental effects \citep{abebe2015study}. An example of these effects on the signal measured by a radio interferometry include antenna gains(slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and Incorrect observation parameters (antenna pointing parameters). Signal effects are classified in two types; direction independent effects (affects signal from all direction of the sky) and direction dependent effects(which vary based on the sky position of the where a signal originated) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration boils down to minimizing the difference between observed and predicted(model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
+In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality it is not as simple as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$, not only due to the instrument being discrete as shown in equation \ref{Samp}, but most importantly due to instrumental and environmental effects \citep{abebe2015study}. An example of these effects on the signal measured by a radio interferometry include antenna gains (slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and incorrect observation parameters (antenna pointing parameters). Signal effects are classified in two types; direction independent effects (affects signal from all direction of the sky) and direction dependent effects (which vary based on the sky position of the signal) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration minimizes the difference between observed and predicted (model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
 
-Suppose for baseline pair $(i,j)$, the observed visibility is $V^{obs}_{i,j}(t)$ and the true visibility is $V^{True}_{i,j}(t)$ at observation time $t$. The basic calibration formula is written as 
+Suppose for baseline pair $(i,j)$, the observed visibility is $V^{obs}_{i,j}(t)$ and the true visibility is $V^{True}_{i,j}(t)$ at observation time $t$. The basic calibration formula is written as,
 
 \begin{align}
 V_{i,j}^{obs}=G_{i,j} V_{i,j}^{true} + \epsilon_{i,j}(t) ,
 \end{align}
-where $G_{i,j}(t)$ denote the complex antenna gains for baseline $(i,j)$ as a results of unwanted effects and may vary with time \citep{thompson2001interferometry}. The extra term $ \epsilon_{i,j}(t)$ is a stochastic complex noise \citep{taylor1999synthesis}.
+where $G_{i,j}(t)$ denotes the complex antenna gains for baseline $(i,j)$ as a results of unwanted effects and may vary with time \citep{thompson2001interferometry}. The extra term $ \epsilon_{i,j}(t)$ is a stochastic complex noise \citep{taylor1999synthesis}.
 
-Since most of the corruptions in data occurs before the signal gets correlated and the response associated with antenna  $i$  does not depend on the response of antenna $j$. Then the baseline-based complex gain $G_{i,j}$ can therefore be approximated into the product of amplitude and phase $A$ and phase $\phi$ such that we have  
+Most of the corruptions in data occur before the signal gets correlated and the response associated with antenna  $i$  does not depend on the response of antenna $j$. The baseline-based complex gain $G_{i,j}$ can therefore be approximated by the product of amplitude $A$ and phase $\phi$ such that we have,  
 
 \begin{align}
 G_{i,j}(t)= g_i(t)g^*_j(t) = A_{i}(t)A_{j}(t) e ^{i\left(\phi_i(t)-\phi_j(t)\right)},
 \label{Sols}
 \end{align}
 
-where  $A_{i}(t)$, $A_{j}(t)$ are antenna-based amplitude solutions and $\phi_i(t),\phi_j(t)$ are antenna-based phase solutions. Calibration means to find the appropriate $A$ and $\phi$ for the corrupted visibilities. One standard technique of obtaining solutions to \ref{Sols} is to obtain dedicated calibration observations of a part of the sky that contains a single known, relatively strong point source. The reason for observing these sources is to measure the instrumental phase since the telescopes on the ground can only measure the phase differences rather than measuring absolute phase reference. Therefore, the reference for phase visibility to the phase tracking center or the center of the primary antenna beam can be practically accomplished by observing point-like calibrator sources, the phase . Using these sources, one can determine the phase deviation from the desired reference point. Periodic observation of these sources is very important so as to track the phase and gain changes in an array. Above all, they have the paramount advantage to estimate time dependent phase changes incurred by the atmosphere \citep{taylor1999synthesis}.
+where  $A_{i}(t)$, $A_{j}(t)$ are antenna-based amplitude solutions and $\phi_i(t),\phi_j(t)$ are antenna-based phase solutions. Calibration means to find the appropriate $A$ and $\phi$ for the corrupted visibilities. One standard technique for measuring the gain calibration solutions is to obtain dedicated calibration observations of a part of the sky that contains a single known, relatively strong point source. This is to measure the instrumental phase since the telescopes on the ground can only measure the phase differences rather than measuring absolute phase reference. Therefore, the reference for phase visibilities can be practically accomplished by observing point-like calibrator sources. Using these sources, one can determine the phase deviation from the desired reference point. Periodic observation of these sources is very important  to track the phase and gain changes in an array. Above all, they have the paramount advantage of estimating time dependent phase changes incurred by the atmosphere \citep{taylor1999synthesis}.
 
-The selection of a good calibrator source in the sky is based on the following desirable characteristics \citep{thompson2001interferometry} 
+The selection of a good calibrator source in the sky is based on the following desirable characteristics \citep{thompson2001interferometry}, 
 
 \begin{enumerate}
 \item They should have known positions in the sky, i.e the calibrator should be close to the target source. 
-\item  Their flux densities have to be strong enough so as to get suitable signal-to-noise ratio (SNR) for calibrating in a short time.
+\item  Their flux densities have to be strong enough so as to get suitable signal-to-noise ratio (SNR) in a short time.
  \item The calibrator should be a point source (unresolved) if possible. 
  \item Their spectral properties should be known.
  \end{enumerate}
  
- Note that the source that is the subject  of the astronomical investigation will be referred to as target sources to distinguish them from the calibrator sources \citep{thompson2001interferometry}.
+ Note that the source that is the subject of astronomical investigation will be referred to as "target sources" to distinguish them from the calibrator sources \citep{thompson2001interferometry}.
  
-Supposed a target source is observed with measured visibility $V(u,v)^{obs}$. To calibrate the antenna-based complex gain factor $G_{i,j}(t)$ as a function of time and antenna pair (i,j), a point source calibrator is observed for which the measured visibility is 
+Suppose a target source is observed with measured visibility $V(u,v)^{obs}$, to calibrate the antenna-based complex gain factor $G_{i,j}(t)$ as a function of time and antenna pair $(i,j)$, a point source calibrator is observed for which the measured visibility is, 
 \begin{align}
 V(u,v)_{calibrator}&= G_{i,j}(t) S_{calibrator}\\
-G_{i,j}(t)&= \frac{V(u,v)_{calibrator}}{S_{calibrator}},
-\citep{thompson2001interferometry}
+G_{i,j}(t)&= \frac{V(u,v)_{calibrator}}{S_{calibrator}}
 \end{align}
-where S indicates the flux density of the calibrator. Now to calibrate the visibilities of the target source we can write  
+\citep{thompson2001interferometry}
+where S indicates the flux density of the calibrator. Now to calibrate the visibilities of the target source we can write, 
 \begin{align}
 V(u,v)^{true}&= \frac{V(u,v)^{obs}}{G_{i,j}(t)}\\
-&= V(u,v)^{obs} \times \frac{S_{calibrator}}{V(u,v)_{calibrator}}
-\citep{thompson2001interferometry}  
+&= V(u,v)^{obs} \times \frac{S_{calibrator}}{V(u,v)_{calibrator}} 
 \end{align}
+\citep{thompson2001interferometry} 
 
 \section{Calibration techniques}
 \label{caltech}
