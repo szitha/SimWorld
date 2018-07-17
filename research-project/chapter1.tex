@@ -25,11 +25,11 @@ also across the electromagnetic spectrum from gamma rays at short wavelength$(\l
 \begin{figure}[h!]
   \centering
     \includegraphics[width=0.7\textwidth]{images/Electromagnetic-Spectrum.png}
-    \caption{The electromagnetic spectrum}
+    \caption{The electromagnetic spectrum \citep{ElectromagneticSpectrum}}
   \label{images/Electromagnetic-Spectrum.png}
 \end{figure}
 
-Electromagnetic radiation is a group of waves created by fluctuations of electric and magnetic fields propagating through space at the speed of light ($c=3\times 10^{8} m/s$) carrying electromagnetic radiant energy \citep{staats2016genetic}.\;There are numerous emission mechanisms in the universe that generate radio waves.
+Electromagnetic radiation is a group of waves created by fluctuations of electric and magnetic fields propagating through space at the speed of light ($c=3\times 10^{8} m/s$) carrying electromagnetic radiant energy \citep{ElectromagneticSpectrum}.\;There are numerous emission mechanisms in the universe that generate radio waves.
 Each portion of the electromagnetic spectrum reveals a unique view of the universe and so modern astronomy employs various instruments to look at each portion of the spectrum.\;The Earth's atmosphere absorbs electromagnetic radiation at most infra-red, ultraviolet, X-ray, and gamma-ray wavelengths. This means we can only observe the Universe from the ground in two windows namely the radio and visible wavebands. Radio waves can reveal objects that do not radiate in other parts of the electromagnetic spectrum, and they are able to pass through galactic dust clouds that obscure the view in the optical range and they can penetrate through the Earth's atmosphere (subject to some limits depending on frequency) \citep{thompson2001interferometry}. After received by a radio telescope, the data is amplified and transferred to a computer (include figure) for further  data processing which is discussed in next chapter.
 
 
@@ -60,7 +60,7 @@ The Figure \ref{images/Rint.png} is illustrating a simple two two-element interf
 
 \begin{equation}\label{eq111}
 \begin{split}
-V_1(t)&=V\cos[\omega(t-\tau_{g})], \text{where} \nu=\frac{\omega}{2\pi}\; \text{is the center frequency} \\
+V_1(t)&=V\cos[\omega(t-\tau_{g})],\; \text{where} \;\nu=\frac{\omega}{2\pi}\; \text{is the center frequency} \\
 V_2(t)&=V\cos(\omega\tau_{g})
 \end{split}
 \end{equation}
@@ -138,7 +138,7 @@ represents a point spread function  corresponding to the sampling function $S(u,
 
 \subsection{Calibration}
 \label{Calib}
-In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality it is not as simple as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$, not only due to the instrument being discrete as shown in equation \ref{Samp}, but most importantly due to instrumental and environmental effects \citep{abebe2015study}. An example of these effects on the signal measured by a radio interferometry include antenna gains (slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and incorrect observation parameters (antenna pointing parameters). Signal effects are classified in two types; direction independent effects (affects signal from all direction of the sky) and direction dependent effects (which vary based on the sky position of the signal) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration minimizes the difference between observed and predicted (model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
+In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality it is not as simple as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$, not only due to the instrument being discrete as shown in equation \ref{Samp}, but most importantly due to instrumental and environmental effects \citep{thompson2017interferometry}. An example of these effects on the signal measured by a radio interferometry include antenna gains (slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and incorrect observation parameters (antenna pointing parameters). Signal effects are classified in two types; direction independent effects (affects signal from all direction of the sky) and direction dependent effects (which vary based on the sky position of the signal) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration minimizes the difference between observed and predicted (model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
 
 Suppose for baseline pair $(i,j)$, the observed visibility is $V^{obs}_{i,j}(t)$ and the true visibility is $V^{True}_{i,j}(t)$ at observation time $t$. The basic calibration formula is written as,
 
@@ -199,7 +199,7 @@ in frequency. Variation in frequency arises as a result of non-uniform filter pa
 
 Note that it is not always possible to find a calibrator source that satisfies the requirements mentioned in section \ref{Calib}, especially point number 2. In such cases it may be necessary to find a calibrator source that is a point source  close to the target source and then calibrate it against one of the more commonly used flux density reference calibrators such as PKS1934-638, 3C147 or 3C286 \citep{thompson2001interferometry}. 
 
-\item Flux calibration is used to calibrate the flux density of source calibrators with unknown flux densities. The flux density of the unknown calibrators is assumed to be $1Jy$. This assumption is done such that the complex gain solutions G of the reference flux density calibrator and one with unknown flux density are compared and scaled so that they match as much as possible. The CASA task used to perform this scaling or bootstrapping is $\textit{fluxscale}$ \citep{editioncasa}.
+\item Flux calibration is used to calibrate the flux density of source calibrators with unknown flux densities. The flux density of the unknown calibrators is assumed to be $1Jy$. This assumption is done such that the complex gain solutions $G$ of the reference flux density calibrator and one with unknown flux density are compared and scaled so that they match as much as possible. The CASA task used to perform this scaling or bootstrapping is $\textit{fluxscale}$ \citep{editioncasa}.
 \end{itemize}
 
 The solutions obtained from the tasks $(\textit{gaincal}, \textit{bandpass}, \textit{fluxscale})$ are saved in tables and then applied on uncalibrated data 
@@ -233,3 +233,22 @@ and can be performed using the following method:
 \subsection{Third generation calibration(3GC)}
 
 The first and second generation calibration discussed in the previous sections focused mainly on solving direction independent effects. With the wide field of views of current and future generation radio telescopes such as the Extended Very Large Array, Low Frequency Array and the SKA, direction dependent effects poses a challenge in calibration which result the third generation calibration (3GC). These are effects that vary not only with time and frequency but also the viewing direction \citep{pandey2009calibrating}. This include variations in the primary beam or the sensitivity pattern of each antenna. 
+
+\section{Data deluge in radio astronomy}
+\subsection{The Square Kilometre Array - South Africa}
+
+\begin{figure}[H]
+  \centering
+    \includegraphics[width=0.5\textwidth]{images/MeerMeer.jpg}
+    \caption{Subset of MeerKAT radio telescope in the Karoo, a semi-desert region of South Africa [SKA, South Africa]}
+  \label{images/MeerKAT}
+\end{figure}
+
+The Square Kilometre Array (SKA) is an an international collaboration project to build the world's largest radio telescope array. When complete, it will be a radio telescope with an aperture of up to a million square meters. This powerful sensitive instrument represents the advance in astronomy, engineering, research and  development to construct a unique scientific instrument. There are two sites chosen chosen for the construction of this tremendous instrument, one of them being the Karoo wilderness of South Africa, where the 64 dish telescope (MeerKAT), a pathfinder to the SKA phase 1 is constructed \ref{images/MeerKAT}, while the other site is in the Murchison region of the Western Australia \citep{hall2008square}.  
+
+When the SKA is complete, it will be the sophisticated instruments to view and track a bevy of cosmic wonders, including objects and events that were too dim or distant for their sky-gazing forebears. This instrument will be far faster ($10^6\times$) than any system currently available, and image the sky in sensitivity ($100\times$) and details never before achieved \citep{skatelescope}.
+
+\subsection{Big data challenges in radio astronomy}
+
+Astronomy has been among the first scientific disciplines to experience the flood of data. The upcoming SKA is expected to produce terabytes of complex data every hour. The term complex applies both to a huge amount of data or data which consists of many separate datasets with a large number of different quantities. This exponential growth of data in Figure \ref{datagrowth.png} is pushing the requirements for data data storage and analysis to the boundaries. The volume and variety of data obtained from the SKA telescope will outstrip the capacity of manual analysis, and in some cases also exceed the capacity of conventional databases currently existing. With these challenges caused by the massive data volume, rates, and complexity from next-generation radio telescopes, it is crucial to develop tools that can address astronomical problems faster than astronomers can analyse, such as artificial intelligence systems or algorithms that can connect large datasets to enable broader and deep analyses than previously possible \citep{provost2013data}. Making new discoveries and revealing the secretes of the universe may not be so simple. Gone are the could manually detect or notice something odd in their tables or graphs by just browsing through \citep{RayNorris}. The circumstances of high volume and speed of data produced by the newly sophisticated astronomical instruments is a great challenge for humans interms of making unexpected discoveries. We wish to leverage a computational machine to
+find patterns in digital data, and translate these patterns into useful information, hence machine learning. This learning must be returned in a useful manner to a human investigator, which hopefully results in human learning \citep{ball2010data}.

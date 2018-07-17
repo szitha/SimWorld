@@ -138,7 +138,7 @@ During science observations, data indexed by time is continuously collected from
 \end{lstlisting}
 \end{tcolorbox}
 
-All components are interfaced to the CAM system via the Karoo Array Telescope Communication Protocol (KATCP), i.e KATCP is responsible for internal communication between CAM components and other subsystems (Science data processing, Correlator Beamformer, etc)\citep{slabber2015overview}. A KATCP interface exposes requests and sensors. To access the sensor information for analysis, users from different subsystems  would  connect to the CAM webserver using Python client and subscribe to sensor data of interest. 
+All components are interfaced to the CAM system via the Karoo Array Telescope Communication Protocol (KATCP), i.e KATCP is responsible for internal communication between CAM components and other subsystems (Science data processing, Correlator Beamformer, etc) \citep{slabber2015overview}. A KATCP interface exposes requests and sensors. To access the sensor information for analysis, users from different subsystems  would  connect to the CAM webserver using Python client and subscribe to sensor data of interest. 
 
 \subsection{Preparation of training data}\label{prep}
 
@@ -155,7 +155,7 @@ In every observation, the collected data is stored by the data capturing system 
 
 In preparation of the training and testing dataset, we look at environmental sensors and instrumental sensors
 recorded during observations with a phase calibrator source
-PKS1613-586 (Figure) listed in the following. 
+PKS1613-586 in Figure \ref{pks1613} listed in the following. 
 \begin{enumerate}
 
 \item Air temperature
@@ -298,9 +298,9 @@ Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
 \end{lstlisting}
 \end{tcolorbox}
 
- The Katdal library can manipulate the HDF5 observation file in many ways including file format conversion from HDF5 to measurement sets. This option is useful for astronomers using CASA for data calibration and visualization.
+ The Katdal library can manipulate the HDF5 observation file in many ways including file format conversion from HDF5 to measurement sets. This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}.
  
-The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where i,j represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this thesis we only focus on the 1GC calibration with an interest of obtaining the complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions G (amplitude \& phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and store in calibration tables.
+The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this thesis we only focus on the 1GC calibration with an interest of obtaining the complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude \& phase) for each polarization h \& v and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and store in calibration tables.
  
 These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is approximately close to the center of the array and it was known to be particularly stable with no drop outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factor $J_{i,j}$ into antenna-based components, so we do not see a set of values for each baseline, but rather only one for each antenna ($J_i$) \citep{CosmoAIMS}. 
 
@@ -315,14 +315,14 @@ We then used one of the following flux-density calibrators with known flux model
 \begin{figure}[H]
  \centering
     \includegraphics[ height=13cm, width=16cm]{images/phaseCasa.eps}
-    \caption{Complex gain phase solutions for phase calibrator PKS1613-586 obtained from CASA per antenna i.Each colour represent different polarization where blue is H-polarization and green is V-polarization. Antenna 5 is showing zero phase since it is used as a reference antenna.}
+    \caption{Complex gain phase solutions for phase calibrator PKS1613-586 obtained from CASA per antenna i.Each colour represent different polarization where blue is H-polarization and green is v-polarization. Antenna 5 is showing zero phase since it is used as a reference antenna.}
   \label{phase}
 \end{figure}
 
  \begin{figure}[H]
  \centering
     \includegraphics[ height=13cm, width=16cm]{images/CasaAmp.eps}
-    \caption{Complex gain amplitude solutions for phase calibrator PKS1613-586 obtained from CASA per antenna i. Each colour represent different polarization where blue is H-polarization and green is V-polarization. }
+    \caption{Complex gain amplitude solutions for phase calibrator PKS1613-586 obtained from CASA per antenna $i$. Each colour represent different polarization where blue is H-polarization and green is v-polarization. }
   \label{amp}
 \end{figure}
  
@@ -334,7 +334,7 @@ We then used one of the following flux-density calibrators with known flux model
 \end{figure}
 \section{Regression algorithm} 
 \label{algo1}
-There are many different approaches employed in machine learning regression. These approaches learn the relationship between the input and output by fitting a model directly from the data. The fitting process involves the adjustment and optimization of hyper parameters to minimize the prediction error. This is usually done  in an independent validation and testing dataset. In this study, we consider the tree based method approach: Decision tree, Random forest, Extremely randomized tree and the neighbourhood search approach: K-Nearest Neighbour to tackle our problem. Firstly, we formulate our regression estimation problem as follows. Suppose we have a feature matrix 
+There are many different approaches employed in machine learning regression. These approaches learn the relationship between the input and output by fitting a model directly from the data. The fitting process involves the adjustment and optimization of hyper parameters to minimize the prediction error. This is usually done in an independent validation and testing dataset. In this study, we consider the tree based method approach: Decision tree, Random forest, Extremely randomized tree and the neighbourhood search approach: K-Nearest Neighbour to tackle our problem. Firstly, we formulate our regression estimation problem as follows. Suppose we have a feature matrix 
 \begin{align*}
 \textbf{X}_{t}=\begin{bmatrix}
     x_{11} & x_{12} & x_{13} & \dots  & x_{1n} \\
@@ -433,7 +433,7 @@ and the mean squared error, mean absolute error, which measures the average of t
 \label{MAE}
 \end{align}.
 
-The aim of this regression exercise is to predict multiple target variables $\widehat{\textbf{Y}}_{t}$  hence it is referred to as multi-output regression. The learned multi-target model will be used afterwards to simultaneously predict the values $\widehat{\textbf{Y}}_{t+1}$  of all target variables of the new incoming unlabeled instances $\textbf{X}_{t+1}$.  It has been proven that multi-output regression methods yield to a better predictive performance and also provide to means to effectively
+The aim of this regression exercise is to predict multiple target variables $\widehat{\textbf{Y}}_{t}$  hence it is referred to as multi-output regression. The learned multi-target model will be used afterwards to simultaneously predict the values $\widehat{\textbf{Y}}_{t+1}$  of all target variables of the new incoming unlabeled instances $\textbf{X}_{t+1}$. It has been proven that multi-output regression methods yield to a better predictive performance and also provide to means to effectively
 model the multi-output datasets by considering not only the underlying relationships
 between the features and the corresponding targets but also the relationships between
 the targets, thereby producing simpler models with a better computational efficiency. From \citep{borchani2015survey}, several applications of multi-output regression are discussed including simultaneous estimation of different biophysical parameters from remote sensing images, channel estimation through the prediction of several received signals, etc. Further discussions, it is mentioned that these applications give rise to challenges such as missing data, i.e, when some features or target variables are not observed.
@@ -469,7 +469,7 @@ The mean absolute error
 \begin{align}
 \text{MAE}\left(\textbf{X}_{c} \right)=\frac{1}{N_{c}} \sum_{i\in N_{c}} \left|\textbf{Y}_{i}-\mu_{c}\right|, 
 \end{align}
- which minimizes the mean of the sum of the absolute differences between the target $\textbf{Y}_{i}$ and the estimated value  $\mu_{c}$ \citep{moisen2008classification}. These methods does not only measure the impurity in each node, but they are also used to measure the accuracy of the predictor as in equation \ref{MSE} and \ref{MAE}.  Another commonly used strategy or measure in classification problems which also applies in regression problem for selecting the best split from a set of possible split is to maximize the information gain at each tree node. i.e, the split chosen at each decision node is chosen from the the set $\text{argmax} IG(\textbf{X}_{c},s)$ where $IG(\textbf{X}_{c},s)$ is the information gain when a split $s$ is applied to sample data $\textbf{X}_c$. This is the difference between the parent node (decision node) impurity and the weighted sum of the child nodes in equation \ref{IG}. 
+ which minimizes the mean of the sum of the absolute differences between the target $\textbf{Y}_{i}$ and the estimated value  $\mu_{c}$ \citep{moisen2008classification}. These methods does not only measure the impurity in each node, but they are also used to measure the accuracy of the predictor as in equation \ref{MSE} and \ref{MAE}. Another commonly used strategy or measure in classification problems which also applies in regression problem for selecting the best split from a set of possible split is to maximize the information gain at each tree node. i.e, the split chosen at each decision node is chosen from the the set $\text{argmax} IG(\textbf{X}_{c},s)$ where $IG(\textbf{X}_{c},s)$ is the information gain when a split $s$ is applied to sample data $\textbf{X}_c$. This is the difference between the parent node (decision node) impurity and the weighted sum of the child nodes in equation \ref{IG}. 
  
  \begin{align}
  IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{Impurity}(\textbf{X}_{c(left)})- \frac{N_{c(right)}}{N_c}\times \text{Impurity} (\textbf{X}_{c(right)}), \label{IG}
@@ -611,7 +611,7 @@ e^{i\phi}= \cos\phi + i\sin\phi, \label{cx}
   \label{Cal3}
 \end{figure}
 
-Figure \ref{Cal2} is shows the observation procedure of KAT-7 where the calibrator is close to the target source preferably within the range of $10^{\circ}$ to $15^{\circ}$, with the scan switching  between  the target and the calibrator. This is to minimize the phase perturbation caused by atmosphere \citep{kassaye2015study}. The calibration solutions are obtained from the phase calibrator ("green") in Figure \ref{Cal2} at different time intervals $\Delta t$ of tracking, Assuming that the calibrator PKS1613-586 has invariant characteristics (i.e known positions in the sky) during the period of observation such that the 
+Figure \ref{Cal2} is shows the observation procedure of KAT-7 where the calibrator is close to the target source preferably within the range of $10^{\circ}$ to $15^{\circ}$, with the scan switching  between  the target and the calibrator \citep{kassaye2015study}. This is to minimize the phase perturbation caused by atmosphere. The calibration solutions are obtained from the phase calibrator ("green") in Figure \ref{Cal2} at different time intervals $\Delta t$ of tracking, Assuming that the calibrator PKS1613-586 has invariant characteristics (i.e known positions in the sky) during the period of observation such that the 
 antenna-based  phase  gain response is zero with constant amplitude. In reality this is not always the case due to instrumental defects such as phase and amplitude drifts in the electronics of each antenna, amplitude response as a function of elevation (gain curve), and tropospheric amplitude and phase effects and other external effects. Hence, to calculate the calibration solutions, CASA consider each antenna-based gains $J_i$ and the prior information about the calibrator to perform some adjustments or estimations $G$ over time intervals $\Delta t$, such that each antenna phase gain response is zero or stable with constant amplitude. These solutions at each time interval are then temporarily interpolated using the $\textit{interp}$ parameter inside the $\textit{gaincal}$ task. 
 
 Interpolation is a model based recovery of continuous data from discrete data with known range \citep{thevenaz2000image}. There are different methods of interpolation used, and in this Section, we only look at linear and nearest interpolation which are popular in radio calibration. Example: Assume that we have two known data points $(x_1,y_1,t_1)$ and  $(x_2,y_2,t_2)$ at time $t_1$ and $t_2$, we would like to estimate what $y$ value we would obtain at time $t$ for some point $x$ that is between $x_1$ and $x_2$. For nearest interpolation method, $y$ would be assigned to the value of the nearest point of $x$. For linear interpolation method, a line is fitted between the points $(x_1,y_1,t_1)$ and $(x_2,y_2,t_2)$  and we look to see the value of $y$ in a line for our chosen $x$ at time $t$. The points $x_1,\dots, x_n$ are called the interpolation points. The property of passing

@@ -11,27 +11,11 @@ criterion using example data or past experience. In this chapter we present mach
   \label{datagrowth.png}
 \end{figure}
 What has changed in the past few decades is the exponential rise in
-available computing power, and as a related consequence, the enormous quantities and complexity of the observed data, primarily in digital form.  Such data is refered to as $big data$, where traditional data-processing tools are inadequate to deal with them. Big data is now creating, in addition to the natural world, a digital world, in which extracting new and useful information from the data already taken and archived is becoming a major endeavor in itself. This action of knowledge discovery in databases is most commonly inferred by the phrase data mining \citep{ball2010data}. The analogy is that a large volume of earth and raw material is extracted from a mine, which when processed leads to a small
+available computing power, and as a related consequence, the enormous quantities and complexity of the observed data, primarily in digital form.  Such data is refered to as $\textit{big data}$, where traditional data-processing tools are inadequate to deal with them. Big data is now creating, in addition to the natural world, a digital world, in which extracting new and useful information from the data already taken and archived is becoming a major endeavor in itself. This action of knowledge discovery in databases is most commonly inferred by the phrase data mining \citep{ball2010data}. The analogy is that a large volume of earth and raw material is extracted from a mine, which when processed leads to a small
 amount of very precious material; similarly, in data mining, a large volume
 of data is processed to construct a simple model with valuable use, for example, having high predictive accuracy \citep{alpaydin2014introduction}.
 
-\subsection{The Square Kilometre Array - South Africa}
 
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=0.5\textwidth]{images/MeerMeer.jpg}
-    \caption{Subset of MeerKAT radio telescope in the Karoo, a semi-desert region of South Africa [SKA, South Africa]}
-  \label{images/MeerKAT}
-\end{figure}
-
-The Square Kilometre Array (SKA) is an an international collaboration project to build the world's largest radio telescope array. When complete, it will be a radio telescope with an aperture of up to a million square meters. This powerful sensitive instrument represents the advance in astronomy, engineering, research and  development to construct a unique scientific instrument. There are two sites chosen chosen for the construction of this tremendous instrument, one of them being the Karoo wilderness of South Africa, where the 64 dish telescope (MeerKAT), a pathfinder to the SKA phase 1 is constructed \ref{images/MeerKAT}, while the other site is in the Murchison region of the Western Australia \citep{hall2008square}.  
-
-When the SKA is complete, it will be the sophisticated instruments to view and track a bevy of cosmic wonders, including objects and events that were too dim or distant for their sky-gazing forebears. This instrument will be far faster ($10^6\times$) than any system currently available, and image the sky in sensitivity ($100\times$) and details never before achieved \citep{staats2016genetic}.
-
-\subsection{Big data challenges in radio astronomy}
-
-Astronomy has been among the first scientific disciplines to experience the flood of data. The upcoming SKA is expected to produce terabytes of complex data every hour. The term complex applies both to a huge amount of data or data which consists of many separate datasets with a large number of different quantities. This exponential growth of data in Figure \ref{datagrowth.png} is pushing the requirements for data data storage and analysis to the boundaries. The volume and variety of data obtained from the SKA telescope will outstrip the capacity of manual analysis, and in some cases also exceed the capacity of conventional databases currently existing. With these challenges caused by the massive data volume, rates, and complexity from next-generation radio telescopes, it is crucial to develop tools that can address astronomical problems faster than astronomers can analyse, such as artificial intelligence systems or algorithms that can connect large datasets to enable broader and deep analyses than previously possible \citep{provost2013data}. Making these new discoveries may not be so simple. Gone are the days when astronomers could just notice something odd as they browse their tables and graphs. Making new discoveries and revealing the secretes of the universe may not be so simple. Gone are the days when astronomers could just notice something odd as they browse their tables and graphs. Nowadays, astronomers are more likely to be distilling their answers from carefully-posed queries to databases containing petabytes of data as shown in Figure \ref{datagrowth.png}. Human brains are just not up to the job of making unexpected discoveries in these circumstances. We wish to leverage a computational machine to
-find patterns in digital data, and translate these patterns into useful information, hence machine learning. This learning must be returned in a useful manner to a human investigator, which hopefully results in human learning \citep{ball2010data}.
 
 \section{An Introduction to Machine Learning}
 \label{Intro}
@@ -46,13 +30,11 @@ instructions or memory. For some tasks, however, we do not have an algorithm for
 
 Learning is what gives us flexibility
 in our life, the fact that we can adjust and adapt to new circumstances, and learn new
-tricks, no mater how old we are. The important parts of human/animal learning is remembering, adapting, and generalising. Being able to recognise late events, and know which actions to be taken, and also knowing how to recognise between different situations, so that things that applied in one place can be used in another is what makes learning useful \citep{marsland2015machine}. 
+tricks, no mater how old we are. The important parts of human or animal learning is remembering, adapting, and generalising. Being able to recognise late events, and know which actions to be taken, and also knowing how to recognise between different situations, so that things that applied in one place can be used in another is what makes learning useful \citep{marsland2015machine}. 
 
-But machine learning is not just a database problem; it is also a part
-of artificial intelligence. To be intelligent, a system that is in a changing
-environment should have the ability to learn. If the system can learn and
-adapt to such changes, the system designer need not foresee and provide
-solutions for all possible situations. This involves tasks such as recognition, diagnosis,
+ Machine learning is not only just a database problem, but also is part
+of artificial intelligence. For a system intelligent, it needs to have the ability to learn and adapt in a changing environment. If the system can learn and
+adapt to such changes, then it can easily provide predict future solutions without being provided by the system designer \citep{alpaydin2014introduction}. This involves tasks such as recognition, diagnosis,
 planning, robot control, prediction, etc \citep{nilsson1996introduction}.
 Machine learning also helps us find solutions to many problems in vision,
 speech recognition, and robotics. Machine learning is programming computers to optimize a performance criterion using example data or past experience. We have a model defined
@@ -64,9 +46,7 @@ Machine learning uses the theory of statistics in building mathematical
 models, because the core task is making inference from a sample \citep{alpaydin2014introduction}.
 
 
-A computer program is said to learn from experience E with respect
-to some class of tasks T and performance measure P, if its performance at tasks in
-T, as measured by P, improves with experience E. 
+Given a class of tasks T; an experience E and measure of performance P. A computer program is said to learn from E with respect to T if the measure P at T improves as more of E is given \citep{michalski2013machine}. 
 \subsection{Examples of Machine learning}
 We are surrounded by a machine learning based technology like online shopping where  search engines learn how to bring us the best results and a list of the most relevant products related to our search, email (spam filters, smart email categorization, etc)  where anti-spam software
 learns to filter our email messages into spam or not-spam using simple rule filters. Similar approach is used by Gmail to categorize our emails into primary, social, and promotion inboxes, as well as labelling emails as important. 
@@ -82,10 +62,7 @@ traditional uses of computers, in these cases, due to the complexity of the patt
 
 \item Machine learning methods can often be used to extract the important relationships and correlations of hidden information among "big data". This is also referred to as data mining.
 
-\item The amount of knowledge available about certain tasks might be too large
-for explicit encoding by humans. Machines that learn this knowledge
-gradually might be able to capture more of it than humans would want to
-write down.
+\item The amount of information available about certain tasks might be too large for humans to encode, while as machines can learn this knowledge gradually and be able to capture more of it than humans would \citep{nilsson1996introduction}.
 
 \item Some tasks cannot be defined well except by example; that is, we might be
 able to specify input or output pairs but not a concise relationship between
@@ -151,12 +128,12 @@ criterion for cluster membership, such as the Euclidean distance, and a stopping
 
 \section{Process of machine learning}
 \label{Process}
-\subsubsection{Data preparation}
+\subsection{Data preparation}
 Machine learning algorithms learn for from data, therefore it is critical that we feed them the right data for the specific problem we want to solve. In this section we will describe the processing steps required for getting data ready for a machine learning algorithm.
 
 There are three steps commonly used in machine learning to process the data, namely data selection, data preprocessing  and data transformation. Data selection has to do with the selection of the the subset of all available data that we need to address the question or problem we are working on. Usually assumptions will be made  about the data and be tested at a later stage. After selecting the data, now come the preprocessing step where we decide how is one going to use the data. Firstly the suitable formatting of the data is considered, could be .csv file format or Numpy file format. In most cases there may be data instances that are incomplete or do not contain useful information. In this case, the removal or fixing of such data is required. When generating the training dataset, it is crucial to also consider the computational cost and memory requirement. Sampling the data by taking smaller representative sample of the selected data that may be much faster for exploring and prototyping solutions before considering the whole dataset can be one of the getaways. The final step is to transform data using either scaling where the preprocessed data may contain attributes with a mixtures of scales for various quantities and is scaled to range between 0 and 1. This helps to stop the weights from getting too large unnecessarily \citep{marsland2015machine}; decompositions which involves attributes that represent a complex concept that may be more useful to a machine learning method when split into the constituent parts, and  aggregations where attributes can be aggregated into a single attribute that would be more meaningful to the problem we are solving \citep{brownlee2013prepare}. The most commonly used scaling methods are referred to as data normalisation, or standardisation \citep{marsland2015machine}.
     
-\subsubsection{Feature engineering}
+\subsection{Feature engineering}
 
 In machine learning applications, whether it is classification or regression, observation
 data that we believe contain information are taken as inputs and fed
@@ -178,10 +155,10 @@ In any machine learning, algorithm technique selection is mostly driven by the s
 
 \section{Tuning model complexity}
 \label{comp}
-Prediction models, the prediction errors can be decomposed into: error due to bias and error due to variance. There is a tradeoff between a model's ability to minimize bias and variance during training. 
+Prediction models, the prediction errors can be decomposed into: error due to bias and error due to variance. There is a tradeoff between a model's ability to minimize bias and variance during training \citep{fortmann2012understanding}. 
 \subsection{Bias and variance }
-Understanding these two types of error can help us diagnose model results and avoid the mistake of over and under-fitting. understanding the bias and variance will help us to improve the data fitting process resulting in more accurate models.
-Error due to bias is the difference between the average prediction of our models and the true value which we are trying to predict. i.e. Assume we have multi models built from dataset generated randomly, this will result in the models to have multi predictions, hence the bias measures how far off in general these models' predictions are from the true value. Error due to variance is the variability of a model prediction for a given data point \citep{fortmann2012understanding}. 
+Understanding these two types of error can help us diagnose model results and avoid the mistake of over and under-fitting. understanding the bias and variance will help us to improve the data fitting process resulting in more accurate models \citep{fortmann2012understanding}.
+Error due to bias is the difference between the average prediction of our models and the true value which we are trying to predict. i.e. Assume we have multi models built from dataset generated randomly, this will result in the models to have multi predictions, hence the bias measures how far off in general these model's predictions are from the true value. Error due to variance is the variability of a model prediction for a given data point \citep{fortmann2012understanding}. 
 
 \begin{figure}[H]
   \centering
