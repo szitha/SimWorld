@@ -151,11 +151,11 @@ problem at hand, and performing as necessary any cross-matching or data combinin
 
 %In this chapter we will look at modelling the behaviour patterns of individual antennas and calibration steps based on Karoo Array Telescope (KAT-7) \ref{images/kat7.png}.
 
-In every observation, the collected data is stored by the data capturing system into the Hierarchical Data Format(HDF5), which is a set of file formats designed to store and organize large amounts of data. The HDF5 file is built into two concepts: meta data and observed visibilities. In meta data we find static information of the data set, including observer, dump rate and all the available subarrays and spectral windows in the data set selection criteria (antennas, channel frequencies, targets, scan information) and sensor data of interest as a function of time. The data observed by the radio telescope is in a form of complex numbers refereed to as visibilities as described in Chapter 1. Each source observed contains its own visibilities as a function of time along with sensor data  which keep record of the the telescope activity and behaviour as it observe.
+In every observation, the collected data is stored by the data capturing system into the Hierarchical Data Format (HDF5), which is a set of file formats designed to store and organize large amounts of data. The HDF5 file is built into two concepts: meta data and observed visibilities. In meta data we find static information of the data set, including observer, dump rate and all the available subarrays and spectral windows in the data set selection criteria (antennas, channel frequencies, targets, scan information) and sensor data of interest as a function of time. The data observed by the radio telescope is in a form of complex numbers refereed to as visibilities as described in Chapter 1. Each source observed contains its own visibilities as a function of time along with sensor data  which keep record of the the telescope activity and behaviour as it observe.
 
 In preparation of the training and testing dataset, we look at environmental sensors and instrumental sensors
-recorded during observations with a phase calibrator source
-PKS1613-586 in Figure \ref{pks1613} listed in the following. 
+recorded during observations with a flux calibrator and a phase calibrator source
+PKS1613-586 in Figure \ref{pks1613}. The chosen sensors of interested are listed as follows. 
 \begin{enumerate}
 
 \item Air temperature
@@ -298,7 +298,7 @@ Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
 \end{lstlisting}
 \end{tcolorbox}
 
- The Katdal library can manipulate the HDF5 observation file in many ways including file format conversion from HDF5 to measurement sets. This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}.
+ The Katdal library can manipulate the HDF5 observation file in many ways including file format conversion from HDF5 to measurement sets (ms). This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}. This conversion also provide an option whereby we flag all channels affected with known Radio Frequency Interference (RFI). Once the observation file was converted to ms format, hand flagging for unknown RFI was performed inside CASA using the task $\textit{flagdata}$ for $h$ and $v$ cross correlation products. After flagging the data and were satisfied, we then proceed to the calibration step. 
  
 The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this thesis we only focus on the 1GC calibration with an interest of obtaining the complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude \& phase) for each polarization h \& v and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and store in calibration tables.
  
@@ -310,26 +310,97 @@ Since our phase calibrator PKS1613-586 have an unknown flux density, the obtaine
 \frac{1 Jy}{(\text{true source flux density})^{0.5}},\;  \text{where 1Jy is the assumed flux density for \text{PKS1613-586}}.
 \end{equation} 
 
-We then used one of the following flux-density calibrators with known flux models: PKS1934-63, 3C147, 3C286 to scale the correct gain amplitude of our phase calibrator in Figure \ref{pks1613} so that it match as well as possible the correctly-scaled amplitude solutions for the flux-density calibrators by running a CASA task $\textit{fluxscale}$ \citep{CosmoAIMS}. This process is called $\textit{Bootstrapping}$. After obtaining the final table with correct amplitude and phase complex gain solutions for the phase calibrator in Figure \ref{pks1613}, we then used the complex solutions matrix written on the "CPARAM" column to generate the training and testing calibration solution data per antenna $i$. An example of the complex gain amplitude and phase solutions is shown in Figure \ref{amp} and \ref{phase}. These solutions were obtained using the CASA task $gaincal$ described in Chapter 1. 
+We then used one of the following flux-density calibrators with known flux models: PKS1934-63, 3C147, 3C286 tied to the Perley-Taylor 99 to scale the correct gain amplitude of our phase calibrator in Figure \ref{pks1613} so that it match as well as possible the correctly-scaled amplitude solutions for the flux-density calibrators by running a CASA task $\textit{fluxscale}$ \citep{CosmoAIMS}. This process is called $\textit{Bootstrapping}$. After obtaining the final table with correct amplitude and phase complex gain solutions for the phase calibrator in Figure \ref{pks1613}, we then used the complex solutions matrix written on the "CPARAM" column to generate the training and testing calibration solution data per antenna $i$. An example of the complex gain amplitude and phase solutions is shown in Figure \ref{amp} and \ref{phase}. These solutions were obtained using the CASA task $gaincal$ described in Chapter 1. 
 
-\begin{figure}[H]
+The following code is showing how the parameters were set in standard practice of 1GC as described in chapter 1.
+
+\begin{tcolorbox}
+\begin{lstlisting}
+#Set flux for flux calibrator
+default(setjy)
+vis = msfile
+field = flux_calibrator
+fluxdensity  = -1
+standard = 'Perley-Taylor 99'
+setjy()
+
+#Bandpass calibration
+default(bandpass)
+vis = msfile
+caltable = bandpasstable
+field = flux_calibrator
+refant = reference_antenna
+solnorm = True
+combine = 'scan'
+solint = 'inf'
+bandtype = 'B'
+minsnr = 5
+interp = ['nearest']
+bandpass()
+\end{lstlisting}
+\end{tcolorbox}
+\begin{tcolorbox}
+\begin{lstlisting}
+#Calculating G solution for flux calibrator 
+default(gaincal)
+vis = msfile
+caltable = gaintable
+field = flux_calibrator
+solint = 'inf'
+refant = reference_antenna
+gaintype = 'G'
+calmode = 'ap'
+solnorm = False
+minsnr = 5
+gaintable = [bandpasstable]
+interp = ['nearest']
+gaincal()
+  
+#G solution for gain cal (BP applied)
+default(gaincal)
+vis = msfile
+caltable = gaintable
+field = gain_calibrator
+solint = 'inf'
+refant = reference_antenna
+gaintype = 'G'
+calmode = 'ap'
+append=True
+solnorm = False
+minsnr = 5
+gaintable = [bandpasstable]
+interp = ['nearest']
+gaincal()   
+
+#Scaling flux density for phase calibrator
+default(fluxscale)
+vis = msfile
+caltable = gaintable
+fluxtable = fluxtable
+reference = flux_calibrator
+transfer = gain_calibrator
+fluxscale()
+\end{lstlisting}
+\end{tcolorbox}
+
+ \begin{figure}[H]
  \centering
-    \includegraphics[ height=13cm, width=16cm]{images/phaseCasa.eps}
+    \includegraphics[ height=13cm, width=15.5cm]{images/phaseCasa.eps}
     \caption{Complex gain phase solutions for phase calibrator PKS1613-586 obtained from CASA per antenna i.Each colour represent different polarization where blue is H-polarization and green is v-polarization. Antenna 5 is showing zero phase since it is used as a reference antenna.}
   \label{phase}
 \end{figure}
 
  \begin{figure}[H]
  \centering
-    \includegraphics[ height=13cm, width=16cm]{images/CasaAmp.eps}
+    \includegraphics[ height=13cm, width=15.5cm]{images/CasaAmp.eps}
     \caption{Complex gain amplitude solutions for phase calibrator PKS1613-586 obtained from CASA per antenna $i$. Each colour represent different polarization where blue is H-polarization and green is v-polarization. }
   \label{amp}
 \end{figure}
  
  \begin{figure}[H]
  \centering
-    \includegraphics[ height=12cm, width=13cm]{images/16.png}
-    \caption{An image of the phase calibrator PKS1613-586 located at  RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was done in CASA using a strong flux calibrator.}
+    \includegraphics[ height=10.5cm, width=13cm]{images/162.png}
+    \caption{An image of the phase calibrator PKS1613-586 located at  RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was done in CASA using a strong flux calibrator. The expected rms noise of this image was measured to be $0.03Jy$ using $\textit{CLEAN}$ task in CASA.}
   \label{pks1613}
 \end{figure}
 \section{Regression algorithm} 
@@ -593,7 +664,7 @@ The process of training and testing involves feeding a learning algorithm with t
 
 Referring Section \ref{prep}, the challenges and the difficulties of gathering  larger data set were encountered  due to : faulty radio telescopes leading to observations being conducted with less elements in an array, observations with target of interest PKS1613-586 conducted using only the baselines of interest (short or long), KAT-7's life span lasted for a short period, and radio frequency interference affecting calibration solutions. The advantage of having a large testing dataset gives us more reliable estimate of accuracy, while as large training set is more representative of how much data we have for the learning process. 
 
-With the encountered mentioned challenges above, we managed to construct a data matrix $\textbf{M}$ of dimension  $1760\times 75$ containing sensor data $\textbf{X}_t\in \mathbb{R}^{1760 \times 47}$ and 1GC calibration solutions $\textbf{Y}_t$ $\in \mathbb{C}^{1760 \times 28}$ from 28 observations at integration time $\Delta t$ ranging from $1-12$ hours dependending on each observation requirements. Since each calibration solution in $\textbf{Y}_t$ is represented as complex variables \begin{align}
+With the encountered mentioned challenges above, we managed to construct a data matrix $\textbf{M}$ of dimension  $1760\times 75$ containing sensor data $\textbf{X}_t\in \mathbb{R}^{1760 \times 47}$ and 1GC calibration solutions $\textbf{Y}_t$ $\in \mathbb{C}^{1760 \times 14}$ from 28 different observations at integration time $\Delta t$ ranging from $1-12$ hours dependending on each observation requirements. Take note that the 14 columns in the plane $\mathbb{C}$ represent the amplitude and phase solutions for h,v polarization, i.e. $7 \times 2$; and the 47 columns in the plane $\mathbb{R}$ is the number of selected sensors for all the antennas. Since each calibration solution in $\textbf{Y}_t$ is represented as complex variables \begin{align}
 e^{i\phi}= \cos\phi + i\sin\phi, \label{cx}
 \end{align} for each polarization h$\&$ v and we know from \citep{taylor1999synthesis} that most data corruption occurs before the signals are correlated. We therefore further split equation \ref{cx} into gain amplitude solutions by taking the absolute value  $\left|e^{i\phi}\right|$ and gain phase solutions $\phi$ in radians for both polarizations. In every supervised machine learning problem, it is crucial to label the input and output of the dataset before starting the learning process. In our case, since this is a regression problem aiming to predict calibration solutions from sensor data, we therefore label the sensor data as input features and the calibration solutions as output targets.
     
