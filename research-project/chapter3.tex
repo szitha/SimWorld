@@ -132,7 +132,7 @@ During science observations, data indexed by time is continuously collected from
    #VALUE_TS A UNIX timestamp when the acquisition
    #was performed. 
 
-   #STATUS An indication of the state of the sensor when
+   #STATUS indicate the state of the sensor when
    #the sample was taken. Can have a value of UNKNOWN,
    #WARN, NOMINAL, FAILURE, INACTIVE, ERROR, UNREACHABLE. 
 \end{lstlisting}
@@ -312,7 +312,7 @@ Since our phase calibrator PKS1613-586 have an unknown flux density, the obtaine
 
 We then used one of the following flux-density calibrators with known flux models: PKS1934-63, 3C147, 3C286 tied to the Perley-Taylor 99 to scale the correct gain amplitude of our phase calibrator in Figure \ref{pks1613} so that it match as well as possible the correctly-scaled amplitude solutions for the flux-density calibrators by running a CASA task $\textit{fluxscale}$ \citep{CosmoAIMS}. This process is called $\textit{Bootstrapping}$. After obtaining the final table with correct amplitude and phase complex gain solutions for the phase calibrator in Figure \ref{pks1613}, we then used the complex solutions matrix written on the "CPARAM" column to generate the training and testing calibration solution data per antenna $i$. An example of the complex gain amplitude and phase solutions is shown in Figure \ref{amp} and \ref{phase}. These solutions were obtained using the CASA task $gaincal$ described in Chapter 1. 
 
-The following code is showing how the parameters were set in standard practice of 1GC as described in chapter 1.
+The following code is showing how the parameters were set in standard practice of 1GC as described in chapter 1 section \ref{caltech}.
 
 \begin{tcolorbox}
 \begin{lstlisting}
@@ -356,7 +356,7 @@ gaintable = [bandpasstable]
 interp = ['nearest']
 gaincal()
   
-#G solution for gain cal (BP applied)
+#G solution for gain calibrator
 default(gaincal)
 vis = msfile
 caltable = gaintable
@@ -382,7 +382,21 @@ transfer = gain_calibrator
 fluxscale()
 \end{lstlisting}
 \end{tcolorbox}
-
+A multi-frequency synthesis image deconvolution was carried using $\textit{CLEAN}$ CASA task with $256 \times 256$ and cell size of $30$ arc seconds. The image rms noise in Figure \ref{pks1613} was measured using the rms noise of the 0 iteration residual image.
+\begin{tcolorbox}
+\begin{lstlisting}
+clean(vis='CircinusX-1.split.ms',imagename='PKS1613586.im',
+     niter=10000,threshold='3.0mJy',
+     psfmode='hogbom',
+     interactive=False,
+     imsize=512,
+     cell='30arcsec',
+     stokes='I',
+     weighting='briggs',
+     mode='mfs',
+     usescratch=True)
+\end{lstlisting}
+\end{tcolorbox}
  \begin{figure}[H]
  \centering
     \includegraphics[ height=13cm, width=15.5cm]{images/phaseCasa.eps}
@@ -400,7 +414,7 @@ fluxscale()
  \begin{figure}[H]
  \centering
     \includegraphics[ height=10.5cm, width=13cm]{images/162.png}
-    \caption{An image of the phase calibrator PKS1613-586 located at  RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was done in CASA using a strong flux calibrator. The expected rms noise of this image was measured to be $0.03Jy$ using $\textit{CLEAN}$ task in CASA.}
+    \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was done in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08Jy$ using $\textit{CLEAN}$ task in CASA.}
   \label{pks1613}
 \end{figure}
 \section{Regression algorithm} 
