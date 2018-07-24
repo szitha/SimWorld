@@ -14,7 +14,7 @@ As defined in Chapter 1, \textit{calibration} is the process of correcting for t
 \left[\frac{2kT_{sys}}{A_{eff}\sqrt{N(N-1)\tau \Delta \nu}}\right]
 \label{sens},
 \end{align}
- where ($N$ is the number of antennas in the array,  $A_{eff}$ is Aperture efficiency, $\tau$ is the integration time,$k=1.38\times 10^{-23}Jk^{-1}$ is the Boltzmann constant, $\Delta \nu$ is the bandwidth and $T_{sys}=\sum T_{i}$ an additive of noise contribution from different source such as atmosphere, ground, telescope surface and receivers) \citep{wilson2013tools}. This can also introduce distortion on sources that are resolved, i.e., objects that consist of a non point-like structure as opposed to the point sources in Figure \ref{pks1613} \citep{Calibration}. 
+ where ($N$ is the number of antennas in the array,  $A_{eff}$ is Aperture efficiency, $\tau$ is the integration time, $k=1.38\times 10^{-23}Jk^{-1}$ is the Boltzmann constant, $\Delta \nu$ is the bandwidth and $T_{sys}=\sum T_{i}$ an additive of noise contribution from different source such as atmosphere, ground, telescope surface and receivers) \citep{wilson2013tools}. This can also introduce distortion on sources that are resolved, i.e., objects that consist of a non point-like structure as opposed to the point sources in Figure \ref{pks1613} \citep{Calibration}. 
 
 
 
@@ -29,7 +29,7 @@ As defined in Chapter 1, \textit{calibration} is the process of correcting for t
 \end{figure}
 
 The Karoo Array (KAT-7) is a seven dish interferometry which was built as an engineering prototype for technologies and techniques testing purposes in preparation for the 64-dish Karoo Array Telescope (MeerKAT). These instruments are located in the Northern Cape Karoo desert region and is operated remotely from CapeTown. The construction of  KAT-7 began in
-2008 with the writing of the telescope requirements specification and was completed in 2010.  It was operated at an engineering mode until 2015  and became fully operational in 2016  \citep{foley2016engineering}. As seen in Table \ref{images/kat7.png}, KAT-7 antennas are extremely close together with baseline ranging between 26-185m \citep{carignan2013kat}. More parameter specifications are presented in the Tables \ref{K7 modes}, \ref{DSpec},\ref{DSpec}:
+2008 with the writing of the telescope requirements specification and was completed in 2010.  It was operated at an engineering mode until 2015  and became fully operational in 2016  \citep{foley2016engineering}. As seen in Table \ref{images/kat7.png}, KAT-7 antennas are extremely close together with baseline ranging between 26-185m \citep{carignan2013kat}. More parameter specifications are presented in the Tables \ref{DSpec},\ref{DSpec}:
 
 \begin{table}[H]\centering
 \begin{tabular}{l l }
@@ -51,30 +51,27 @@ Digital back end & Roach \\
 Elevation & 1054m\\
 \bottomrule
 \end{tabular}
-\caption{The 7 dish instrument each built with diameter 12m and linear polarization $H \& V$. The operational lower noise amplifier for each dish is $80K$  with system temperature $<35K$. The frequency range of this instrument is $1200-1950 MHz$ with bandwidth $256MHz$ \citep{foley2016engineering}.}
+\caption{The 7 dish instrument each built with diameter 12m and linear polarization $H \& V$. The operational lower noise amplifier for each dish is $80K$  with system temperature $<35K$. The frequency range of this instrument is $1200-1950 \text{MHz}$ with bandwidth of $256\text{MHz}$ \citep{foley2016engineering}.}
 \label{K7 spec}
 \end{table}
 
-karoo array
-\begin{table}[H]\centering
-\begin{tabular}{l l l l}
-\toprule
-\textbf{Mode}& \textbf{Total BW(MHz)} & \textbf{Number of chan} & \textbf{Chan width(KHz)} \\
-\midrule
-c16n2M4k  &  1.5625	& 4096& 	0.381\\
-c16n7M4k & 6.25 & 	4096& 	1.526\\
-c16n25M4k& 	25&	4096& 	6.104\\
-c16n400M4k&  256& 	1024& 	390.625\\
-\bottomrule
-\end{tabular}
-\caption{The table is showing different correlator modes for observations. The correlator is based
-on the so-called 'FX, architecture, i.e (Fourier transform 'F' followed
-by Cross-correlation 'X'). The F  which channelise the incoming data streams
-into spectral components and the X does the multiplication and accumulation of each and every product pair \citep{foley2016engineering}.}
-\label{K7 modes}
-\end{table}
-
-
+%\begin{table}[H]\centering
+%\begin{tabular}{l l l l}
+%\toprule
+%\textbf{Mode}& \textbf{Total BW(MHz)} & \textbf{Number of chan} & \textbf{Chan width(KHz)} \\
+%\midrule
+%c16n2M4k  &  1.5625	& 4096& 	0.381\\
+%c16n7M4k & 6.25 & 	4096& 	1.526\\
+%c16n25M4k& 	25&	4096& 	6.104\\
+%c16n400M4k&  256& 	1024& 	390.625\\
+%\bottomrule
+%\end{tabular}
+%\caption{The table is showing different correlator modes for observations. The correlator is based
+%on the so-called 'FX, architecture, i.e (Fourier transform 'F' followed
+%by Cross-correlation 'X'). The F  which channelise the incoming data streams
+%into spectral components and the X does the multiplication and accumulation of each and every product pair \citep{foley2016engineering}.}
+%\label{K7 modes}
+%\end{table}
 
 \begin{table}[H]\centering
 \begin{tabular}{l l }
@@ -93,12 +90,11 @@ Elevation limits & 0$^{\circ}$, 90 $^{\circ}$\\
 Feed/Cryo & Mass 75 kg\\
 \bottomrule
 \end{tabular}
-\caption{The table is showing KAT-7 dish specification, each with pointing accuracy of 25 $^\prime \prime$. Each telescope is built with azimuth ranging from -175$^{\circ}$, +285 $^{\circ}$ and elevation drive ranging from 0$^{\circ}$, 90 $^{\circ}$. For protection of the dish from high wind conditions on site, the telescope is built to operate on 45 km/h windspeed and drive to protection mode at 55 km/h wind speed. \citep{foley2016engineering}.}
+\caption{The table is showing KAT-7 dish specification, each with pointing accuracy of 25 $^{\prime \prime}$. Each telescope is built with azimuth ranging from -175$^{\circ}$, +285 $^{\circ}$ and elevation drive ranging from 0$^{\circ}$, 90 $^{\circ}$. For protection of the dish from high wind conditions on site, the telescope is built to operate on 45 km/h windspeed and drive to protection mode at 55 km/h wind speed. \citep{foley2016engineering}.}
 \label{DSpec}
 \end{table}
 
 \subsection{Sensor data}
-
 
 During science observations, data indexed by time is continuously collected from instruments and  environment (atmospheric pressure, air temperature,  wind conditions, and relative humidity, wind direction, etc). Samples as a function of time are recorded from software and sensors attached to the telescopes with its adjoining instrumentation \citep{slabberICALEPCS2017}. Sampling strategies are set on sensors processed by the Control And Monitoring system (CAM), ranging from several updates per second to infrequent updates. The typical sample in KAT-7 CAM contains the following attributes: a sensor name, sample timestamp, value timestamp, status and a value as shown in the following example where red represents the sensor sample and green is the sensor sample description  \citep{slabber2015overview, slabber2015illustrate}. 
 
@@ -155,7 +151,7 @@ In every observation, the collected data is stored by the data capturing system 
 
 In preparation of the training and testing dataset, we look at environmental sensors and instrumental sensors
 recorded during observations with a flux calibrator and a phase calibrator source
-PKS1613-586 in Figure \ref{pks1613}. The chosen sensors of interested are listed as follows. 
+PKS1613-586 in Figure \ref{pks1613}. This was the mostly used phase calibrator during Kat-7 commissioning phase. A series of observations for different tests with this calibrator \ref{pks1613} were taken between the period of December 2011 and November 2014. These tests includes Circinus X-1 monitoring at frequency $2022 - 1622.391 \text{MHz}$; OH maser monitoring at frequency $1666.481 - 1664.919 \text{MHz}$, $1666.381-1666.819\text{MHz}$,  $1666.281- 1664.719\text{MHz}$; Spectral dynamic range test at frequency $1669.125 - 1662.877 \text{MHz}$, $1678.500 - 1653.506 \text{MHz}$; Circinus X-1 H absorption at frequency $1425.125 - 1418.827 \text{MHz}$, $1424.125 - 1417.877 \text{MHz}$; Imaging new calibrators at frequency $2022 - 1622.391 \text{MHz}$. The chosen sensors of interested from each observation are listed in the following. 
 \begin{enumerate}
 
 \item Air temperature
@@ -414,7 +410,7 @@ clean(vis='CircinusX-1.split.ms',imagename='PKS1613586.im',
  \begin{figure}[H]
  \centering
     \includegraphics[ height=10.5cm, width=13cm]{images/162.png}
-    \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was done in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08Jy$ using $\textit{CLEAN}$ task in CASA.}
+    \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was carried in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08Jy$ using $\textit{CLEAN}$ task in CASA.}
   \label{pks1613}
 \end{figure}
 \section{Regression algorithm} 
@@ -656,7 +652,7 @@ d(\textbf{x},\textbf{y})= \sqrt{\sum_{i=1}^m \left(x_i -y_i \right)^2}
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.5\textwidth]{images/Kn.jpg}
-    \caption{Example of K-nearest neighbor. We have two different target classes white and orange circles. We have total 26 training samples. Now we would like to predict the target class for the blue circle. Considering k value as three, we need to calculate the similarity distance using similarity measures like Euclidean distance. Image by Dataaspirant [Dataaspirant].}
+    \caption{Example of K-nearest neighbor. We have two different target classes white and orange circles. We have total 26 training samples. Now we would like to predict the target class for the blue circle. Considering k value as three, we need to calculate the similarity distance using similarity measures like Euclidean distance \citep{K-NNALGORITHM}.}
   \label{kn}
 \end{figure}
 
