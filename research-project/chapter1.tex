@@ -205,34 +205,36 @@ Note that it is not always possible to find a calibrator source that satisfies t
 The solutions obtained from the tasks $(\textit{gaincal}, \textit{bandpass}, \textit{fluxscale})$ are saved in tables and then applied on uncalibrated data 
 to form calibrated data.
 
-\subsection{Second generation calibration (2GC)}
+\subsection{Second and third generation calibration (2GC and 3GC)}
 
-Once the calibrated data is obtained by performing the first generation calibration, the first model image is computed. A process called $\textit{self calibration}$ can be performed to obtain more accurate images by making additional corrections to the antenna gains as a function of time. It is very similar to the basic calibration. The main difference is that the model of the source is generally more complex than assuming it it is a point source at the phase centre and also the observed field is used to calibrate itself \citep{wieringa1992investigation}. The self-calibration technique finds antenna gains $g_i$, which minimise the difference between the measured visibilities $V_{i,j}$, and the model visibilities $\hat{V}_{i,j}$ \citep{grobler2016calibration}, 
+Once the calibrated data is obtained by performing the first generation calibration, the first model image is computed. A process called $\textit{self calibration}$ can be performed to obtain more accurate images by making additional corrections to the antenna gains as a function of time. It is very similar to the basic calibration. The main difference is that the model of the source is generally more complex than assuming it is a point source at the phase centre and also the observed field is used to calibrate itself \citep{wieringa1992investigation}. The first and second generation calibration sections focus mainly on solving direction independent effects. With the wide field of views of current and future generation radio telescopes such as the Extended Very Large Array, Low Frequency Array and the SKA, direction dependent effects poses a challenge in calibration which result the third generation calibration (3GC).
+%The self-calibration technique finds antenna gains $g_i$, which minimise the difference between the measured visibilities $V_{i,j}$, and the model visibilities $\hat{V}_{i,j}$ \citep{grobler2016calibration}, 
+%
+%\begin{align}
+%\epsilon^2 = \sum |V_{i,j}-g_i g_j^* V^{obs}_{i,j}|^2
+%\label{ls}
+%\end{align}
+%
+%Self calibration can be briefly described using the flowchart in Figure \ref{self},
+%\begin{figure}[H]
+%  \centering
+%    \includegraphics[width=0.7\textwidth]{images/Selfcal.png}
+%    \caption{Selfcal flow diagram} 
+%    \label{self} 
+%\end{figure}
+%
+%and can be performed using the following method:
+%\begin{enumerate}
+%\item Create an initial source model from an initial image (1GC).
+%\item Set your model to the initial skymodel and use it to find antenna gains using the least squares fit as shown in equation \ref{ls}.
+%\item Apply gains to the observed visibilities.
+%\item Image the corrected visibilities and create new model visibilities. 
+%\item Return to Step 2 with your new skymodel or terminate if the current model is satisfactory.
+%\end{enumerate}
+%\subsection{Third generation calibration (3GC)}
 
-\begin{align}
-\epsilon^2 = \sum |V_{i,j}-g_i g_j^* V^{obs}_{i,j}|^2
-\label{ls}
-\end{align}
 
-Self calibration can be briefly described using the flowchart in Figure \ref{self},
-\begin{figure}[H]
-  \centering
-    \includegraphics[width=0.7\textwidth]{images/Selfcal.png}
-    \caption{Selfcal flow diagram} 
-    \label{self} 
-\end{figure}
-
-and can be performed using the following method:
-\begin{enumerate}
-\item Create an initial source model from an initial image (1GC).
-\item Set your model to the initial skymodel and use it to find antenna gains using the least squares fit as shown in equation \ref{ls}.
-\item Apply gains to the observed visibilities.
-\item Image the corrected visibilities and create new model visibilities. 
-\item Return to Step 2 with your new skymodel or terminate if the current model is satisfactory.
-\end{enumerate}
-\subsection{Third generation calibration (3GC)}
-
-The first and second generation calibration discussed in the previous sections focused mainly on solving direction independent effects. With the wide field of views of current and future generation radio telescopes such as the Extended Very Large Array, Low Frequency Array and the SKA, direction dependent effects poses a challenge in calibration which result the third generation calibration (3GC). These are effects that vary not only with time and frequency but also the viewing direction \citep{pandey2009calibrating}. This include variations in the primary beam or the sensitivity pattern of each antenna. 
+% These are effects that vary not only with time and frequency but also the viewing direction \citep{pandey2009calibrating}. This include variations in the primary beam or the sensitivity pattern of each antenna. 
 
 \section{Data deluge in radio astronomy}
 \subsection{The Square Kilometre Array - South Africa}
