@@ -407,7 +407,7 @@ clean(vis='CircinusX-1.split.ms',imagename='PKS1613586.im',
  
  \begin{figure}[H]
  \centering
-    \includegraphics[ height=6.5cm, width=7cm]{images/162.png}
+    \includegraphics[ height=7.5cm, width=10cm]{images/162.png}
     \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was carried in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08Jy$ using $\textit{CLEAN}$ task in CASA.}
   \label{pks1613}
 \end{figure}
@@ -1084,7 +1084,7 @@ Uniform average-V &0.028 & 0.088 & 0.916    & 0. 917\\ \hline
 
 \end{tabular}}
 \end{center}
-\caption{The table shows the performance of the random forest algorithm in predicting the amplitude and phase  gain solutions for both h and v polarizations. The values shown represents the uniform average of all KAT-7 antennas, i.e, all outputs measures are averaged with uniform weight. Majority of the predictions stay near the ideal truth values with rmse \ref{MSE} and rmae \ref{MAE}  $\approx <$ 0.5, $R^2$ \ref{R2score} and explained variance V \ref{ExV} are converging to 1.}
+\caption{The table shows the performance of the random forest algorithm in predicting the amplitude and phase  gain solutions for both h and v polarizations. The values shown represents the uniform average of all KAT-7 antennas, i.e, all outputs measures are averaged with uniform weight. Majority of the predictions stay near the ideal truth values with rmse \ref{MSE} and rmae \ref{MAE}  $\approx <$ 0.5, $R^2$ \ref{R2score} and explained variance $V$ \ref{ExV} are converging to 1.}
 \end{table}
 
 \subsection{K-nearest neighbor-RUN}
@@ -1141,7 +1141,7 @@ Uniform average-V &0.291 & 0.239 & 0.961    & 0. 961\\ \hline
 Uniform average-V &0.291 & 0.239 & 0.961    & 0. 961\\ \hline
 \end{tabular}}
 \end{center}
-\caption{The table shows the performance of the K-nearest neighbor algorithm in predicting the amplitude and phase gain solutions for both h and v polarizations. The values shown represents the uniform average of all KAT-7 antennas, i.e, all outputs measures are averaged with uniform weight. Majority of the predictions stay near the ideal truth values with RMSE \ref{MSE} and rmae \ref{MAE}  $\approx <$ 0.5, $R^2$ \ref{R2score} and explained variance V \ref{ExV} are converging to 1.}
+\caption{The table shows the performance of the K-nearest neighbor algorithm in predicting the amplitude and phase gain solutions for both h and v polarizations. The values shown represents the uniform average of all KAT-7 antennas, i.e, all outputs measures are averaged with uniform weight. Majority of the predictions stay near the ideal truth values with RMSE \ref{MSE} and rmae \ref{MAE}  $\approx <$ 0.5, $R^2$ \ref{R2score} and explained variance $V$ \ref{ExV} are converging to 1.}
 \end{table}
 
 
@@ -1198,19 +1198,22 @@ Uniform average-H &0.027 & 0.083 & 0.925    & 0.925 \\
 Uniform average-V &0.027 & 0.083 & 0.923    & 0.923 \\ \hline
 \end{tabular}}
 \end{center}
-\caption{The table shows the performance of the Extremely randomized tree algorithm in predicting the amplitude and phase gain solutions for both h and v polarizations. The values shown represents the uniform average of all KAT-7 antennas, i.e, all outputs measures are averaged with uniform weight. Majority of the predictions stay near the ideal truth values with rmse \ref{MSE} and rmae \ref{MAE}  $\approx <$ 0.5, $R^2$ \ref{R2score} and explained variance V \ref{ExV} are converging to 1.}
+\caption{The table shows the performance of the Extremely randomized tree algorithm in predicting the amplitude and phase gain solutions for both h and v polarizations. The values shown represents the uniform average of all KAT-7 antennas, i.e, all outputs measures are averaged with uniform weight. Majority of the predictions stay near the ideal truth values with rmse \ref{MSE} and rmae \ref{MAE}  $\approx <$ 0.5, $R^2$ \ref{R2score} and explained variance $V$ \ref{ExV} are converging to 1.}
 \end{table}
 
  %When fitting a straight line(slope) between the predicted and the true we  observe there is only few outlying points.
 \subsection{Testing on new dataset}
 
-Now that we are happy with the performance of our learning algorithms in predicting the calibration solutions accurately from the testing dataset. In this section we use new sensor data extracted from new(unseen) KAT-7 observations with the phase calibrator source PKS1623-586 to predict the calibration solutions. This process is called model validation. Since our model was trained on normalized data, we first normalize the new sensor data with mean $\mu$ and standard deviation $\sigma$ obtained from the normalization of the training dataset.
+Now that we are happy with the performance of our learning algorithms in predicting the calibration solutions accurately from the testing dataset. In this section we use new sensor data extracted from new (unseen) KAT-7 observations with the phase calibrator source PKS1623-586 to predict the calibration solutions. This process is called model validation. Since our model was trained on normalized data, we first normalize the new sensor data with mean $\mu$ and standard deviation $\sigma$ obtained from the normalization of the training dataset.
 \begin{align}
 \text{scaled-sensor data}= \frac{\text{sensor data}- \mu}{\sigma}
 \end{align}
 
+We make use of 3 observation dataset to perform the unbiased evaluation of the final model fit. These are a subset of the Circinus X-1 KAT-7 commissioning observations taken on December 2011- June 2012. In each validation dataset, we compare the performance of Decision tree, Random forest, K-Nearest Neighbors and Extremely randomized trees. We compare these results with gain amplitude and phase calibration solutions obtained from CASA 1GC for h $\&$ v polarization. 
+
 \subsubsection{Observation test-1}
-In this section, we show plot results obtained from the validation dataset-1. 
+In this section, we show the plot results obtained from the validation dataset-1 vs CASA solutions. From dataset-1, we observe that the Decision tree perfectly predicts the gain phase calibration solutions similar as CASA in Figure \ref{obs1} better than than the other models in Figures \ref{obs2}, \ref{obs3}, \ref{obs4}. In the gain amplitude prediction we observe that only Random forest and Extremely randomized trees perform better as shown in Figure \ref{ra1} and \ref{ea1}. 
+
  \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/Phasegain.eps}
     \caption{This figure is showing the response of the decision tree learning algorithm in predicting the phase gain solutions for the calibrator PKS1613-586 from the validation dataset-1. In each subplot we show the CASA calculated phase gain solutions for h (blue) and v (green) polarization vs the learning algorithm (ZCal) predicted phase gain solutions for h (red) and v (yellow) polarization.}
@@ -1235,7 +1238,6 @@ In this section, we show plot results obtained from the validation dataset-1.
     \caption{This figure is showing the response of the random forest learning algorithm in predicting the amplitude gain solutions for the calibrator PKS1613-586 from the validation dataset-1. In each subplot we show the CASA calculated amplitude gain solutions for h (blue) and v (green) polarization vs the learning algorithm (ZCal) predicted amplitude gain solutions for h (red) and v (yellow) polarization.}
      \label{ra1}
 \end{figure}
-
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/KNNPhasegain.eps}
@@ -1262,7 +1264,9 @@ In this section, we show plot results obtained from the validation dataset-1.
 \end{figure}
 
 \subsubsection{Observation test-2}
-In this section, we show plot results obtained from the validation dataset-2. 
+
+In this section, we show the plot results obtained from the validation dataset-2 vs CASA solutions. For dataset-2, we observe that the Random forest, Extremely randomized trees and the K-Nearest Neighbors has learned to generalise in predicting the gain amplitude calibration solutions than phase with Extremely randomized trees performing better than the rest as shown in Figure \ref{obs8} and \ref{ea2}.
+
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/DCPhasegain1015.eps}
     \caption{This figure is showing the response of the decision tree learning algorithm in predicting the phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we show the CASA calculated phase gain solutions for h (blue) and v (green) polarization vs the learning algorithm (ZCal) predicted phase gain solutions for h (red) and v (yellow) polarization.}
@@ -1314,7 +1318,7 @@ In this section, we show plot results obtained from the validation dataset-2.
 
 
 \subsubsection{Observation test-3}
-In this section, we show plot results obtained from the validation dataset-3. 
+In this section, we show the plot results obtained from the validation dataset-2 vs CASA solutions. For dataset-3, Similar to dataset-2, we observe that the Random forest, Extremely randomized trees and the K-Nearest Neighbors has learned to generalise in predicting the gain amplitude calibration solutions with stable phase over time as shown in Figures \ref{obs10},\ref{obs11}, \ref{obs12}. The Extremely randomized trees is performing better followed by the Random forest and the decision tree.
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/DCPhasegain773.eps}
     \caption{This figure is showing the response of the decision tree learning algorithm in predicting the phase gain solutions for the calibrator PKS1613-586 from the validation dataset-3. In each subplot we show the CASA calculated phase gain solutions for h (blue) and v (green) polarization vs the learning algorithm (ZCal) predicted phase gain solutions for h (red) and v (yellow) polarization.}
