@@ -1209,7 +1209,7 @@ Now that we are happy with the performance of our learning algorithms in predict
 \text{scaled-sensor data}= \frac{\text{sensor data}- \mu}{\sigma}
 \end{align}
 
-We make use of 3 observation dataset to perform the unbiased evaluation of the final model fit. These are a subset of the Circinus X-1 KAT-7 commissioning observations taken on December 2011- June 2012. In each validation dataset, we compare the performance of Decision tree, Random forest, K-Nearest Neighbors and Extremely randomized trees. We compare these results with gain amplitude and phase calibration solutions obtained from CASA 1GC for h $\&$ v polarization. 
+We make use of 3 observation dataset to perform the unbiased evaluation of the final model fit. These are a subset of the Circinus X-1 KAT-7 commissioning observations taken on December 2011 - June 2012. In each validation dataset, we compare the performance of Decision tree, Random forest, K-Nearest Neighbors and Extremely randomized trees. We compare these results with gain amplitude and phase calibration solutions obtained from CASA 1GC for h $\&$ v polarization. 
 
 \subsubsection{Observation test-1}
 In this section, we show the plot results obtained from the validation dataset-1 vs CASA solutions. From dataset-1, we observe that the Decision tree perfectly predicts the gain phase calibration solutions similar as CASA in Figure \ref{obs1} better than than the other models in Figures \ref{obs2}, \ref{obs3}, \ref{obs4}. In the gain amplitude prediction we observe that only Random forest and Extremely randomized trees perform better as shown in Figure \ref{ra1} and \ref{ea1}. 
@@ -1318,7 +1318,7 @@ In this section, we show the plot results obtained from the validation dataset-2
 
 
 \subsubsection{Observation test-3}
-In this section, we show the plot results obtained from the validation dataset-2 vs CASA solutions. For dataset-3, Similar to dataset-2, we observe that the Random forest, Extremely randomized trees and the K-Nearest Neighbors has learned to generalise in predicting the gain amplitude calibration solutions with stable phase over time as shown in Figures \ref{obs10},\ref{obs11}, \ref{obs12}. The Extremely randomized trees is performing better followed by the Random forest and the decision tree.
+In this section, we show the plot results obtained from the validation dataset-3 vs CASA solutions. For dataset-3, Similar to dataset-2, we observe that the Random forest, Extremely randomized trees and the K-Nearest Neighbors has learned to generalise in predicting the gain amplitude calibration solutions with stable phase over time as shown in Figures \ref{obs10},\ref{obs11}, \ref{obs12}. The Extremely randomized trees is performing better followed by the Random forest and the decision tree.
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/DCPhasegain773.eps}
     \caption{This figure is showing the response of the decision tree learning algorithm in predicting the phase gain solutions for the calibrator PKS1613-586 from the validation dataset-3. In each subplot we show the CASA calculated phase gain solutions for h (blue) and v (green) polarization vs the learning algorithm (ZCal) predicted phase gain solutions for h (red) and v (yellow) polarization.}
