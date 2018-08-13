@@ -292,11 +292,11 @@ Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
 \end{lstlisting}
 \end{tcolorbox}
 
- The Katdal library can manipulate the HDF5 observation file in many ways including file format conversion from HDF5 to measurement sets (ms). This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}. This conversion also provide an option whereby we flag all channels affected with known Radio Frequency Interference (RFI). Once the observation file was converted to ms format, hand flagging for unknown RFI was performed inside CASA using the task $\textit{flagdata}$ for $h$ and $v$ cross correlation products. After flagging the data and were satisfied, we then proceed to the calibration step. 
+ The katdal library can manipulate the HDF5 observation file in many ways, including file format conversion from HDF5 to measurement sets (ms). This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}. This conversion also provides an option whereby one flag all channels affected with known radio frequency interference (RFI). Once the observation file has been converted to ms format, hand flagging for unknown RFI is performed inside CASA using the task $\textit{flagdata}$ for H and V cross correlation products. After satisfactory flagging of the data, one then proceeds to the calibration step. 
  
-The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this thesis we only focus on the 1GC calibration with an interest of obtaining the complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude \& phase) for each polarization h \& v and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and store in calibration tables.
+The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this dissertation we only focus on the 1GC calibration with an interest in obtaining complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude and phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and stores these in calibration tables.
  
-These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is approximately close to the center of the array and it was known to be particularly stable with no drop outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factor $J_{i,j}$ into antenna-based components, so we do not see a set of values for each baseline, but rather only one for each antenna ($J_i$) \citep{CosmoAIMS}. 
+These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is reasonably close to the center of the array and it was known to be particularly stable with no drop-outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factors $J_{i,j}$ into antenna-based components, so one does not see a set of values for each baseline, but rather only one for each antenna ($J_i$) \citep{CosmoAIMS}. 
 
 Since our phase calibrator PKS1613-586 have an unknown flux density, the obtained values of the antenna based amplitude solutions differ from the correct ones by a factor depending only on the true source flux density by 
 
@@ -304,9 +304,9 @@ Since our phase calibrator PKS1613-586 have an unknown flux density, the obtaine
 \frac{1 Jy}{(\text{true source flux density})^{0.5}},\;  \text{where 1Jy is the assumed flux density for \text{PKS1613-586}}.
 \end{equation} 
 
-We then used one of the following flux-density calibrators with known flux models: PKS1934-63, 3C147, 3C286 tied to the Perley-Taylor 99 to scale the correct gain amplitude of our phase calibrator in Figure \ref{pks1613} so that it match as well as possible the correctly-scaled amplitude solutions for the flux-density calibrators by running a CASA task $\textit{fluxscale}$ \citep{CosmoAIMS}. This process is called $\textit{Bootstrapping}$. After obtaining the final table with correct amplitude and phase complex gain solutions for the phase calibrator in Figure \ref{pks1613}, we then used the complex solutions matrix written on the "CPARAM" column to generate the training and testing calibration solution data per antenna $i$. An example of the complex gain amplitude and phase solutions is shown in Figure \ref{amp} and \ref{phase}. These solutions were obtained using the CASA task $gaincal$ described in Chapter 1. 
+We then used one of the following flux-density calibrators with known flux models: PKS1934-63, 3C147, 3C286 tied to the Perley-Taylor 99 to scale the correct gain amplitude of the phase calibrator in Figure \ref{pks1613} so that it matched the correctly scaled amplitude solutions for the flux-density calibrators as well as possible by running a CASA task $\textit{fluxscale}$ \citep{CosmoAIMS}. This process is called $\textit{bootstrapping}$. After obtaining the final table with correct amplitude and phase complex gain solutions for the phase calibrator in Figure \ref{pks1613}, we then used the complex solutions matrix written on the "CPARAM" column to generate the training and testing calibration solution data per antenna $i$. An example of the complex gain amplitude and phase solutions is shown in Figures \ref{amp} and \ref{phase}. These solutions were obtained using the CASA task $gaincal$ described in Chapter 1. 
 
-The following code is showing how the parameters were set in standard practice of 1GC as described in chapter 1 section \ref{caltech}.
+The following code shows how the parameters were set in standard practice of 1GC as described in chapter 1 section \ref{caltech}.
 
 \begin{tcolorbox}
 \begin{lstlisting}
@@ -376,7 +376,7 @@ transfer = gain_calibrator
 fluxscale()
 \end{lstlisting}
 \end{tcolorbox}
-A multi-frequency synthesis image deconvolution was carried using $\textit{CLEAN}$ CASA task with $256 \times 256$ and cell size of $30$ arc seconds. The image rms noise in Figure \ref{pks1613} was measured using the rms noise of the 0 iteration residual image.
+A multi-frequency synthesis image deconvolution was carried out using a $\textit{CLEAN}$ CASA task with $256 \times 256$ and cell size of $30$ arc seconds. The image rms noise in Figure \ref{pks1613} was measured using the rms noise of the 0 iteration residual image.
 \begin{tcolorbox}
 \begin{lstlisting}
 clean(vis='CircinusX-1.split.ms',imagename='PKS1613586.im',
@@ -394,26 +394,26 @@ clean(vis='CircinusX-1.split.ms',imagename='PKS1613586.im',
  \begin{figure}[H]
  \centering
     \includegraphics[ height=13cm, width=15.5cm]{images/phaseCasa.eps}
-    \caption{Complex gain phase solutions for phase calibrator PKS1613-586 obtained from CASA per antenna i.Each colour represent different polarization where blue is H-polarization and green is v-polarization. Antenna 5 is showing zero phase since it is used as a reference antenna.}
+    \caption{Complex gain phase solutions for phase calibrator PKS1613-586 obtained from CASA per antenna i. Each colour represents a different polarization where blue is H-polarization and green is v-polarization. Antenna 5 shows zero phase since it is used as a reference antenna.}
   \label{phase}
 \end{figure}
 
  \begin{figure}[H]
  \centering
     \includegraphics[ height=13cm, width=15.5cm]{images/CasaAmp.eps}
-    \caption{Complex gain amplitude solutions for phase calibrator PKS1613-586 obtained from CASA per antenna $i$. Each colour represent different polarization where blue is H-polarization and green is v-polarization. }
+    \caption{Complex gain amplitude solutions for phase calibrator PKS1613-586 obtained from CASA per antenna $i$. Each colour represents different polarization where blue is H-polarization and green is v-polarization. }
   \label{amp}
 \end{figure}
  
  \begin{figure}[H]
  \centering
     \includegraphics[ height=8cm, width=10cm]{images/162.png}
-    \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was carried in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08Jy$ using $\textit{CLEAN}$ task in CASA.}
+    \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was carried in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08\;Jy$ using $\textit{CLEAN}$ task in CASA.}
   \label{pks1613}
 \end{figure}
 \section{Regression algorithm} 
 \label{algo1}
-There are many different approaches employed in machine learning regression. These approaches learn the relationship between the input and output by fitting a model directly from the data. The fitting process involves the adjustment and optimization of hyper parameters to minimize the prediction error. This is usually done in an independent validation and testing dataset. In this study, we consider the tree based method approach: Decision tree, Random forest, Extremely randomized tree and the neighbourhood search approach: K-Nearest Neighbour to tackle our problem. Firstly, we formulate our regression estimation problem as follows. Suppose we have a feature matrix 
+Many different approaches employed in machine learning regression. These approaches learn the relationship between the input and output by fitting a model directly from the data. The fitting process involves the adjustment and optimization of hyper-parameters to minimize the prediction error. This is usually done in an independent validation and testing dataset. In this study, we consider the tree-based method approach: Decision tree, random forest, extremely randomized tree and the neighbourhood search approach: K-nearest neighbor to tackle our problem. Firstly, we formulate our regression estimation problem as follows. Suppose we have a feature matrix 
 \begin{align*}
 \textbf{X}_{t}=\begin{bmatrix}
     x_{11} & x_{12} & x_{13} & \dots  & x_{1n} \\
@@ -469,7 +469,7 @@ with each row a vector of length m, containing the m variable measurements for t
 \end{bmatrix},
 \end{align*}
  
-Our problem is to construct a learning machine $M:\textbf{X}_{t} \rightarrow \textbf{Y}_{t}$ which when given a validation set of sensor examples $\textbf{X}^*_{t}$, minimises some measure of discrepancy between its prediction $M(\textbf{X}^*_{t})\approx\widehat{\textbf{Y}}_{t}$ and the value of $\textbf{Y}_{t}$, where M represents the predictor. We measure the discrepancy using the commonly used statistical measures in regression \citep{borchani2015survey}. This includes the coefficient of determination, i.e
+The problem is to construct a learning machine, $M:\textbf{X}_{t} \rightarrow \textbf{Y}_{t}$, which when given a validation set of sensor examples, $\textbf{X}^*_{t}$, minimises some measure of discrepancy between its prediction $M(\textbf{X}^*_{t})\approx\widehat{\textbf{Y}}_{t}$, and the value of $\textbf{Y}_{t}$, where M represents the predictor. We measure the discrepancy using the commonly used statistical measures in regression \citep{borchani2015survey}. This includes the coefficient of determination, i.e.
 
 \begin{equation}
 R^2\left[\textbf{Y}_{t},\widehat{\textbf{Y}}_{t}\right]=1-\frac{\sum_{k} \left[(\textbf{Y}_{t})_{k}-(\widehat{\textbf{Y}}_{t})_{k}\right]^2}{\sum_{k}\left[(\textbf{Y}_{t})_{k}-\overline{\textbf{Y}_{t}}\right]^2}, 0 \leq R^2 \leq 1,
@@ -481,7 +481,7 @@ where,  \begin{equation}
 \end{equation} 
 
 is the mean value of $\textbf{Y}_{t}$ draw from d samples,  
- $\sum_{k}\left[(\textbf{Y}_{t})_{k}-\overline{\textbf{Y}_{t}}\right]^2$ is the total sum of squares which measures the total variance in the predictor and $\sum_{k} \left[(\textbf{Y}_{t})_{k}-(\widehat{\textbf{Y}}_{t})_{k}\right]^2$ the residual sum of squares (deviations predicted from actual values of data) which measures the discrepancy between $\textbf{Y}_{t}$ and $\widehat{\textbf{Y}}_{t}$ \citep{james2013introduction}.
+ $\sum_{k}\left[(\textbf{Y}_{t})_{k}-\overline{\textbf{Y}_{t}}\right]^2$ is the total sum of squares which measures the total variance in the predictor and $\sum_{k} \left[(\textbf{Y}_{t})_{k}-(\widehat{\textbf{Y}}_{t})_{k}\right]^2$ the residual sum of squares (deviations predicted from actual values of data), which measures the discrepancy between $\textbf{Y}_{t}$ and $\widehat{\textbf{Y}}_{t}$ \citep{james2013introduction}.
 
 The explained variance
 \begin{equation}
@@ -489,7 +489,7 @@ V=\frac{\text{Var}\left[\textbf{Y}_{t}-\widehat{\textbf{Y}}_{t} \right]}{\text{V
 \label{ExV}
 \end{equation}  
 
-measures the proportion to which the predictor accounts for the variation of of the observed data $\textbf{Y}_{t}$ \citep{bellinger2016fundamental}. The best possible score is considered to be 1. where 
+measures the proportion to which the predictor accounts for the variation of the observed data $\textbf{Y}_{t}$ \citep{bellinger2016fundamental}. The best possible score is considered to be 1. where 
 
 \begin{align*}
 \text{Var}\left[\textbf{Y}_{t}\right]&=\mathbb{E}\left[(\textbf{Y}_{t}-\mu)^2\right],\; \mu=\mathbb{E}\left[\textbf{Y}_{t}\right]\\
@@ -500,7 +500,7 @@ measures the proportion to which the predictor accounts for the variation of of 
 \end{align*}
 \citep{fortmann2012understanding}
 
-and the mean squared error, mean absolute error, which measures the average of the squared and absolute of the errors between the the observed values $\textbf{Y}_{t}$ and the predicted $\widehat{\textbf{Y}}_{t}$. For accurate prediction of the predictor, the value of MSE and MAE should converge to zero \citep{james2013introduction}. 
+and the mean squared error(MSE), mean absolute error (MAE), which measures the average of the squared and absolute of the errors between the the observed values $\textbf{Y}_{t}$ and the predicted $\widehat{\textbf{Y}}_{t}$. For accurate prediction of the predictor, the value of MSE and MAE should converge to zero \citep{james2013introduction}. 
 
 \begin{align}
 \text{MSE}\left(\textbf{Y}_{t},\widehat{\textbf{Y}}_{t} \right)=\frac{1}{d_{samples}} \sum_{k} (\textbf{Y}_{t}-\widehat{\textbf{Y}}_{t})^2_{k}
@@ -512,71 +512,71 @@ and the mean squared error, mean absolute error, which measures the average of t
 \label{MAE}
 \end{align}.
 
-The aim of this regression exercise is to predict multiple target variables $\widehat{\textbf{Y}}_{t}$  hence it is referred to as multi-output regression. The learned multi-target model will be used afterwards to simultaneously predict the values $\widehat{\textbf{Y}}_{t+1}$  of all target variables of the new incoming unlabeled instances $\textbf{X}_{t+1}$. It has been proven that multi-output regression methods yield to a better predictive performance and also provide to means to effectively
-model the multi-output datasets by considering not only the underlying relationships
+The aim of this regression exercise is to predict multiple target variables $\widehat{\textbf{Y}}_{t}$  hence it is referred to as multi-output regression. The learned multi-target model will be used afterwards to simultaneously predict the values $\widehat{\textbf{Y}}_{t+1}$  of all target variables of the new incoming unlabeled instances $\textbf{X}_{t+1}$. It has been proven that multi-output regression methods yield better predictive performance and also provide means to
+model the multi-output datasets effectively by considering not only the underlying relationships
 between the features and the corresponding targets but also the relationships between
-the targets, thereby producing simpler models with a better computational efficiency. From \citep{borchani2015survey}, several applications of multi-output regression are discussed including simultaneous estimation of different biophysical parameters from remote sensing images, channel estimation through the prediction of several received signals, etc. Further discussions, it is mentioned that these applications give rise to challenges such as missing data, i.e, when some features or target variables are not observed.
+the targets, thereby producing simpler models with better computational efficiency. According to \citep{borchani2015survey}, several applications of multi-output regression are discussed, including simultaneous estimation of different biophysical parameters from remote sensing images, channel estimation through the prediction of several received signals, etc. In further discussions, it is mentioned that these applications give rise to challenges such as missing data, i.e., when some features or target variables are not observed.
 
 \subsection{Decision tree}
 \label{Dt}
-Decision trees algorithms are popular methods for machine learning tasks such as classification and regression. These algorithms are easy to handle categorical features, interpret, extend to the multi-output for regression settings and multiclass for classification setting. They can handle datasets that may have errors, missing values and are able to capture non-linearities and feature interactions \citep{DT}, hence they are widely used. One of the biggest advantages of using decision trees is the ease in which we can see what features or variables contribute to the classification or regression and their relative importance based on their location in the tree.
+Decision tree algorithms are popular methods for machine learning tasks such as classification and regression. These algorithms make it easy to handle categorical features, interpret, extend to the multi-output for regression settings and multiclass for classification setting. They can handle datasets that may have errors or missing values and are able to capture non-linearities and feature interactions \citep{DT}, hence they are widely used. One of the biggest advantages of using decision trees is the ease with which one can see what features or variables contribute to the classification or regression and their relative importance based on their location in the tree.
 
-For a response variable which
+For a response variable that
 has classes, the tree algorithm (classification) organizes the dataset into groups by the response based on the similarities of the data, and when the response variable is numeric or continuous, the tree algorithm (regression) uses the data to predict the outcome by fitting the regression model in each of the independent variables \citep{morgan2014classification}.
 
-Decision trees are simple but powerful form of multi-variable analysis, they  perform a recursive binary partitioning of the feature space. The term binary refers to the fact that the parent node  will always be split into exactly two child nodes \citep{moisen2008classification}. The term recursive is used to indicate that each child node will, in turn, become a parent node, unless it is a terminal node as illustrated in Figure \ref{images/DecisionTree} where the split occurs at the decision node.  
+Decision trees are a simple but powerful form of multi-variable analysis, they  perform a recursive binary partitioning of the feature space. The term binary refers to the fact that the parent node  will always be split into exactly two child nodes \citep{moisen2008classification}. The term recursive is used to indicate that each child node will, in turn, become a parent node, unless it is a terminal node, as illustrated in Figure \ref{images/DecisionTree}, where the split occurs at the decision node.  
 
-Decision trees are build by growing a tree upside down starting from the root node. The data sample passes down the tree through a series of splits, or nodes, at which a decision is made as to which direction to proceed either left or right sub-tree based a sequence of questions about the features \citep{musicant2007supervised}. The next split or decision made depends on the answers to previous questions. Eventually, a terminal node is reached and the prediction is made.  
+Decision trees are built by growing a tree upside down, starting from the root node. The data sample passes down the tree through a series of splits, or nodes, at which a decision is made on the direction in which to proceed, either the left or right sub-tree, based on a sequence of questions about the features \citep{musicant2007supervised}. The next split or decision made depends on the answers to previous questions. Eventually, a terminal node is reached and the prediction is made.  
 
  \begin{figure}[H]
   \centering
     \includegraphics[width=0.6\textwidth]{images/DC.png}
-    \caption{An illustration of decision tree where a recursive partition is shown from root node where there is an entire data sample to the internal nodes (decision nodes) where splitting occur to form child nodes which are either decision nodes or terminal nodes. Terminal node implies that after this split, further splitting of the samples does not provide relevant information in predicting the response variable \citep{moisen2008classification}. }
+    \caption{An illustration of a decision tree where a recursive partition is shown from the root node where there is an entire data sample to the internal nodes (decision nodes) where splitting occurs to form child nodes, which are either decision nodes or terminal nodes. A terminal node implies that after this split, further splitting of the samples does not provide relevant information in predicting the response variable \citep{moisen2008classification}. }
   \label{images/DecisionTree}
 \end{figure}
 
-The binary recursive partitioning, applies to the fitting of both classification and regression trees, where in both cases the variable and the location of the split are
-chosen to minimize the impurity of the node at that point. However the selection criteria of splitting each node are different for these two methods. In our case for regression scenario, the splitting rules used to minimize the impurity of each node $c$ with number of samples $N_{c}$ and training data $\textbf{X}_{c}$ is the mean square error \citep{morgan2014classification}.
+The binary recursive partitioning applies to the fitting of both classification and regression trees, where in both cases the variable and the location of the split are
+chosen to minimize the impurity of the node at that point. However, the selection criteria of splitting each node are different for these two methods. In our case the for the regression scenario, the splitting rules used to minimize the impurity of each node $c$ with the number of samples $N_{c}$ and training data $\textbf{X}_{c}$ are the mean square error \citep{morgan2014classification}.
 \begin{align}
 \text{MSE}\left(\textbf{X}_{c}\right)=\frac{1}{N_{c}} \sum_{i\in N_{c}} (\textbf{Y}_{i}-\mu_{c})^2,
 \end{align}  
 which minimizes the mean of the sum of the square of the differences between the target value $\textbf{Y}_{i}$ and the estimated value $\mu_{c}$ \citep{moisen2008classification},
  
-where  $$\mu_{c}=\frac{1}{N_{c}} \sum_{i\in N_{c}} \textbf{Y}_{i}$$ is the sample mean of the response variable which represents the  assigned prediction in each terminal node.
+where  $$\mu_{c}=\frac{1}{N_{c}} \sum_{i\in N_{c}} \textbf{Y}_{i}$$ is the sample mean of the response variable that represents the  assigned prediction in each terminal node.
 
-The mean absolute error  
+The MAE 
 \begin{align}
 \text{MAE}\left(\textbf{X}_{c} \right)=\frac{1}{N_{c}} \sum_{i\in N_{c}} \left|\textbf{Y}_{i}-\mu_{c}\right|, 
 \end{align}
- which minimizes the mean of the sum of the absolute differences between the target $\textbf{Y}_{i}$ and the estimated value  $\mu_{c}$ \citep{moisen2008classification}. These methods does not only measure the impurity in each node, but they are also used to measure the accuracy of the predictor as in equation \ref{MSE} and \ref{MAE}. Another commonly used strategy or measure in classification problems which also applies in regression problem for selecting the best split from a set of possible split is to maximize the information gain at each tree node. i.e, the split chosen at each decision node is chosen from the the set $\text{argmax} IG(\textbf{X}_{c},s)$ where $IG(\textbf{X}_{c},s)$ is the information gain when a split $s$ is applied to sample data $\textbf{X}_c$. This is the difference between the parent node (decision node) impurity and the weighted sum of the child nodes in equation \ref{IG}. 
+ minimizes the mean of the sum of the absolute differences between the target $\textbf{Y}_{i}$ and the estimated value  $\mu_{c}$ \citep{moisen2008classification}. These methods not only measure the impurity in each node, but are also used to measure the accuracy of the predictor, as in equations \ref{MSE} and \ref{MAE}. Another commonly used strategy or measure in classification problems which also applies in regression problem, for selecting the best splits, from a set of possible split is to maximize the information gain at each tree node; i.e., the split chosen at each decision node is chosen from the the set $\text{argmax} IG(\textbf{X}_{c},s)$ where $IG(\textbf{X}_{c},s)$ is the information gain when a split $s$ is applied to sample data $\textbf{X}_c$. This is the difference between the parent node (decision node) impurity and the weighted sum of the child nodes in equation \ref{IG}. 
  
  \begin{align}
  IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{Impurity}(\textbf{X}_{c(left)})- \frac{N_{c(right)}}{N_c}\times \text{Impurity} (\textbf{X}_{c(right)}), \label{IG}
  \end{align}
  where $s$ is a split partitioning the training sample $\textbf{X}_c$ of size $N_c$ into two datasets $\textbf{X}_{c(left)}$ and $\textbf{X}_{c(left)}$ each of size $N_{c(left)}$ and $N_{c(right)}$.
-If the impurity measure is the mean squared error, we therefore define the information gain by
+If the impurity measure is the MSE, we therefore define the information gain by
  \begin{align}
  IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{MSE}_{(left)}- \frac{N_{c(right)}}{N_c}\times \text{MSE}_{(right)}.
   \end{align}
-If the impurity measure is the mean absolute error, the information gain is defined by   
+If the impurity measure is the MAE, the information gain is defined by   
  \begin{align}
- IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{MAE}_{(left)}- \frac{N_{c(right)}}{N_c}\times \text{MAE}_{(right)} 
+ IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{MAE}_{(left)}- \frac{N_{c(right)}}{N_c}\times \text{MAE}_{(right)}. 
  \end{align}
  
-For multi-output decision trees which predict multiple continuous target attributes at once, the advantage over building a separate
-regression tree for each target is that the built tree is usually much smaller than the total size of the individual single-target trees for all variables, second, they identifies the dependencies between the different target variables in a better manner.
+For multi-output decision trees that predict multiple continuous target attributes at once, the advantage over building a separate
+regression tree for each target is that the built tree is usually much smaller than the total size of the individual single-target trees for all variables; secondly they identify the dependencies between the different target variables  better.
 
-The building of the multi-output decision trees follows  the same steps as the standard decision tree in Figure \ref{images/DecisionTree}. Starting with all instances in the root node, then iteratively finding the optimal split and partitioning the nodes accordingly until a terminal node is reached given a certain stopping criterion. The only difference  is the redefinition of the impurity measures in equation \ref{MSE} and \ref{MAE} of a node as the sum of the squared error  over multi-target response. 
+The building of the multi-output decision trees follows  the same steps as the standard decision tree in Figure \ref{images/DecisionTree}, starting with all instances in the root node, then iteratively finding the optimal split and partitioning the nodes accordingly until a terminal node is reached, given a certain stopping criterion. The only difference  is the redefinition of the impurity measures in equations \ref{MSE} and \ref{MAE} of a node as the sum of the squared error  over a multi-target response. 
 \begin{align}
 \sum_{k\in d}\frac{1}{N}\left[\sum_{l \in N }\left(\textbf{y}_{k}^{(l)}-\mu^{(l)} \right)^2\right],
 \end{align}
-where $\mu^{(l)}$ denotes the predicted output for the instance $l$ in each node. Each split is selected to minimize the sum of the squared error such that each terminal leaf of the tree can be characterized by the multi-variate mean
+where $\mu^{(l)}$ denotes the predicted output for the instance $l$ in each node. Each split is selected to minimize the sum of the squared error such that each terminal leaf of the tree can be characterized by the multivariate mean
 of its instances and its defining feature values.
 
 \subsection{Random forest}
 While classification and regression trees are powerful methods in and of themselves, much work has been done in machine learning to improve the predictive ability of these tools by combining separate tree models into what is often called ensemble.
 
-Random Forests is a combination (ensemble) of decision tree predictors such that each tree depends on the values of a random vector sampled independently and with the same distribution for all trees in the forest as shown in Figure \ref{random tree} \citep{breiman2001random}. This algorithm  was introduced by \citep{ho1995random} after having noticed that decision trees were limited in their accuracy due to their inability to grow in arbitrary complexity. This method was not only more accurate, but it was less susceptible to overfitting.
+A random Forest is a combination (ensemble) of decision tree predictors such that each tree depends on the values of a random vector sampled independently and with the same distribution for all trees in the forest, as shown in Figure \ref{random tree} \citep{breiman2001random}. This algorithm  was introduced by \citep{ho1995random} after having noticed that decision trees were limited in their accuracy owing to their inability to grow in arbitrary complexity. This method was not only more accurate, but was less susceptible to overfitting.
 
  \begin{figure}[H]
   \centering
@@ -586,9 +586,9 @@ Random Forests is a combination (ensemble) of decision tree predictors such that
 \end{figure}
 
 During the construction of a component decision tree, at each step
-of split selection, random forest first randomly selects a subset of features, and then carries out the conventional split selection procedure within the selected
+of split selection, a random forest first randomly selects a subset of features, and then carries out the conventional split selection procedure within the selected
 feature subset. Note that the randomness is only introduced into
-the feature selection process, not into the choice of split points on the selected feature. Random forest is an extension of bootstrap aggregating (Bagging) where the major difference difference with bagging is the incorporation of randomized feature selection \citep{zhou2012ensemble}. The operational procedure of bagging is as follows: 
+the feature selection process, not into the choice of split points on the selected feature. Random forest is an extension of bootstrap aggregating (bagging), where the major difference with bagging is the incorporation of randomized feature selection \citep{zhou2012ensemble}. The operational procedure of bagging is as follows: 
 
 \begin{itemize}
 \item Given a a set $\textbf{X}$ of size $\textit{N}$.
@@ -599,7 +599,7 @@ the feature selection process, not into the choice of split points on the select
 data set of $\textbf{X}_{\textit{n}}$ to estimate the features of the data.
 \end{itemize}
 
-The parameter $\textit{k}$ controls the incorporation of randomness and this results on an increase in the bias. When $\textit{k}$ equals the total number of features, the constructed decision tree is identical to the traditional deterministic decision tree, when $\textit{k}$ = 1, a feature will be selected randomly. The suggested value of $\textit{k}$ is the logarithm of the number of features \citep{breiman2001random}.
+The parameter $\textit{k}$ controls the incorporation of randomness and this results in an increase in the bias. When $\textit{k}$ equals the total number of features, the constructed decision tree is identical to the traditional deterministic decision tree, when $\textit{k}$ = 1, a feature will be selected randomly. The suggested value of $\textit{k}$ is the logarithm of the number of features \citep{breiman2001random}.
 
 The predictions of the trees that are constructed by the random forest are aggregated (majority voting for classification or averaging for regression) to produce the final output prediction. Suppose the underlying true function we try to learn is $f(\textbf{x})$, and $\textbf{x}$ is sampled according to a distribution p($\textbf{x}$). The output of each decision tree learner can be written as the the true value plus an error item, i.e.,
 \begin{align}
@@ -613,31 +613,31 @@ H(\textbf{x})= \frac{1}{T}\sum_{i=1}^{T} h_{i}(\textbf{x}).
 \end{align}
 \citep{zhou2012ensemble}
 
-Recall in Section \ref{Dt}, that the prediction of  each tree is the sample mean, then from equation \ref{hx} we thus have the mean squared error of the output prediction $h_i$ as 
+Recall in Section \ref{Dt}, that the prediction of  each tree is the sample mean, then from equation \ref{hx} we thus have the MSE of the output prediction $h_i$ as 
 \begin{align}
-\int (f(\textbf{x})-h_{i}(\textbf{x}))p(\textbf{x})^2d\textbf{x} = \int \epsilon_{i} (\textbf{x})^2 p(\textbf{x})d\textbf{x}
+\int (f(\textbf{x})-h_{i}(\textbf{x}))p(\textbf{x})^2d\textbf{x} = \int \epsilon_{i} (\textbf{x})^2 p(\textbf{x})d\textbf{x}.
 \end{align}
-Similarly we can derive the mean square error of the combine decision tree learner (i.e, the ensemble) is 
+Similarly, we can derive the MSE of the combined decision tree learner (i.e., the ensemble) as 
 
 \begin{align}
 \int \left(f(\textbf{x}) - \frac{1}{T}\sum_{i=1}^{T} h_{i}(\textbf{x}) \right)^2  p(\textbf{x})d\textbf{x} = \int \left( \frac{1}{T}\sum_{i=1}^{T} \epsilon_{i}(\textbf{x})\right)p(\textbf{x})d\textbf{x}
 \end{align} 
 
 
-The two main parameters of RF are the number of trees grown and the number of predictors randomly tried at each split. What you call depth is sometimes found as the maximum node size, and controls the size of the trees that are grown. In the original implementation of RF, trees are grown to the maximum potential extent so that they reach the lowest possible bias. Then, variance is reduced by growing many trees and averaging them. The main reason being that in RF, you can only decrease error by reducing the variance, so the bias needs to be as low as possible in the first place. Therefore, in most cases, you don't really need to adjust this parameter (depth or max nodesize). Just make sure the default value allows the trees to grow as deep as possible.
+The two main parameters of a RF are the number of trees grown and the number of predictors randomly tried at each split. What one calls depth is sometimes found as the maximum node size, and controls the size of the trees that are grown. In the original implementation of RF, trees are grown to the maximum potential extent so that they reach the lowest possible bias. Then, variance is reduced by growing many trees and averaging them. The main reason is that in RF, one can only decrease error by reducing the variance, so the bias needs to be as low as possible in the first place. Therefore, in most cases, one does not really need to adjust this parameter (depth or max nodesize). but just has to make sure the default value allows the trees to grow as deeply as possible.
 
 \subsection{K-nearest neighbour}
 
-The K-nearest neighbors algorithm is a well known non-parametric algorithm commonly used for regression and classification problems. This algorithm does not make any assumptions about the distribution of the data being evaluated, i.e, the model structure is determined from the data. The learning technique used in in K-nearest neigbors is known as the instance Based Learning. This technique is based on the memorization of the training dataset and the number of parameters is unbounded and grows with the size of the data. 
+The K-nearest neighbor algorithm is a well known non-parametric algorithm commonly used for regression and classification problems. This algorithm does not make any assumptions about the distribution of the data being evaluated, i.e., the model structure is determined from the data. The learning technique used in K-nearest neigbors, is known as the instance-based learning. This technique is based on the memorization of the training dataset and the number of parameters is unbounded and grows with the size of the data. 
 
-The intuition underlying nearest neighbor regression is quite straightforward,
-the output predictions are obtained by looking into the memorized examples where the cost of the learning process is 0. The cost is in the computation of the prediction, with the prediction output being the continuous average values (or median) of the values of its K nearest neighbors. The commonly used measure in K-nearest neighbors is the distance functions , i.e, consider $\mathcal{M}$ the m-dimensional Euclidean space $\mathbb{R}^m$  , a training data set $\textbf{X}=\{\textbf{x}_1,\dots, \textbf{x}_n\} \subset \mathcal{M}$, a query point $q\in \mathcal{M}$, and a distance metric $d:\mathcal{M}^2 \rightarrow \mathbb{R}$. The K-nearest neighbor search is the task of finding  the K closest (w.r.t $d$ ) points to $q$ from the data set $\textbf{X}$, i.e, we find a set $\textbf{A} \subset \textbf{X}$ for which it holds  that $|\textbf{A}|= K$ and  $d(q,\textbf{x})\leq d(q,\textbf{y})$ $\forall$ $\textbf{x}\in \textbf{A}, \textbf{y}\in \textbf{X} \;\text{or}\; \textbf{A}$ \citep{hyvonen2015fast}. 
+The intuition underlying nearest neighbor regression is quite straightforward;
+the output predictions are obtained by looking into the memorized examples where the cost of the learning process is 0. The cost is in the computation of the prediction, with the prediction output being the continuous average values (or median) of the values of its K nearest neighbors. The commonly used measure in K-nearest neighbors is the distance functions , i.e., consider $\mathcal{M}$ the m-dimensional Euclidean space $\mathbb{R}^m$  , a training data set $\textbf{X}=\{\textbf{x}_1,\dots, \textbf{x}_n\} \subset \mathcal{M}$, a query point $q\in \mathcal{M}$, and a distance metric $d:\mathcal{M}^2 \rightarrow \mathbb{R}$. The K-nearest neighbor search is the task of finding  the K closest (w.r.t. $d$ ) points to $q$ from the data set $\textbf{X}$, i.e., we find a set $\textbf{A} \subset \textbf{X}$ for which it holds  that $|\textbf{A}|= K$ and  $d(q,\textbf{x})\leq d(q,\textbf{y})$ $\forall$ $\textbf{x}\in \textbf{A}, \textbf{y}\in \textbf{X} \;\text{or}\; \textbf{A}$ \citep{hyvonen2015fast}. 
 
 The distance function is defined as 
 \begin{align}
 d(\textbf{x},\textbf{y})= \sum_{i=1}^m \left(|x_i -y_i|^m\right)^{\frac{1}{m}}
 \end{align}
-known as Minkowski distance. For special case where $m=1$ the distance function is a Manhantan distance also know as the L-1 norm
+known as the Minkowski distance. For a special case where $m=1$, the distance function is a Manhantan distance also know as the L-1 norm
 \begin{align}
 d(\textbf{x},\textbf{y})= \sum_{i=1}^m|x_i -y_i|,
 \end{align}
@@ -645,20 +645,20 @@ and if $m=2$, the distance function is a Euclidean distance, also know as the L-
 \begin{align}
 d(\textbf{x},\textbf{y})= \sqrt{\sum_{i=1}^m \left(x_i -y_i \right)^2}
 \end{align}
-\citep{cunningham2007k}
+\citep{cunningham2007k}.
 
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.5\textwidth]{images/Kn.jpg}
-    \caption{Example of K-nearest neighbor. We have two different target classes white and orange circles. We have total 26 training samples. Now we would like to predict the target class for the blue circle. Considering k value as three, we need to calculate the similarity distance using similarity measures like Euclidean distance \citep{K-NNALGORITHM}.}
+    \caption{Example of K-nearest neighbor. We have two different target classes white and orange circles and a total of 26 training samples. To predict the target class for the blue circle, considering the K value as three, one needs to calculate the similarity distance using similarity measures such as Euclidean distance \citep{K-NNALGORITHM}.}
   \label{kn}
 \end{figure}
 
 \subsection{Extremely randomized tree}
 
-Extremely randomized tree is another tree-based ensemble method for supervised classification and regression problems. It builds an ensemble of decision trees according to the classical top-down procedure in Figure \ref{random tree}. Its differences with other tree-based ensemble methods (random forest) are that the nodes are being split by choosing a threshold (cut-point) at random, and that it uses the whole training dataset rather than the bootstrap replica to grow the trees.  
+Extremely randomized tree is another tree-based ensemble method for supervised classification and regression problems. It builds an ensemble of decision trees according to the classical top-down procedure in Figure \ref{random tree}. Its differences from other tree-based ensemble methods (random forest) are that the nodes are being split by choosing a threshold (cut-point) at random, and that it uses the whole training dataset rather than the bootstrap replica to grow the trees.  
 
-As in random forest, the predictions of the trees are also aggregated to yield the final prediction, by majority vote in classification problems and arithmetic average in regression problems as shown in equation \ref{averageRF}. The explicit randomization of the cut-point and ensemble averaging reduces the variance even more, i.e $\text{Error}=\text{bias} - \text{variance}$ \citep{geurts2006extremely}. 
+As in random forest, the predictions of the trees are also aggregated to yield the final prediction, by majority vote in classification problems and arithmetic average in regression problems as shown in equation \ref{averageRF}. The explicit randomization of the cut-point and ensemble averaging reduces the variance even more, i.e. $\text{error}=\text{bias} - \text{variance}$ \citep{geurts2006extremely}. 
 \section{Training and testing}
 \label{TT}
 The process of training and testing involves feeding a learning algorithm with training data (seen data) to learn from by finding suitable parameters and evaluate its performance using testing data (unseen) as illustrated in Figure \ref{overview}. A fundamental assumption of machine learning is that the training data is representative of the distribution from which future data  will be chosen \citep{witten2016data}. Each instance in the training set contains "target value" and several "attributes" (namely features). 
