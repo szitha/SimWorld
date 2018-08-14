@@ -199,7 +199,7 @@ in frequency. Variation in frequency arises as a result of non-uniform filter pa
 
 Note that it is not always possible to find a calibrator source that satisfies the requirements mentioned in section \ref{Calib}, especially point number 2. In such cases it may be necessary to find a calibrator source that is a point source  close to the target source and then calibrate it against one of the more commonly used flux density reference calibrators, such as PKS1934-638, 3C147 or 3C286 \citep{thompson2001interferometry}. 
 
-\item Flux calibration is used to calibrate the flux density of source calibrators with unknown flux densities. The flux density of the unknown calibrators is assumed to be $1Jy$. This assumption is made such that the complex gain solutions $G$ of the reference flux density calibrator and one with unknown flux density are compared and scaled so that they match as much as possible. The CASA task used to perform this scaling or bootstrapping is $\textit{fluxscale}$ \citep{editioncasa}.
+\item Flux calibration is used to calibrate the flux density of source calibrators with unknown flux densities. The flux density of the unknown calibrators is assumed to be $1\;Jy$. This assumption is made such that the complex gain solutions $G$ of the reference flux density calibrator and one with unknown flux density are compared and scaled so that they match as much as possible. The CASA task used to perform this scaling or bootstrapping is $\textit{fluxscale}$ \citep{editioncasa}.
 \end{itemize}
 
 The solutions obtained from the tasks $(\textit{gaincal}, \textit{bandpass}, \textit{fluxscale})$ are saved in tables and then applied to uncalibrated data 
