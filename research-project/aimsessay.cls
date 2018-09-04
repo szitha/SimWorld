@@ -25,7 +25,7 @@
 \RequirePackage{color}
 \definecolor{brown}{rgb}{0.5,0.3,0.1}
 \RequirePackage[pdftex,a4paper,%
-    colorlinks=true,urlcolor=blue,citecolor=brown]{hyperref}
+    colorlinks=true,urlcolor=brown,citecolor=blue]{hyperref}
 \urlstyle{same}
 
 \RequirePackage[pdftex]{graphicx}

@@ -1,6 +1,6 @@
 \chapter{ZCal - calibrating radio interferometric data with machine learning}
 \label{c3}
-ZCal, in full "Zitha calibration" is a new machine learning radio data calibration experiment through which one make use of the telescope sensor data to determine the relationship with the secondary calibrator solutions obtained with CASA. In Section \ref{Exp}, we further discuss the external parameters affecting the observed radio interferometric data, followed by a brief description of the KAT-7 telescope and  Section \ref{kat7} describes how the sensor data and calibration solutions are processed for training. In Section \ref{algo1} we define and describe the regression algorithms used for our experiment, and in Section \ref{TT} we describe the training and testing procedure of the algorithms leading to the output results of our experiment in Section \ref{sec3}. 
+ZCal, in full "Zitha calibration" is a new machine learning radio data calibration experiment through which one make use of the telescope sensor data to determine the relationship with calibrator solutions obtained using conventional calibration techniques. In Section \ref{Exp}, we further discuss the external parameters affecting the observed radio interferometric data, followed by a brief description of the KAT-7 telescope and  Section \ref{kat7} describes how the sensor data and calibration solutions are processed for training. In Section \ref{algo1} we define and describe the regression algorithms used for our experiment, and in Section \ref{TT} we describe the training and testing procedure of the algorithms leading to the output results of our experiment in Section \ref{sec3}. 
 \section{External parameters affecting the data}
 \label{Exp}
 %%Each antenna in an array has a primary beam which is used for perfect resolution during an observation of a source. The resolution of each antenna is defined as =1.22 / D, where  ~ 21 cm is the  wavelength, D is the diameter of your dish and is the resolution angle. In an interferometric array of N antennas with baselines b, the resolution angle is defined as  =1.22  / d, where d is the maximum baseline in an array.   The beam of all the baselines is call a synthesised beam which is a multiplication of all the primary beams.
@@ -9,7 +9,7 @@ Astronomical observations done with interferometric radio
 telescopes suffer from variable gain effects that can
 broadly be classified as direction-independent and direction-dependent errors. The complex instrumental gains due to the electronic devices that follow the feed elements are directionally independent \citep{bhatnagar2008correcting}; relative amplitude and phase gain for each antenna; phase and amplitude drifts in the electronics of each antenna; amplitude response as a function of elevation (gain curve) and tropospheric amplitude and phase effects.
 
-As defined in Chapter 1, \textit{calibration} is the process of correcting for the signal corrupted by various mechanisms. Some of these mechanisms include external parameters such as fluctuations in air temperature, weather conditions on site and antenna pointing errors \citep{taylor1999synthesis}. Antenna pointing error is the difference between the actual pointing position and the requested (to go) position. Though an array consists of more than one antenna, each with a tracking centre, during a request ("POINT"), they must all follow the same required position. However, this is not always accurate, owing to misalignment of the elevation axis, atmospheric refraction, gravitational deformation of the structure, differential heating of the structure and wind loading \citep{taylor1999synthesis}. Wind loading is an effect that degrades the pointing accuracy, thus the design of the telescope structure plays a role in terms of wind loads \citep{smithdynamic}. Telescopes with a large dish structure are subjected to large wind loads. The wind speed and the geometric dimensions are the cause of highly turbulent flows around the antenna. There are violent shifts in airflow on the surface and around the antenna \citep{upnere2012characterization}. Large errors can reduce the sensitivity of the telescope, as shown in equation \ref{sens}:
+As defined in Chapter 1, \textit{calibration} is the process of correcting for the signal corrupted by various mechanisms. Some of these mechanisms include external parameters such as fluctuations in air temperature, weather conditions on site and antenna pointing errors \citep{taylor1999synthesis}. Antenna pointing error is the difference between the actual pointing position and the requested (to go) position. Though an array consists of more than one antenna, each with a tracking centre, during a request ("POINT"), they must all follow the same required position. However, this is not always accurate, owing to misalignment of the elevation axis, atmospheric refraction, gravitational deformation of the structure, differential heating of the structure and wind loading \citep{taylor1999synthesis}. Wind loading is an effect that degrades the pointing accuracy, thus the design of the telescope structure plays a role in terms of wind loads \citep{smithdynamic}. Telescopes with a large dish structure are subjected to large wind loads. The wind speed and the geometric dimensions are the cause of highly turbulent flows around the antenna. There are violent shifts in airflow on the surface and around the antenna \citep{upnere2012characterization}. The following equation \ref{sens} shows the nominal expected sensitivity of the telescope without any errors:
 \begin{align}
 \left[\frac{2kT_{sys}}{A_{eff}\sqrt{N(N-1)\tau \Delta \nu}}\right]
 \label{sens},
@@ -50,7 +50,7 @@ Digital back end & Roach \\
 Elevation & 1054 m\\
 \bottomrule
 \end{tabular}
-\caption{The seven-dish instruments each has a diameter of 12 m and linear polarization horizontal and vertical. The operational lower noise amplifier for each dish is $80\;K$  with system temperature $<35\;K$. The frequency range of this instrument is $1200-1950 \text{MHz}$ with bandwidth of $256\;\text{MHz}$ \citep{foley2016engineering}.}
+\caption{The instrument consist of 7 12-m dishes with linearly polarized feeds. The operational lower noise amplifier for each dish is $80\;K$  with system temperature $<35\;K$. The frequency range of this instrument is $1200-1950 \text{MHz}$ with bandwidth of $256\;\text{MHz}$ \citep{foley2016engineering}.}
 \label{K7 spec}
 \end{table}
 
@@ -88,13 +88,13 @@ Elevation limits & 0$^{\circ}$, 90 $^{\circ}$\\
 Feed/Cryo & Mass 75 kg\\
 \bottomrule
 \end{tabular}
-\caption{The table shows the KAT-7 dish specification, each with pointing accuracy of 25 $^{\prime \prime}$. Each telescope is built with azimuth ranging from -175$^{\circ}$ to +285 $^{\circ}$ and elevation drive ranging from 0$^{\circ}$ to 90 $^{\circ}$. For protection of the dish from high wind conditions on site, the telescope is built to operate on 45 km/h windspeed and drive to protection mode at 55 km/h wind speed. \citep{foley2016engineering}.}
+\caption{The table shows the KAT-7 dish specification \citep{foley2016engineering}.}
 \label{DSpec}
 \end{table}
 
 \subsection{Sensor data}
 
-During scientific observations, data indexed by time are continuously collected from instruments and  environment (atmospheric pressure, air temperature,  wind conditions, and relative humidity, wind direction, etc). Samples as a function of time are recorded from software and sensors attached to the telescopes with their adjoining instrumentation \citep{slabberICALEPCS2017}. Sampling strategies are set on sensors processed by the control and monitoring (CAM) system, ranging from several updates per second to infrequent updates. The typical sample in KAT-7 CAM contains the following attributes: a sensor name, sample timestamp, value timestamp, status and a value as shown in the following example where red represents the sensor sample and green is the sensor sample description  \citep{slabber2015overview, slabber2015illustrate}. 
+During scientific observations, data indexed by time are continuously collected from instruments and  environment (atmospheric pressure, air temperature,  wind conditions, and relative humidity, wind direction, etc). Samples as a function of time are recorded from software and sensors attached to the telescopes with their adjoining instrumentation \citep{slabberICALEPCS2017}. Sampling strategies are set on sensors processed by the control and monitoring (CAM) system, ranging from several updates per second to infrequent updates. The typical sample in KAT-7 CAM contains the following attributes: a sensor name, sample timestamp, value timestamp, status and a value as shown in the following example, where red represents the sensor sample and green is the sensor sample description  \citep{slabber2015overview, slabber2015illustrate}. 
 
 \definecolor{keywords}{RGB}{255,0,90}
 \definecolor{comments}{RGB}{0,0,113}
@@ -112,9 +112,9 @@ During scientific observations, data indexed by time are continuously collected 
 \begin{tcolorbox} 
 \begin{lstlisting}
 
-   {"name": "wx_station_wind_speed",
+   {"name": wx_station_wind_speed,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 10.3}
 
@@ -136,7 +136,7 @@ All components are interfaced to the CAM system via the Karoo Array Telescope Co
 
 \subsection{Preparation of training data}\label{prep}
 
-%The objective of this study is to find correlations between
+The objective of this study is to find correlations between
 calibration solutions and sensor information on the telescope.
 Therefore the main dataset for the study is the time-based
 sensor information of each antenna.
@@ -149,7 +149,7 @@ In every observation, the collected data are stored by the data capturing system
 
 In preparation for the training and testing dataset, we look at environmental sensors and instrumental sensors
 recorded during observations with a flux calibrator and a phase calibrator source
-PKS1613-586 in Figure \ref{pks1613}. This was the most frequently used phase calibrator during the KAT-7 commissioning phase. A series of observations for different tests with this calibrator \ref{pks1613} were taken in the period from December 2011 to November 2014. These tests includes Circinus X-1 monitoring at frequency $2022 - 1622.391 \;\text{MHz}$; OH maser monitoring at frequency $1666.481 - 1664.919 \;\text{MHz}$, $1666.381-1666.819\;\text{MHz}$,  $1666.281- 1664.719\;\text{MHz}$; spectral dynamic range test at frequency $1669.125 - 1662.877 \;\text{MHz}$, $1678.500 - 1653.506 \;\text{MHz}$; Circinus X-1 H absorption at frequency $1425.125 - 1418.827\; \text{MHz}$, $1424.125 - 1417.877 \;\text{MHz}$ and imaging new calibrators at frequency $2022 - 1622.391 \;\text{MHz}$. The chosen sensors of interested from each observation is listed in the following. 
+PKS1613-586 in Figure \ref{pks1613}. This was the most frequently used phase calibrator during the KAT-7 commissioning phase. A series of observations for different tests with this calibrator \ref{pks1613} were taken in the period from December 2011 to November 2014. These tests includes Circinus X-1 monitoring at frequency $2022 - 1622.391 \;\text{MHz}$; OH maser monitoring at frequency $1666.481 - 1664.919 \;\text{MHz}$, $1666.381-1666.819\;\text{MHz}$,  $1666.281- 1664.719\;\text{MHz}$; spectral dynamic range test at frequency $1669.125 - 1662.877 \;\text{MHz}$, $1678.500 - 1653.506 \;\text{MHz}$; Circinus X-1 H absorption at frequency $1425.125 - 1418.827\; \text{MHz}$, $1424.125 - 1417.877 \;\text{MHz}$ and imaging new calibrators at frequency $2022 - 1622.391 \;\text{MHz}$. The chosen sensors of interest from each observation are: 
 \begin{enumerate}
 
 \item Air temperature
@@ -178,17 +178,19 @@ The environmental sensors measure the environmental conditions on site via the w
         stringstyle=\color{red},
         showstringspaces=false,
         identifierstyle=\color{green}}
+        
+        
 \begin{tcolorbox}
 \begin{lstlisting}
-   {"name": "anc_air_pressure",
+   {"name": anc_air_pressure,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 981.65}
    
-   {"name": "anc_gust_wind_speed",
+   {"name": anc_gust_wind_speed,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 3.96}
 
@@ -198,63 +200,62 @@ The environmental sensors measure the environmental conditions on site via the w
    "value_ts": 1506430493.4774999619,
    "value": 23.96}
 
-   {"name": "anc_air_relative_humidity",
+   {"name": anc_air_relative_humidity,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 25.87}
 
-   {"name": "anc_wind-direction",
+   {"name": anc_wind-direction,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 46.61}
-  
 \end{lstlisting}
 \end{tcolorbox}
 
 \begin{tcolorbox}
 \begin{lstlisting}
-   {"name": "antX_pos.actual-pointm-elev",
+   {"name": antX_pos.actual-pointm-elev,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 89.97}
    
-   {"name": "antX_pos.actual-pointm-azim",
+   {"name": antX_pos.actual-pointm-azim,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": -78.81}
    
-   {"name": "antX_pos.actual-refrac-elev",
+   {"name": antX_pos.actual-refrac-elev,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 89.80}
    
-   {"name": "antX_pos.actual-refrac-azim",
+   {"name": antX_pos.actual-refrac-azim,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": -70.15}
    
-   {"name": "antX_pos.actual-scan-elev",
+   {"name": antX_pos.actual-scan-elev,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 89.82}
    
-   {"name": "antX_pos.actual-scan-azim",
+   {"name": antX_pos.actual-scan-azim,
    "time": 1506430493.4778199196,
-   "status": "nominal",
+   "status": nominal,
    "value_ts": 1506430493.4774999619,
    "value": 78.94}
    
 \end{lstlisting}
 \end{tcolorbox}
 
-We access this data from the HDF5 file using the KAT-7 data access library called katdal \citep{molenaar2017kern}. We select the sensor data of interest with time index during the telescope tracking of the flux calibrator and phase calibrator PKS1613-586. The following is a Python code example showing how the sensor time index is selected from the observations for a specific calibrator.
+We access this data from the HDF5 file using the KAT-7 data access library called katdal \citep{skatelescope}. We select the sensor data of interest with time index during the telescope tracking of the flux calibrator and phase calibrator PKS1613-586. The following is a Python code example showing how the sensor time index is selected from the observations for a specific calibrator.
 
 \begin{tcolorbox}
 \begin{lstlisting}
@@ -289,10 +290,12 @@ for scan in hdf5.scans() :
 #obtaining time index of telescope sensors and scan time.
 Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
                        Time_Scan))[0]
+                       
+                                           
 \end{lstlisting}
 \end{tcolorbox}
 
- The katdal library can manipulate the HDF5 observation file in many ways, including file format conversion from HDF5 to measurement sets (ms). This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}. This conversion also provides an option whereby one flag all channels affected with known radio frequency interference (RFI). Once the observation file has been converted to ms format, hand flagging for unknown RFI is performed inside CASA using the task $\textit{flagdata}$ for H and V cross correlation products. After satisfactory flagging of the data, one then proceeds to the calibration step. 
+ The katdal library can manipulate the HDF5 observation file in many ways, including file format conversion from HDF5 to measurement sets (MS). This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}. This conversion also provides an option whereby one flags all channels affected with known radio frequency interference (RFI). Once the observation file has been converted to ms format, hand flagging for unknown RFI is performed inside CASA using the task $\textit{flagdata}$ for H and V cross correlation products. After satisfactory flagging of the data, one then proceeds to the calibration step. 
  
 The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this dissertation we only focus on the 1GC calibration with an interest in obtaining complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude and phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and stores these in calibration tables.
  
@@ -301,10 +304,10 @@ These solutions are calculated based on reference antenna 5 in our case, since i
 Since our phase calibrator PKS1613-586 have an unknown flux density, the obtained values of the antenna based amplitude solutions differ from the correct ones by a factor depending only on the true source flux density by 
 
 \begin{equation}
-\frac{1 Jy}{(\text{true source flux density})^{0.5}},\;  \text{where 1Jy is the assumed flux density for \text{PKS1613-586}}.
+\frac{1 \mathrm{Jy}}{(\text{true source flux density})^{0.5}},\;  \text{where 1Jy is the assumed flux density for \text{PKS1613-586}}.
 \end{equation} 
 
-We then used one of the following flux-density calibrators with known flux models: PKS1934-63, 3C147, 3C286 tied to the Perley-Taylor 99 to scale the correct gain amplitude of the phase calibrator in Figure \ref{pks1613} so that it matched the correctly scaled amplitude solutions for the flux-density calibrators as well as possible by running a CASA task $\textit{fluxscale}$ \citep{CosmoAIMS}. This process is called $\textit{bootstrapping}$. After obtaining the final table with correct amplitude and phase complex gain solutions for the phase calibrator in Figure \ref{pks1613}, we then used the complex solutions matrix written on the "CPARAM" column to generate the training and testing calibration solution data per antenna $i$. An example of the complex gain amplitude and phase solutions is shown in Figures \ref{amp} and \ref{phase}. These solutions were obtained using the CASA task $gaincal$ described in Chapter 1. 
+We then used one of the following flux-density calibrators with known flux models: PKS1934-63, 3C147, 3C286 tied to the Perley-Taylor 99 to scale the correct gain amplitude of the phase calibrator in Figure \ref{pks1613} so that it matched the correctly scaled amplitude solutions for the flux-density calibrators as well as possible by running a CASA task $\textit{fluxscale}$ \citep{CosmoAIMS}. This process is called $\textit{bootstrapping}$. After obtaining the final table with correct amplitude and phase complex gain solutions for the phase calibrator in Figure \ref{pks1613}, we then used the complex solutions matrix written to the "CPARAM" column to generate the training and testing calibration solution data per antenna $i$. An example of the complex gain amplitude and phase solutions is shown in Figures \ref{amp} and \ref{phase}. These solutions were obtained using the CASA task $gaincal$ described in Chapter 1. 
 
 The following code shows how the parameters were set in standard practice of 1GC as described in chapter 1 section \ref{caltech}.
 
@@ -376,10 +379,11 @@ transfer = gain_calibrator
 fluxscale()
 \end{lstlisting}
 \end{tcolorbox}
-A multi-frequency synthesis image deconvolution was carried out using a $\textit{CLEAN}$ CASA task with $256 \times 256$ and cell size of $30$ arc seconds. The image rms noise in Figure \ref{pks1613} was measured using the rms noise of the 0 iteration residual image.
+A multi-frequency synthesis image deconvolution was carried out using the $\textit{CLEAN}$ CASA task with an image size of  $256 \times 256$ and cell size of $30$ arc seconds. The image rms noise in Figure \ref{pks1613} was measured using the rms noise of the 0 iteration residual image.
 \begin{tcolorbox}
 \begin{lstlisting}
-clean(vis='CircinusX-1.split.ms',imagename='PKS1613586.im',
+     clean(vis='CircinusX-1.split.ms',
+     imagename='PKS1613586.im',
      niter=10000,threshold='3.0mJy',
      psfmode='hogbom',
      interactive=False,
@@ -394,26 +398,26 @@ clean(vis='CircinusX-1.split.ms',imagename='PKS1613586.im',
  \begin{figure}[H]
  \centering
     \includegraphics[ height=13cm, width=15.5cm]{images/phaseCasa.eps}
-    \caption{Complex gain phase solutions for phase calibrator PKS1613-586 obtained from CASA per antenna i. Each colour represents a different polarization where blue is H-polarization and green is v-polarization. Antenna 5 shows zero phase since it is used as a reference antenna.}
+    \caption{Complex gain phase solutions for phase calibrator PKS1613-586 obtained from CASA per antenna $i$. Blue is H-polarization and green is V-polarization. Antenna 5 shows zero phase since it is used as a reference antenna.}
   \label{phase}
 \end{figure}
 
  \begin{figure}[H]
  \centering
     \includegraphics[ height=13cm, width=15.5cm]{images/CasaAmp.eps}
-    \caption{Complex gain amplitude solutions for phase calibrator PKS1613-586 obtained from CASA per antenna $i$. Each colour represents different polarization where blue is H-polarization and green is v-polarization. }
+    \caption{Complex gain amplitude solutions for phase calibrator PKS1613-586 obtained from CASA per antenna $i$. Blue is H-polarization and green is V-polarization. }
   \label{amp}
 \end{figure}
  
  \begin{figure}[H]
  \centering
     \includegraphics[ height=8cm, width=10cm]{images/162.png}
-    \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was carried in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08\;Jy$ using $\textit{CLEAN}$ task in CASA.}
+    \caption{An image of the phase calibrator PKS1613-586 located at RA, Dec (J2000): 16:17:17.88951, -58:48:07.8604. Its flux density in $Jy$ at $\text{frequency}=1.82688e^{+09} \text{Hz}$ is $4.59973 \pm 0.0146351$. This flux scaling was carried out in CASA using a strong flux calibrator. The expected rms noise of this image was calculated to be $0.08\;Jy$ using $\textit{CLEAN}$ task in CASA.}
   \label{pks1613}
 \end{figure}
 \section{Regression algorithm} 
 \label{algo1}
-Many different approaches employed in machine learning regression. These approaches learn the relationship between the input and output by fitting a model directly from the data. The fitting process involves the adjustment and optimization of hyper-parameters to minimize the prediction error. This is usually done in an independent validation and testing dataset. In this study, we consider the tree-based method approach: Decision tree, random forest, extremely randomized tree and the neighbourhood search approach: K-nearest neighbor to tackle our problem. Firstly, we formulate our regression estimation problem as follows. Suppose we have a feature matrix 
+Many different approaches employed in machine learning regression. These approaches learn the relationship between the input and output by fitting a model directly from the data. The fitting process involves the adjustment and optimization of hyper-parameters to minimize the prediction error. This is usually done in an independent validation and testing dataset. In this study, we consider tree-based approaches: Decision tree, random forest, extremely randomized tree and the neighbourhood search approach: (K-nearest neighbor) to tackle our problem. Firstly, we formulate our regression estimation problem as follows. Suppose we have a feature matrix 
 \begin{align*}
 \textbf{X}_{t}=\begin{bmatrix}
     x_{11} & x_{12} & x_{13} & \dots  & x_{1n} \\
@@ -469,13 +473,13 @@ with each row a vector of length m, containing the m variable measurements for t
 \end{bmatrix},
 \end{align*}
  
-The problem is to construct a learning machine, $M:\textbf{X}_{t} \rightarrow \textbf{Y}_{t}$, which when given a validation set of sensor examples, $\textbf{X}^*_{t}$, minimises some measure of discrepancy between its prediction $M(\textbf{X}^*_{t})\approx\widehat{\textbf{Y}}_{t}$, and the value of $\textbf{Y}_{t}$, where M represents the predictor. We measure the discrepancy using the commonly used statistical measures in regression \citep{borchani2015survey}. This includes the coefficient of determination, i.e.
+The problem is to construct a learning machine, $M:\textbf{X}_{t} \rightarrow \textbf{Y}_{t}$, which when given a validation set of sensor examples, $\textbf{X}^*_{t}$, minimises some measure of discrepancy between its prediction $M(\textbf{X}^*_{t})\approx\widehat{\textbf{Y}}_{t}$, and the value of $\textbf{Y}_{t}$, where M represents the predictor. We measure the discrepancy using four commonly used statistical measures in regression \citep{borchani2015survey}: coefficient of determination, explained variance, mean squared error (MSE) and mean absolute error (MAE). The coefficient of determination is given by:
 
 \begin{equation}
 R^2\left[\textbf{Y}_{t},\widehat{\textbf{Y}}_{t}\right]=1-\frac{\sum_{k} \left[(\textbf{Y}_{t})_{k}-(\widehat{\textbf{Y}}_{t})_{k}\right]^2}{\sum_{k}\left[(\textbf{Y}_{t})_{k}-\overline{\textbf{Y}_{t}}\right]^2}, 0 \leq R^2 \leq 1,
 \label{R2score}
 \end{equation}
-which simply measures how well the future observations are to be predicted by M, with the best score being 1 for the best performing predictor. 
+which simply measures how well the future observations are to be predicted by M, with the best score being 1 for the best performing predictor 
 where,  \begin{equation}
 \overline{\textbf{Y}_{t}}=\frac{1}{d_{samples}} \sum_{k} (\textbf{Y}_{t})_{k},
 \end{equation} 
@@ -500,7 +504,7 @@ measures the proportion to which the predictor accounts for the variation of the
 \end{align*}
 \citep{fortmann2012understanding}
 
-and the mean squared error (MSE), mean absolute error (MAE), which measures the average of the squared and absolute of the errors between the the observed values $\textbf{Y}_{t}$ and the predicted $\widehat{\textbf{Y}}_{t}$. For accurate prediction of the predictor, the value of MSE and MAE should converge to zero \citep{james2013introduction}. 
+MSE and MAE, which measure the average of the squared and absolute of the errors between the the observed values $\textbf{Y}_{t}$ and the predicted $\widehat{\textbf{Y}}_{t}$. For accurate prediction of the predictor, the value of MSE and MAE should converge to zero \citep{james2013introduction}. 
 
 \begin{align}
 \text{MSE}\left(\textbf{Y}_{t},\widehat{\textbf{Y}}_{t} \right)=\frac{1}{d_{samples}} \sum_{k} (\textbf{Y}_{t}-\widehat{\textbf{Y}}_{t})^2_{k}
@@ -515,7 +519,7 @@ and the mean squared error (MSE), mean absolute error (MAE), which measures the 
 The aim of this regression exercise is to predict multiple target variables $\widehat{\textbf{Y}}_{t}$  hence it is referred to as multi-output regression. The learned multi-target model will be used afterwards to simultaneously predict the values $\widehat{\textbf{Y}}_{t+1}$  of all target variables of the new incoming unlabeled instances $\textbf{X}_{t+1}$. It has been proven that multi-output regression methods yield better predictive performance and also provide means to
 model the multi-output datasets effectively by considering not only the underlying relationships
 between the features and the corresponding targets but also the relationships between
-the targets, thereby producing simpler models with better computational efficiency. According to \citep{borchani2015survey}, several applications of multi-output regression are discussed, including simultaneous estimation of different biophysical parameters from remote sensing images, channel estimation through the prediction of several received signals, etc. In further discussions, it is mentioned that these applications give rise to challenges such as missing data, i.e., when some features or target variables are not observed.
+the targets, thereby producing simpler models with better computational efficiency. \citep{borchani2015survey} discuss several applications of multi-output regression, including simultaneous estimation of different biophysical parameters from remote sensing images, channel estimation through the prediction of several received signals, etc. In further discussions, it is mentioned that these applications give rise to challenges such as missing data, i.e., when some features or target variables are not observed.
 
 \subsection{Decision tree}
 \label{Dt}
@@ -524,7 +528,7 @@ Decision tree algorithms are popular methods for machine learning tasks such as 
 For a response variable that
 has classes, the tree algorithm (classification) organizes the dataset into groups by the response based on the similarities of the data, and when the response variable is numeric or continuous, the tree algorithm (regression) uses the data to predict the outcome by fitting the regression model in each of the independent variables \citep{morgan2014classification}.
 
-Decision trees are a simple but powerful form of multi-variable analysis, they  perform a recursive binary partitioning of the feature space. The term binary refers to the fact that the parent node  will always be split into exactly two child nodes \citep{moisen2008classification}. The term recursive is used to indicate that each child node will, in turn, become a parent node, unless it is a terminal node, as illustrated in Figure \ref{images/DecisionTree}, where the split occurs at the decision node.  
+Decision trees are a simple but powerful form of multi-variable analysis. In effect, they  perform a recursive binary partitioning of the feature space. The term binary refers to the fact that the parent node  will always be split into exactly two child nodes \citep{moisen2008classification}. The term recursive is used to indicate that each child node will, in turn, become a parent node, unless it is a terminal node, as illustrated in Figure \ref{images/DecisionTree}, where the split occurs at the decision node.  
 
 Decision trees are built by growing a tree upside down, starting from the root node. The data sample passes down the tree through a series of splits, or nodes, at which a decision is made on the direction in which to proceed, either the left or right sub-tree, based on a sequence of questions about the features \citep{musicant2007supervised}. The next split or decision made depends on the answers to previous questions. Eventually, a terminal node is reached and the prediction is made.  
 
@@ -535,32 +539,27 @@ Decision trees are built by growing a tree upside down, starting from the root n
   \label{images/DecisionTree}
 \end{figure}
 
-The binary recursive partitioning applies to the fitting of both classification and regression trees, where in both cases the variable and the location of the split are
-chosen to minimize the impurity of the node at that point. However, the selection criteria of splitting each node are different for these two methods. In our case the for the regression scenario, the splitting rules used to minimize the impurity of each node $c$ with the number of samples $N_{c}$ and training data $\textbf{X}_{c}$ are the mean square error \citep{morgan2014classification}.
+The binary recursive partitioning applies to the fitting of both classification and regression trees. Each node in a tree is split based on its impurity, which is a measure of how badly the samples at that node fits the model defined in equation \ref{model}. Therefore, in regression and classification trees, variables and the locations of the split are
+chosen to minimize the impurity of the node at that point. However, the selection criteria of splitting each node are different for these two methods. In our case the for the regression scenario, the splitting rules used to minimize the impurity of each node $c$ is the MSE and MAE as defined in equations \ref{MSE} and \ref{MAE} \citep{morgan2014classification}. The sample mean of the response variable (estimated value $\mu_{c}$) that represents the assigned prediction in each terminal node is defined as: 
 \begin{align}
-\text{MSE}\left(\textbf{X}_{c}\right)=\frac{1}{N_{c}} \sum_{i\in N_{c}} (\textbf{Y}_{i}-\mu_{c})^2,
-\end{align}  
-which minimizes the mean of the sum of the square of the differences between the target value $\textbf{Y}_{i}$ and the estimated value $\mu_{c}$ \citep{moisen2008classification},
+\mu_{c}=\frac{1}{N_{c}} \sum_{i\in N_{c}} \textbf{Y}_{i},
+\label{model}
+\end{align} 
+where $N_{c}$ is the number of samples in each node, and $\textbf{X}_{c}$ is the training samples. 
  
-where  $$\mu_{c}=\frac{1}{N_{c}} \sum_{i\in N_{c}} \textbf{Y}_{i}$$ is the sample mean of the response variable that represents the  assigned prediction in each terminal node.
-
-The MAE 
-\begin{align}
-\text{MAE}\left(\textbf{X}_{c} \right)=\frac{1}{N_{c}} \sum_{i\in N_{c}} \left|\textbf{Y}_{i}-\mu_{c}\right|, 
-\end{align}
- minimizes the mean of the sum of the absolute differences between the target $\textbf{Y}_{i}$ and the estimated value  $\mu_{c}$ \citep{moisen2008classification}. These methods not only measure the impurity in each node, but are also used to measure the accuracy of the predictor, as in equations \ref{MSE} and \ref{MAE}. Another commonly used strategy or measure in classification problems which also applies in regression problem, for selecting the best splits, from a set of possible split is to maximize the information gain at each tree node; i.e., the split chosen at each decision node is chosen from the the set $\text{argmax} IG(\textbf{X}_{c},s)$ where $IG(\textbf{X}_{c},s)$ is the information gain when a split $s$ is applied to sample data $\textbf{X}_c$. This is the difference between the parent node (decision node) impurity and the weighted sum of the child nodes in equation \ref{IG}. 
+These methods not only measure the impurity in each node, but are also used to measure the accuracy of the predictor, as in equations \ref{MSE} and \ref{MAE}. Another commonly used strategy or measure in classification problems which also applies in regression problem, for selecting the best splits, from a set of possible split is to maximize the information gain at each tree node; i.e., the split chosen at each decision node is chosen from the the set $\mathrm{argmax (IG(\textbf{X}_{c},s))}$ where $\mathrm{IG}(\textbf{X}_{c},s)$ is the information gain when a split $s$ is applied to sample data $\textbf{X}_c$. This is the difference between the parent node (decision node) impurity and the weighted sum of the child nodes in equation \ref{IG}. 
  
  \begin{align}
- IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{Impurity}(\textbf{X}_{c(left)})- \frac{N_{c(right)}}{N_c}\times \text{Impurity} (\textbf{X}_{c(right)}), \label{IG}
+ \mathrm{IG}(\textbf{X}_c,s)&= \mathrm{Impurity}(\textbf{X}_c)-\frac{N_{c(\mathrm{left})}}{N_c}\times \mathrm{Impurity}(\textbf{X}_{c(\mathrm{left})})- \frac{N_{c(\mathrm{right})}}{N_c}\times \mathrm{Impurity} (\textbf{X}_{c(\mathrm{right})}), \label{IG}
  \end{align}
- where $s$ is a split partitioning the training sample $\textbf{X}_c$ of size $N_c$ into two datasets $\textbf{X}_{c(left)}$ and $\textbf{X}_{c(left)}$ each of size $N_{c(left)}$ and $N_{c(right)}$.
+ where $s$ is a split partitioning the training sample $\textbf{X}_c$ of size $N_c$ into two datasets $\textbf{X}_{c(\mathrm{left})}$ and $\textbf{X}_{c(\mathrm{left})}$ each of size $N_{c(\mathrm{left})}$ and $N_{c(\mathrm{right})}$.
 If the impurity measure is the MSE, we therefore define the information gain by
  \begin{align}
- IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{MSE}_{(left)}- \frac{N_{c(right)}}{N_c}\times \text{MSE}_{(right)}.
+ \mathrm{IG}(\textbf{X}_c,s)&= \mathrm{Impurity}(\textbf{X}_c)-\frac{N_{c(\mathrm{left})}}{N_c}\times \text{MSE}_{(\mathrm{left})}- \frac{N_{c(\mathrm{right})}}{N_c}\times \text{MSE}_{(\mathrm{right})}.
   \end{align}
 If the impurity measure is the MAE, the information gain is defined by   
  \begin{align}
- IG(\textbf{X}_c,s)&= \text{Impurity}(\textbf{X}_c)-\frac{N_{c(left)}}{N_c}\times \text{MAE}_{(left)}- \frac{N_{c(right)}}{N_c}\times \text{MAE}_{(right)}. 
+ \mathrm{IG}(\textbf{X}_c,s)&= \mathrm{Impurity}(\textbf{X}_c)-\frac{N_{c(\mathrm{left})}}{N_c}\times \text{MAE}_{(\mathrm{left})}- \frac{N_{c(\mathrm{right})}}{N_c}\times \text{MAE}_{(\mathrm{right})}. 
  \end{align}
  
 For multi-output decision trees that predict multiple continuous target attributes at once, the advantage over building a separate
@@ -576,7 +575,7 @@ of its instances and its defining feature values.
 \subsection{Random forest}
 While classification and regression trees are powerful methods in and of themselves, much work has been done in machine learning to improve the predictive ability of these tools by combining separate tree models into what is often called ensemble.
 
-A random Forest is a combination (ensemble) of decision tree predictors such that each tree depends on the values of a random vector sampled independently and with the same distribution for all trees in the forest, as shown in Figure \ref{random tree} \citep{breiman2001random}. This algorithm  was introduced by \citep{ho1995random} after having noticed that decision trees were limited in their accuracy owing to their inability to grow in arbitrary complexity. This method was not only more accurate, but was less susceptible to overfitting.
+A random forest is a combination (ensemble) of decision tree predictors such that each tree depends on the values of a random vector sampled independently and with the same distribution for all trees in the forest, as shown in Figure \ref{random tree} \citep{breiman2001random}. This algorithm  was introduced by \citep{ho1995random} after having noticed that decision trees were limited in their accuracy owing to their inability to grow to arbitrary complexity. This method was not only more accurate, but was less susceptible to overfitting.
 
  \begin{figure}[H]
   \centering
@@ -628,7 +627,7 @@ The two main parameters of a random forest are the number of trees grown and the
 
 \subsection{K-nearest neighbour}
 
-The K-nearest neighbor algorithm is a well known non-parametric algorithm commonly used for regression and classification problems. This algorithm does not make any assumptions about the distribution of the data being evaluated, i.e., the model structure is determined from the data. The learning technique used in K-nearest neigbors, is known as the instance-based learning. This technique is based on the memorization of the training dataset and the number of parameters is unbounded and grows with the size of the data. 
+The K-nearest neighbor algorithm is a well known non-parametric algorithm commonly used for regression and classification problems. This algorithm does not make any assumptions about the distribution of the data being evaluated, i.e., the model structure is determined from the data. The learning technique used in K-nearest neigbors is known as the instance-based learning. This technique is based on the memorization of the training dataset and the number of parameters is unbounded and grows with the size of the data. 
 
 The intuition underlying nearest neighbor regression is quite straightforward;
 the output predictions are obtained by looking into the memorized examples where the cost of the learning process is 0. The cost is in the computation of the prediction, with the prediction output being the continuous average values (or median) of the values of its K-nearest neighbors. The commonly used measure in K-nearest neighbors is the distance functions , i.e., consider $\mathcal{M}$ the m-dimensional Euclidean space $\mathbb{R}^m$  , a training data set $\textbf{X}=\{\textbf{x}_1,\dots, \textbf{x}_n\} \subset \mathcal{M}$, a query point $q\in \mathcal{M}$, and a distance metric $d:\mathcal{M}^2 \rightarrow \mathbb{R}$. The K-nearest neighbor search is the task of finding  the K closest (w.r.t. $d$ ) points to $q$ from the data set $\textbf{X}$, i.e., we find a set $\textbf{A} \subset \textbf{X}$ for which it holds  that $|\textbf{A}|= K$ and  $d(q,\textbf{x})\leq d(q,\textbf{y})$ $\forall$ $\textbf{x}\in \textbf{A}, \textbf{y}\in \textbf{X} \;\text{or}\; \textbf{A}$ \citep{hyvonen2015fast}. 
@@ -670,11 +669,11 @@ The process of training and testing involves feeding a learning algorithm with t
   \label{overview}
 \end{figure}
 
-Referring to Section \ref{prep}, challenges and difficulties of gathering  a larger data set were encountered  due to faulty radio telescopes leading to observations being conducted with fewer elements in an array, observations with target of interest PKS1613-586 conducted using only the baselines of interest (short or long), KAT-7's lifespan lasting for a short period, and radio frequency interference affecting calibration solutions. The advantage of having a large testing dataset is a more reliable estimate of accuracy, whereas a large training set is more representative of how much data are available for the learning process. 
+Referring to Section \ref{prep}, some challenges and difficulties of gathering  a larger data set were encountered  due to faulty radio telescopes leading to observations being conducted with fewer elements in an array, observations with target of interest PKS1613-586 conducted using only the baselines of interest (short or long), KAT-7's lifespan lasting for a short period, and radio frequency interference affecting calibration solutions. The advantage of having a large testing dataset is a more reliable estimate of accuracy, whereas a large training set is more representative of how much data are available for the learning process. 
 
-Despite the challenges mentioned above, we managed to construct a data matrix $\textbf{M}$ of dimension  $1760\times 75$ containing sensor data $\textbf{X}_t\in \mathbb{R}^{1760 \times 47}$ and 1GC calibration solutions $\textbf{Y}_t$ $\in \mathbb{C}^{1760 \times 14}$ from 28 different observations at integration time $\Delta t$ ranging from $1-12$ hours dependending on each observation requirement. Take note that the 14 columns in plane $\mathbb{C}$ represent the amplitude and phase solutions for H,V polarization, i.e. $7 \times 2$; and the 47 columns in plane $\mathbb{R}$ are the number of selected sensors for all the antennas. Since each calibration solution in $\textbf{Y}_t$ is represented as complex variables \begin{align}
+Despite the challenges mentioned above, we managed to construct a data matrix $\textbf{M}$ of dimension  $1760\times 75$ containing sensor data $\textbf{X}_t\in \mathbb{R}^{1760 \times 47}$ and 1GC calibration solutions $\textbf{Y}_t$ $\in \mathbb{C}^{1760 \times 14}$ from 28 different observations at integration time $\Delta t$ ranging from $1-12$ hours dependending on each observation requirement. Take note that the 14 columns in plane $\mathbb{C}$ represent the amplitude and phase solutions for H,V polarization, i.e. $7 \times 2$; and the 47 columns in plane $\mathbb{R}$ are the number of selected sensors for all the antennas. Since each calibration solution in $\textbf{Y}_t$ is represented as a complex variable \begin{align}
 e^{i\phi}= \cos\phi + i\sin\phi, \label{cx}
-\end{align} for each polarization H $\&$ V and we know from \citep{taylor1999synthesis} that most data corruption occurs before the signals are correlate, we therefore split equation \ref{cx}, into gain amplitude solutions by taking the absolute value  $\left|e^{i\phi}\right|$ and gain phase solutions $\phi$ in radians for both polarizations. In every supervised machine learning problem, it is crucial to label the input and output of the dataset before starting the learning process. In our case, since this is a regression problem aiming to predict calibration solutions from sensor data, we therefore label the sensor data as input features and the calibration solutions as output targets.
+\end{align} for each polarization H $\&$ V. Due to different physical causes on the received signal, we therefore choose to treat the antenna phases and amplitudes separately by splitting equation \ref{cx}, into gain amplitude solutions  $\left|e^{i\phi}\right|$ and gain phase solutions $\phi$ in radians for both H $\&$ V. In every supervised machine learning problem, it is crucial to label the input and output of the dataset before starting the learning process. In our case, since this is a regression problem aiming to predict calibration solutions from sensor data, we therefore label the sensor data as input features and the calibration solutions as output targets.
     
 \begin{figure}[H]
   \centering
@@ -690,7 +689,7 @@ e^{i\phi}= \cos\phi + i\sin\phi, \label{cx}
   \label{Cal3}
 \end{figure}
 
-Figure \ref{Cal2} shows the observation procedure of KAT-7 where the calibrator is close to the target source preferably within the range of $10^{\circ}$ to $15^{\circ}$, with the scan switching  between  the target and the calibrator \citep{kassaye2015study}. This is to minimize the phase perturbation caused by atmosphere. The calibration solutions are obtained from the phase calibrator ("green") in Figure \ref{Cal2} at different time intervals $\Delta t$ of tracking called duty cycles. This is done assuming that the calibrator PKS1613-586 has invariant characteristics (i.e. known positions in the sky or known properties from previous observations). One of the standard properties for an ideal instrument would be the $0^{\circ}$ antenna-based gain phase response and constant amplitude for all baselines. In reality this is not always the case because of instrumental defects such as phase and amplitude drifts in the electronics of each antenna; amplitude response as a function of elevation (gain curve), and tropospheric amplitude and phase effects and other external effects. Hence, to calculate the calibration solutions, CASA considers each antenna-based gain $J_i$ and the prior information about the calibrator to perform some adjustments or estimations $G$ over the calibrator's duty cycle $\Delta t$ for all the instruments $i,j$. These solutions at each duty cycle are then temporarily interpolated using the $\textit{interp}$ parameter inside the $\textit{gaincal}$ CASA task. 
+Figure \ref{Cal2} shows the observation procedure of KAT-7 where the calibrator is close to the target source (preferably within the range of $10^{\circ}$ to $15^{\circ}$), with the scan switching  between  the target and the calibrator \citep{taylor1999synthesis}. This is to minimize the phase perturbation caused by atmosphere. The calibration solutions are obtained from the phase calibrator ("green") in Figure \ref{Cal2} at different time intervals $\Delta t$ of tracking called duty cycles. This is done assuming that the calibrator PKS1613-586 has invariant characteristics (i.e. known positions in the sky or known properties from previous observations). One of the standard properties for an ideal instrument would be the $0^{\circ}$ antenna-based gain phase response and constant amplitude for all baselines. In reality this is not always the case because of instrumental defects such as phase and amplitude drifts in the electronics of each antenna; amplitude response as a function of elevation (gain curve), and tropospheric amplitude and phase effects and other external effects. Hence, to calculate the calibration solutions, CASA considers each antenna-based gain $J_i$ and the prior information about the calibrator to perform some adjustments or estimations $G$ over the calibrator's duty cycle $\Delta t$ for all the instruments $i,j$. These solutions at each duty cycle are then temporarily interpolated using the $\textit{interp}$ parameter inside the $\textit{gaincal}$ CASA task. 
 
 %Interpolation is a model based recovery of continuous data from discrete data with known range \citep{thevenaz2000image}. There are different methods of interpolation used, and in this Section, we only look at linear and nearest interpolation which are popular in radio calibration. Example: Assume that we have two known data points $(x_1,y_1,t_1)$ and  $(x_2,y_2,t_2)$ at time $t_1$ and $t_2$, we would like to estimate what $y$ value we would obtain at time $t$ for some point $x$ that is between $x_1$ and $x_2$. For nearest interpolation method, $y$ would be assigned to the value of the nearest point of $x$. For linear interpolation method, a line is fitted between the points $(x_1,y_1,t_1)$ and $(x_2,y_2,t_2)$  and we look to see the value of $y$ in a line for our chosen $x$ at time $t$. The points $x_1,\dots, x_n$ are called the interpolation points. The property of passing
 %through these points is referred to as interpolating the data and the function that interpolates the data is an interpolant \citep{levy2010introduction}. An example of interpolation is further illustrated in the following Figure \ref{int}. 
@@ -702,7 +701,7 @@ Figure \ref{Cal2} shows the observation procedure of KAT-7 where the calibrator 
 %  \label{int}
 %\end{figure}
  
-After obtaining solutions $G$, they are written in calibration tables and later applied to the target source of interest, $T$. The CASA task for this process is called $\textit{applycal}$, which reads the specified calibration tables, applies them to the observed data column through an interpolation process at each single time unit for different target duty cycles $\Delta t, \Delta t_{n+1},\dots$, following the order shown in Figure \ref{Cal2}. The calibrated results are then written into the corrected column for imaging or other scientific processing \citep{ott2013casa}. Since CASA "calculates" the solutions using interpolation and estimation methods given some prior information about the calibrators, the goal of the experiment is to produce a model (based on the training data) that learns the behaviour and changes of the calibrator owing to various external effects and able to predict the calibration solutions of the test data with high accuracy, given only the test sensors at different duty cycles. This will help in speeding up the calibration processes and decreasing the time duration for tracking the phase calibrator PKS1613-586 and therefore increasing the time duration for tracking the target observed as shown in Figure \ref{Cal3}. 
+After obtaining solutions $G$, they are written into calibration tables and later applied to the target source of interest, $T$. The CASA task for this process is called $\textit{applycal}$, which reads the specified calibration tables, applies them to the observed data column through an interpolation process at each single time unit for different target duty cycles $\Delta t, \Delta t_{n+1},\dots$, following the order shown in Figure \ref{Cal2}. The calibrated results are then written into the corrected column for imaging or other scientific processing \citep{ott2013casa}. Since CASA "calculates" the solutions using interpolation and estimation methods given some prior information about the calibrators, the goal of the experiment is to produce a model (based on the training data) that learns the behaviour and changes of the calibrator owing to various external effects and able to predict the calibration solutions of the test data with high accuracy, given only the test sensors at different duty cycles. This will help in speeding up the calibration processes and decreasing the time duration for tracking the phase calibrator PKS1613-586 and therefore increasing the time duration for tracking the target observed as shown in Figure \ref{Cal3}. 
 
 Since the sensor data obtained from the radio telescope are of different scales, i.e., unstructured. a pre-processing stage before proceeding with the training of the learning algorithms is necessarily. We propose to use a scaling statistical technique called Z-score normalization or standardization. This technique gives the normalized values or range of data from the original unstructured data using the concept of mean and standard deviation \citep{patro2015normalization}. The features are rescaled such that they have properties of a standard normal distribution with mean $\mu=0$ and standard deviation $\sigma=1$. 
 \begin{align}
@@ -969,7 +968,7 @@ Random forests and extremely randomized trees are well established ensembles of 
     \caption{Feature importance}
     \label{FI}
 \end{figure}
-Figure \ref{FI} shows the importance of each feature in each learning algorithm i.e. the values with the highest contribution in building an accurate model. One observes that the environmental features air temperature, relative humidity, wind speed, wind direction and air pressure are highly ranked in than the pointing sensors. The pointing features are ranked second, with the telescope elevation sensors being higher than the telescope azimuth sensors. 
+Figure \ref{FI} shows the importance of each feature in each learning algorithm i.e. the values with the highest contribution in building an accurate model. One observes that the environmental features air temperature, relative humidity, wind speed, wind direction and air pressure are higher ranked than the pointing sensors. The pointing features are ranked second, with the telescope elevation sensors being higher than the telescope azimuth sensors. 
 
 \section{Results}
 \label{sec3}

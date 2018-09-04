@@ -4,17 +4,17 @@
 
 
 Modern-day astronomy is at an unprecedented stage, with a deluge of data from different telescopes. In contrast
-to conventional methods, today astronomical discoveries are data- driven. The upcoming Square Kilometer Array (SKA) is expected to produce terabytes of data every hour \citep{aniyan2017classifying}. With this exponential growth of data, challenges for data calibration, reduction and analysis also increase, making it difficult for astronomers to manually process and analyse the data. Therefore, intelligent and automated systems are required  to overcome these challenges.
+to conventional methods, today astronomical discoveries are data- driven. The upcoming Square Kilometer Array (SKA) is expected to produce terabytes of data every hour \citep{skatelescope}. With this exponential growth of data, challenges for data calibration, reduction and analysis also increase, making it difficult for astronomers to manually process and analyse the data. Therefore, intelligent and automated systems are required  to overcome these challenges.
 
 One of the main issues in radio astronomy is determining the quality of observational data. Astronomical signals are very weak  by the time they reache the Earth’s surface. They are easily corrupted by atmospheric interferences, incorrect observational parameters (e.g. telescope locations or telescope pointing parameters), malfunctioning signal receivers, interference from terrestrial man-made radio sources and tracking inaccuracies \citep{taylor1999synthesis}. Therefore, it is required to do proper corrections to the observational data before processing the data. Radio astronomers spend a considerable amount of time performing a series of preprocessing steps called $\textit{calibration}$, which involves the determination of a set of parameters to correct the received data. These generally include instrumental as well as astronomical parameters. The general strategy for doing these corrections makes use of a calibrator source. Calibrator sources are well suited for determining astronomical parameters for data corrections because they have known characteristics such as the brightness, shape, and frequency spectrum \citep{taylor1999synthesis}. This process of calibration is iterative and time-consuming.
 
-During scientific observations different  external parameters such as atmospheric pressure, temperature  wind conditions, and relative humidity  are collected through thousands of sensors attached to the telescopes and its adjoining instrumentation. The data coming from different sensors may provide information about the external conditions that may have corrupted the observed data. This piece of information is not always included in the conventional calibration steps. We propose to use machine learning methods to predict the calibration solutions, looking at pointing and environmental sensor data. This is mainly motivated by the fact that calibration steps make corrections to data that have been corrupted by environmental parameters.
+During scientific observations, different external parameters such as atmospheric pressure, temperature  wind conditions, and relative humidity  are collected through thousands of sensors attached to the telescopes and its adjoining instrumentation. The data coming from different sensors may provide information about the external conditions that may have corrupted the observed data. This piece of information is not always included in the conventional calibration steps. We propose to use machine learning methods to predict the calibration solutions, looking at pointing and environmental sensor data. This is mainly motivated by the fact that calibration steps make corrections to data that have been corrupted by environmental parameters.
 
-In this project, we make use of data from the Karoo Array Telescope (KAT-7), an array consisting of seven telescopes, which is a precursor to the MeerKAT radio telescope. We look at pointing azimuth, elevation, scan, offset, temperature, wind speed, air pressure and relative humidity sensor data recorded during observations with a calibrator source PKS1613-586 to generate the training and testing dataset. The overall generated dataset contains sensor data per telescope and calibration solutions for correcting the signal received by each telescope in horizontal polarization (h-pol)  and vertical polarization (v-pol). These calibrator solutions are calculated using one version of the traditional astronomy software called Common Astronomy Software Applications (CASA) which is used for data calibration and imaging in radio astronomy.
+In this project, we make use of data from the Karoo Array Telescope (KAT-7), an array consisting of seven telescopes, which is a precursor to the MeerKAT radio telescope. We look at pointing azimuth, elevation, scan, offset, temperature, wind speed, air pressure and relative humidity sensor data recorded during observations with a calibrator source PKS1613-586 to generate the training and testing dataset. The overall generated dataset contains sensor data per telescope and calibration solutions for package the signal received by each telescope in horizontal polarization (H-pol)  and vertical polarization (V-pol). These calibrator solutions are calculated using the astronomy software called Common Astronomy Software Applications (CASA), the popular which is used for data calibration and imaging in radio astronomy.
  
 \section{Introduction to radio astronomy}
 
-Radio astronomy is one of the most fascinating fields to study about the Universe. Astronomers capture and analyze the electromagnetic signals emitted by distant objects, such as stars and galaxies, using a radio telescope. In Section \ref{Ra} we present a brief introduction to radio astronomy, including interferometry vs single dish in Section \ref{RvI}. In Section \ref{Calibr} we define calibration in radio astronomy and describe the different techniques used for data calibration in Section \ref{caltech}.
+Radio astronomy is one of the most fascinating fields of study about the Universe. Astronomers capture and analyze the electromagnetic signals emitted by distant objects, such as stars and galaxies, using a radio telescope. In Section \ref{Ra} we present a brief introduction to radio astronomy, including interferometry vs single dish in Section \ref{RvI}. In Section \ref{Calibr} we define calibration in radio astronomy and describe the different techniques used for data calibration in Section \ref{caltech}.
 \label{Ra}
 \subsection{History}
 
@@ -47,7 +47,7 @@ Astronomical signals tend to be weak by the time they reach the ground. The need
 \label{RvI}
 
 
-A single-dish survey can be complemented by an array of small radio telescopes providing higher sensitivity and higher resolution images  \citep{wright2004single}. This technique is called radio interferometry. Radio interferometry is mostly used to obtain high resolution images of astronomical sources, where-as a single-dish technique is mostly considered as a tool for low spacial resolution, i.e., it allows for imaging of very large sources \citep{stanimirovic2002short}. Though these two techniques are quite different, they both provide measurements of the Fourier transform of  some region in the sky \citep{cornwell1988radio}. In this dissertation we focus on the interferometer, which consists of two or more sub-apertures grouped together to form a large array \citep{verschuur2015invisible}, as shown in Figure \ref{images/Rint.png}. Though the telescopes are placed at different positions separated by distance $b$, the resulting power output from all the telescopes is combined. For an interferometric array, the angular resolution is defined as  $\theta \approx\frac{\lambda}{B}$, where $B$ represents the t maximum baseline in the array. 
+A single-dish survey can be complemented by an array of small radio telescopes providing higher sensitivity and higher resolution images  \citep{thompson2001interferometry}. This technique is called radio interferometry. Radio interferometry is mostly used to obtain high resolution images of astronomical sources, where-as a single-dish technique is mostly considered as a tool for low spacial resolution, i.e., it allows for imaging of very large sources \citep{thompson2001interferometry}. Though these two techniques are quite different, they both provide measurements of the Fourier transform of  some region in the sky \citep{cornwell1988radio}. In this dissertation we focus on the interferometer, which consists of two or more sub-apertures grouped together to form a large array \citep{verschuur2015invisible}, as shown in Figure \ref{images/Rint.png}. Though the telescopes are placed at different positions separated by distance $b$, the resulting power output from all the telescopes is combined. For an interferometric array, the angular resolution is defined as  $\theta \approx\frac{\lambda}{B}$, where $B$ represents the t maximum baseline in the array. 
 
 \begin{figure}[h!]
   \centering
@@ -56,7 +56,7 @@ A single-dish survey can be complemented by an array of small radio telescopes p
   \label{images/Rint.png}
 \end{figure}
 
-Figure \ref{images/Rint.png} illustrates a simple two two-element interferometer consisting of baseline $\overrightarrow{b}$ (we will refer to the left antenna as antenna 1 and the right antenna as antenna 2). This can be extended to multi-antenna arrays by adding more $N$ antennas in the array such that the number of baselines  $\frac{N(N-1)}{2}$  increases \citep{zensus1995very}. From Figure \ref{images/Rint.png}, suppose a distant star is observed in the direction $\widehat{s}$, the incoming signal will arrive in each radio telescope at slightly  different times. To compensate for this time difference such that the signal arrives in each telescope at the same time, a time delay term $\tau_{g}=\frac{\overrightarrow{b}\cdot\widehat{s}}{c}$ is introduced to produce voltages $V_1$ and $V_2$ from antenna 1 and antenna 2 denoted by: 
+Figure \ref{images/Rint.png} illustrates a simple two two-element interferometer consisting of baseline $\overrightarrow{b}$ (we will refer to the left antenna as antenna 1 and the right antenna as antenna 2). This can be extended to multi-antenna arrays by adding more $N$ antennas in the array such that the number of baselines  $\frac{N(N-1)}{2}$  increases \citep{thompson2001interferometry}. From Figure \ref{images/Rint.png}, suppose a distant source is observed in the direction $\widehat{s}$, the incoming signal will arrive in each radio telescope at slightly  different times. To compensate for this time difference such that the signal arrives in each telescope at the same time, a time delay term $\tau_{g}=\frac{\overrightarrow{b}\cdot\widehat{s}}{c}$ is introduced to produce voltages $V_1$ and $V_2$ from antenna 1 and antenna 2 denoted by: 
 
 \begin{equation}\label{eq111}
 \begin{split}
@@ -85,22 +85,22 @@ R&= <V_1V_2> = \frac{V^2}{2}  \cos (\omega\tau_{g})\\
    \overrightarrow{b} \cdot \widehat{s} \right). 
 \end{align}
 
-The amplitudes $V1$ and $V2$ are proportional to the electric field produced by the  source multiplied by the the voltage gains of antennas 1 and 2. Thus the output amplitude $\frac{V^2}{2}$ is proportional to the point-source flux density $S$ multiplied by $\sqrt{(A_1, A_2)}$, where $A_1$ and $A_2$ are the effective collecting areas of the two antennas \citep{NRAO}.
+The amplitudes $V_1$ and $V_2$ are proportional to the electric field produced by the  source multiplied by the the voltage gains of antennas 1 and 2. Thus the output amplitude $\frac{V^2}{2}$ is proportional to the point-source flux density $S$ multiplied by $\sqrt{(A_1, A_2)}$, where $A_1$ and $A_2$ are the effective collecting areas of the two antennas \citep{NRAO}.
 
 According to equation \ref{eq111} 
 radio interferometry has enabled astronomers to make measurements of fine angular  details, including parameters such as intensity, polarization and the frequency spectrum \citep{thompson2001interferometry}.
 
 \section{Calibration in radio astronomy}
 \label{Calibr}
-\subsection{Interferometry visibility}
-In an interferometric array, the measured visibilities  which are the two-dimensional (2D) Fourier transform of the sky's intensity at different baseline coordinates, are defined by
+\subsection{Interferometric visibility}
+In an interferometric array, the measured visibilities  which are the two-dimensional (2D) Fourier transform of the sky's intensity at different baseline coordinates in the absence of instrumental effects, are defined by
 \begin{align}
 V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int A(l,m) I (l,m)e^{-2\pi i(ul+vm)} dl dm,
 \label{Vis}
 \end{align}
 where $(u,v)$ denotes the projected baseline coordinates in the 2D Fourier transform plane  measured in wavelength along the axes in the east-west and north-south direction, and changes with time as the earth rotates  \citep{taylor1999synthesis}. The orthogonal coordinates $(l, m)$ represent the position of a source or the phase reference position. In the 2D analysis $l$ and $m$ are defined as the cosines of the  angles between the direction $(l,m)$ and $(u, v)$. $I(l,m)$ is the intensity distribution of a source and its Fourier transform  ${F}\left\{I\right\}$ represents the amplitude and phase of a sinusoidal component of the intensity profile with spatial frequency $u$ and $v$; $A(l, m)$ represents the effective collecting area of the antennas with respect to the direction of the incoming radiation \citep{thompson2001interferometry}.
 
-For simplicity of equation \ref{Vis}, the term $A(l,m)$ is most often assumed to be 1 such that the Van Cittert Zernike theorem states, \citep{thompson2017interferometry}:
+To simplify equation \ref{Vis}, the term $A(l,m)$ is most often assumed to be 1 such that the Van Cittert Zernike theorem states, \citep{thompson2017interferometry}:
 \begin{align}
 V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int I (l,m)e^{-2\pi i(ul+vm)} dl dm.
 \label{V}
@@ -110,12 +110,12 @@ brightness can readily be recovered from the measured visibilities by an inverse
 \begin{align}
 I^{True}(l,m)\approx \mathcal{F}^{-1}\left\{V\right\}(l,m)=\int \int V (u,v)e^{-2\pi i(ul+vm)} du dv .
 \end{align}
-Since for every sky's brightness $I$ $\exists$ visibility function $V(u,v)$, the array of antennas with baselines $b=(u_i,v_i)$  measures only certain values in the set of continuous  $(u,v)$ coordinates in the visibility function $V(u,v)$. This measured set of values is called the \emph{Sampling function}, denoted by \citep{taylor1999synthesis}, \[ S(u,v) =
+Since for every sky's brightness $I$, there exists visibility function $V(u,v)$, the array of antennas with baselines $b=(u_i,v_i)$  measures only certain values in the set of continuous  $(u,v)$ coordinates in the visibility function $V(u,v)$. This measured set of values is given by the \emph{Sampling function}, denoted by \citep{taylor1999synthesis}, \[ S(u,v) =
   \begin{cases}
     1   & \quad    \text{at uv point}\\
     0  & \quad  \text{ otherwise}\\
   \end{cases}
-\] $\forall$ baselines. The actual data provided by the array is called  sampled visibilities, denoted by  $S(u,v)\times V(u,v)$. The Fourier transform of these sampled visibilities is the dirty image,
+\] for all the baselines. The actual data provided by the array is called  sampled visibilities, denoted by  $S(u,v)\times V(u,v)$. The Fourier transform of these sampled visibilities is the dirty image,
 \begin{align}
 I^{D}(l,m)=\int \int S(u,v)\times V(u,v) e^{-2\pi i(ul+vm)} du dv.
 \label{Samp}
@@ -127,7 +127,7 @@ f*g\rightleftharpoons \mathcal{F} \mathcal{G},
 where $f\rightleftharpoons \mathcal{F}$ and $g\rightleftharpoons \mathcal{G}$.
 From equation \ref{Samp}, we therefore have 
 \begin{align}
-I^{D}=PSF \circ I^{True},
+I^{D}=PSF \circ I^{\mathrm{True}}, 
 \end{align}
 where 
 \begin{align}
@@ -138,7 +138,7 @@ representing a point spread function  corresponding to the sampling function $S(
 
 \subsection{Calibration}
 \label{Calib}
-In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality it is not as simple, as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$, not only owing to the instrument being discrete, as shown in equation \ref{Samp}, but most importantly owing to instrumental and environmental effects \citep{thompson2017interferometry}. An example of these effects on the signal measured by a radio interferometry include antenna gains (slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and incorrect observation parameters (antenna pointing parameters). Signal effects are classified into two types, direction-independent effects (affects signal from all direction of the sky) and direction-dependent effects (which vary based on the sky position of the signal) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration minimizes the difference between observed and predicted (model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
+In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality it is not as simple, as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$ and this is due to instrumental and environmental effects \citep{thompson2017interferometry}. An example of these effects on the signal measured by a radio interferometry include antenna gains (slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and incorrect observation parameters (antenna pointing parameters). Signal effects are classified into two types, direction-independent effects (affecting the signal from all directions equally) and direction-dependent effects (which vary based on the sky position of the signal) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration minimizes the difference between observed and predicted (model) visibilities by estimating the complex instrumental gain response \citep{grobler2016calibration}. 
 
 Suppose for baseline pair $(i,j)$, the observed visibility is $V^{obs}_{i,j}(t)$ and the true visibility is $V^{True}_{i,j}(t)$ at observation time $t$. The basic calibration formula is written as,
 
@@ -154,12 +154,12 @@ G_{i,j}(t)= g_i(t)g^*_j(t) = A_{i}(t)A_{j}(t) e ^{i\left(\phi_i(t)-\phi_j(t)\rig
 \label{Sols}
 \end{align}
 
-where  $A_{i}(t)$, $A_{j}(t)$ are antenna-based amplitude solutions and $\phi_i(t),\phi_j(t)$ are antenna-based phase solutions. Calibration means to find the appropriate $A$ and $\phi$ for the corrupted visibilities. One standard technique for measuring the gain calibration solutions is to obtain dedicated calibration observations of a part of the sky that contains a single known, relatively strong point source. This is to measure the instrumental phase, since the telescopes on the ground can only measure the phase differences rather than measuring absolute phase reference. Therefore, the reference for phase visibilities can be practically accomplished by observing point-like calibrator sources. Using these sources, one can determine the phase deviation from the desired reference point. Periodic observation of these sources is very important  to track the phase and gain changes in an array. Above all, they have the paramount advantage of estimating time-dependent phase changes incurred by the atmosphere \citep{taylor1999synthesis}.
+where  $A_{i}(t)$, $A_{j}(t)$ are antenna-based amplitude solutions and $\phi_i(t),\phi_j(t)$ are antenna-based phase solutions. Calibration aims to find the appropriate $A$ and $\phi$ for the corrupted visibilities. One standard technique for measuring the gain calibration solutions is to obtain dedicated calibration observations of a part of the sky that contains a single known, relatively strong point source. This is to measure the instrumental phase, since the telescopes on the ground can only measure the phase differences rather than measuring absolute phase reference. Therefore, the reference for phase visibilities can be practically accomplished by observing point-like calibrator sources. Using these sources, one can determine the phase deviation from the desired reference point. Periodic observation of these sources is very important  to track the phase and gain changes in an array. Above all, they have the paramount advantage of estimating time-dependent phase changes incurred by the atmosphere \citep{taylor1999synthesis}.
 
 The selection of a good calibrator source in the sky is based on the following desirable characteristics \citep{thompson2001interferometry}: 
 
 \begin{enumerate}
-\item They should have known positions in the sky, i.e. the calibrator should be close to the target source. 
+\item They should have known positions in the sky, and the calibrator should be close to the target source. 
 \item  Their flux densities have to be strong enough to get a suitable signal-to-noise ratio (SNR) in a short time.
  \item The calibrator should be a point source (unresolved), if possible. 
  \item Their spectral properties should be known.
@@ -167,10 +167,10 @@ The selection of a good calibrator source in the sky is based on the following d
  
  Note that the sources that are the subject of astronomical investigation will be referred to as "target sources" to distinguish them from calibrator sources \citep{thompson2001interferometry}.
  
-Suppose a target source is observed with measured visibility $V(u,v)^{obs}$, to calibrate the antenna-based complex gain factor $G_{i,j}(t)$ as a function of time and antenna pair $(i,j)$, a point source calibrator is observed for which the measured visibility is, 
-\begin{align}
-V(u,v)_{calibrator}&= G_{i,j}(t) S_{calibrator}\\
-G_{i,j}(t)&= \frac{V(u,v)_{calibrator}}{S_{calibrator}}
+Suppose a target source is observed with measured visibility $V(u,v)^{obs}$ to calibrate the antenna-based complex gain factor $G_{i,j}(t)$ as a function of time and antenna pair $(i,j)$, a point source calibrator is observed for which the measured visibility is, 
+\begin{align} 
+V(u,v)_{calibrator}&= G_{i,j}(t) S_{\mathrm{calibrator}}\\
+G_{i,j}(t)&= \frac{V(u,v)_{calibrator}}{S_{\mathrm{calibrator}}}
 \end{align}
 \citep{thompson2001interferometry},
 where $S$ indicates the flux density of the calibrator. Now to calibrate the visibilities of the target source one can write, 
@@ -182,7 +182,7 @@ V(u,v)^{true}&= \frac{V(u,v)^{obs}}{G_{i,j}(t)}\\
 
 \section{Calibration techniques}
 \label{caltech}
-With the improvement in complexities of the new radio astronomy instruments, various calibration techniques have been developed to overcome these challenges  posed by the new instruments, thereby producing accurate calibration results. These techniques are classified into first generation calibration (1GC), second generation calibration (2GC) and third generation calibration (3GC). In this dissertation thesis our focus will be on 1GC using CASA, which is a suite of functions for the reduction and analysis of radio astronomical data with IPython interface, and is currently maintained by the National Radio Astronomy Observatory \citep{mcmullin2007casa}. 
+With the improvement in complexities of the new radio astronomy instruments, various calibration techniques have been developed to overcome these challenges  posed by the new instruments, thereby producing accurate calibration results. These techniques are loosely classified into first generation calibration (1GC), second generation calibration (2GC) and third generation calibration (3GC) \citep{noordam2010meqtrees}. In this dissertation thesis our focus will be on 1GC using CASA. CASA is a suite of functions for the reduction and analysis of radio astronomical data with IPython interface, and is currently maintained by the National Radio Astronomy Observatory \citep{mcmullin2007casa}. 
 
 \subsection{First generation calibration}
 
@@ -246,7 +246,7 @@ Once the calibrated data have been obtained by performing the 1GC, the first mod
   \label{images/MeerKAT}
 \end{figure}
 
-The SKA is an an international collaboration project to build the world's largest radio telescope array. When complete, it will be a radio telescope with an aperture of up to a million square meters. This powerful, sensitive instrument represents the advance in astronomy, engineering, research and  development to construct a unique scientific instrument. Two sites chosen for the construction of this tremendous instrument, one of them being the Karoo wilderness of South Africa, where the 64-dish telescope (MeerKAT), a pathfinder to the SKA phase 1, is being constructed \ref{images/MeerKAT}, while the other site is in the Murchison region of Western Australia \citep{hall2008square}.  
+The SKA is an an international project to build the world's largest radio telescope array. When complete, it will be a radio telescope with an aperture of up to a million square meters. This powerful, sensitive instrument represents the advance in astronomy, engineering, research and  development to construct a unique scientific instrument. Two sites chosen for the construction of this tremendous instrument, one of them being the Karoo wilderness of South Africa, where the 64-dish telescope (MeerKAT), a pathfinder to the SKA phase 1, is being constructed \ref{images/MeerKAT}, while the other site is in the Murchison region of Western Australia \citep{hall2008square}.  
 
 When the SKA is complete, it will be a sophisticated instrument to view and track a bevy of cosmic wonders, including objects and events that were too dim or distant for modern astronomers' sky-gazing forebears. This instrument will be far faster ($10^6\times$) than any system currently available, and image the sky in sensitivity ($100\times$) and detail never before achieved \citep{skatelescope}.
 
