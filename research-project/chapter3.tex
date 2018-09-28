@@ -1349,7 +1349,7 @@ In this section, the plot results obtained from the validation dataset-2 vs 1GC 
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/RFPhasegain773.eps}
-    \caption{This figure shows the response of the random forest learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). random forest algorithm is failing to predict the gain phase solutions for some antennas and slightly performing well in others as seen for example in antenna 1H where CASA estimated solutions at 150 $\deg$ and the decision tree at -150 $\deg$. We also observe a successful prediction of antenna 5 solutions.}
+    \caption{This figure shows the response of the random forest learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The random forest algorithm is failing to predict the gain phase solutions for some antennas and slightly performing well in others as seen for example in antenna 1H where CASA estimated solutions at 150 $\deg$ and the random forest at -150 $\deg$. We also observe a successful prediction of antenna 5 solutions.}
     \label{obs10}
 \end{figure}
 
@@ -1361,32 +1361,29 @@ In this section, the plot results obtained from the validation dataset-2 vs 1GC 
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/KNNPhasegain773.eps}
-    \caption{This figure shows the response of the K-nearest neighbor learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). K-nearest neighbor algorithm is failing to predict the gain phase solutions, except for antenna 5.}
+    \caption{This figure shows the response of the K-nearest neighbor learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The K-nearest neighbor algorithm is failing to predict the gain phase solutions, except for antenna 5 which was used as a reference antenna.}
     \label{obs11}
 \end{figure}
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/KNNampgain773.eps}
-    \caption{This figure shows the response of the random forest learning algorithm in predicting the amplitude gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the the predicted amplitude gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The random forest algorithm is failing to predict the gain amplitude solutions on the new observation dataset-2.}
+    \caption{This figure shows the response of the K-nearest neighbor learning algorithm in predicting the amplitude gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the the predicted amplitude gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The K-nearest neighbor algorithm is failing to predict the gain amplitude solutions on the new observation dataset-2. We observe that at time index > 12 the algorithm is predicting solutions slightly  closer to what CASA estimated with few outliers for antenna 1,2,3,5, 6 and 7.}
      \label{ka3}
 \end{figure}
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/EXTPhasegain773.eps}
-    \caption{This figure shows the response of the extremely randomized tree learning algorithm in predicting the phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot the CASA calculated phase gain solutions for H (blue) and V (green) polarization vs the learning algorithm (ZCal) predicted phase gain solutions for H (red) and V (yellow) polarization as shown.}
+    \caption{This figure shows the response of the extremely randomized tree learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The extremely randomized tree algorithm is failing to predict the gain phase solutions for some antennas and slightly performing well in others as seen for example in antenna 1H where CASA estimated solutions at 150 $\deg$ and the extremely randomized tree at -150 $\deg$. We also observe a successful prediction of antenna 5 solutions.}
     \label{obs12}
 \end{figure}
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/EXTampgain773.eps}
-    \caption{This figure shows the response of the extremely randomized tree learning algorithm in predicting the amplitude gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot the CASA calculated amplitude gain solutions for H (blue) and V (green) polarization vs the learning algorithm (ZCal) predicted amplitude gain solutions for H (red) and V (yellow) polarization as shown.}
+    \caption{This figure shows the response of the extremely randomized tree learning algorithm in predicting the amplitude gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the the predicted amplitude gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The extremely randomized tree algorithm is failing to predict the gain amplitude solutions on the new observation dataset-2.}
      \label{ea3}
 \end{figure}
 
-
-For dataset-2, similar to dataset-1, we observe that the random forest, extremely randomized trees and the K-nearest neighbors have learned to generalise in predicting the gain amplitude calibration solutions with stable phase over time, as shown in Figures \ref{obs10},\ref{obs11}, \ref{obs12}. The extremely randomized tree performs best, followed by the random forest and the decision tree.
-
-
+For dataset-2, one observe that the random forest, extremely randomized trees, K-nearest neighbors and decision tree algorithm have not learned to generalise in predicting the gain amplitude and phase solutions when compared with CASA. Unlike from the observation dataset-1, there isn’t no match with CASA in all the models and data samples. 
 
 
 
