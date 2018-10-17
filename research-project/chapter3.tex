@@ -971,6 +971,8 @@ Random forests and extremely randomized trees are well established ensembles of 
 Figure \ref{FI} shows the importance of each feature in each learning algorithm i.e. the values with the highest contribution in building an accurate model. One observes that the environmental features air temperature, relative humidity, wind speed, wind direction and air pressure are higher ranked than the pointing sensors. The pointing features are ranked second, with the telescope elevation sensors being higher than the telescope azimuth sensors. 
 
 \section{Results}
+
+\subsection{Testing on test-data}
 \label{sec3}
 This section shows the plots of the predictions for the decision tree, random forest, extremely randomised trees and the K-nearest neighbor. The algorithms are run a number of times on the learning sample and tested on the test samples to estimate the prediction errors. 
 \subsection{Decision tree-RUN}
@@ -1215,7 +1217,7 @@ This section report the accuracy measure obtained for each learning algorithm wh
 
 
  %When fitting a straight line(slope) between the predicted and the true we  observe there is only few outlying points.
-\subsection{Testing on new dataset}
+\subsection{Validating on new dataset}
 
 Once one is satisfied with the performance of the learning algorithms in predicting the calibration solutions accurately from the testing dataset, in this section new sensor data extracted from new (unseen) KAT-7 observations with the phase calibrator source PKS1623-586 can be used to predict the calibration solutions. This process is called model validation. Since the model was trained on normalized data, one first normalizes the new sensor data with mean $\mu$ and standard deviation $\sigma$ obtained from the normalization of the training dataset.
 \begin{align}
