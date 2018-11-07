@@ -6,10 +6,10 @@ ZCal, in full "Zitha calibration" is a new machine learning radio data calibrati
 %%Each antenna in an array has a primary beam which is used for perfect resolution during an observation of a source. The resolution of each antenna is defined as =1.22 / D, where  ~ 21 cm is the  wavelength, D is the diameter of your dish and is the resolution angle. In an interferometric array of N antennas with baselines b, the resolution angle is defined as  =1.22  / d, where d is the maximum baseline in an array.   The beam of all the baselines is call a synthesised beam which is a multiplication of all the primary beams.
 
 Astronomical observations done with interferometric radio
-telescopes suffer from variable gain effects that can
-broadly be classified as direction-independent and direction-dependent errors. The complex instrumental gains due to the electronic devices that follow the feed elements are directionally independent \citep{bhatnagar2008correcting}; relative amplitude and phase gain for each antenna; phase and amplitude drifts in the electronics of each antenna; amplitude response as a function of elevation (gain curve) and tropospheric amplitude and phase effects.
+telescopes suffer from various variable gain effects. The more the instrument is complex,  astronomers are likely to deal with complex gain effect that can
+broadly be classified as direction-independent and direction-dependent errors. The complex instrumental gains due to the electronic devices in the telescope such as the receiver elements are directionally independent \citep{bhatnagar2008correcting}; the tropospheric amplitude and phase effects; relative amplitude and phase gain for each antenna; amplitude response as a function of elevation (gain curve) and phase and amplitude drifts in the electronics of each antenna\citep{bhatnagar2008correcting}.
 
-As defined in Chapter 1, \textit{calibration} is the process of correcting for the signal corrupted by various mechanisms. Some of these mechanisms include external parameters such as fluctuations in air temperature, weather conditions on site and antenna pointing errors \citep{taylor1999synthesis}. Antenna pointing error is the difference between the actual pointing position and the requested (to go) position. Though an array consists of more than one antenna, each with a tracking centre, during a request ("POINT"), they must all follow the same required position. However, this is not always accurate, owing to misalignment of the elevation axis, atmospheric refraction, gravitational deformation of the structure, differential heating of the structure and wind loading \citep{taylor1999synthesis}. Wind loading is an effect that degrades the pointing accuracy, thus the design of the telescope structure plays a role in terms of wind loads \citep{smithdynamic}. Telescopes with a large dish structure are subjected to large wind loads. The wind speed and the geometric dimensions are the cause of highly turbulent flows around the antenna. There are violent shifts in airflow on the surface and around the antenna \citep{upnere2012characterization}. The following equation \ref{sens} shows the nominal expected sensitivity of the telescope without any errors:
+As defined in Chapter 1, \textit{calibration} is the process of correcting for the signal corrupted by various mechanisms. Some of these mechanisms include external parameters such as fluctuations in air temperature, weather conditions on site and antenna pointing errors \citep{taylor1999synthesis}. The antenna pointing error is the error measure by looking at the difference between the actual pointing position  of the telecope and the requested (to go) position. Though an array consists of more than one antenna, each with a tracking centre, during a request ("POINT"), they must all follow the same required position. However, this is not always accurate, owing to misalignment of the elevation axis, atmospheric refraction, gravitational deformation of the structure, differential heating of the structure and wind loading \citep{taylor1999synthesis}. Wind loading is an effect that degrades the pointing accuracy, thus the design of the telescope structure plays a role in terms of wind loads \citep{smithdynamic}. Telescopes with a large dish structure are subjected to large wind loads. The wind speed and the geometric dimensions are the cause of highly turbulent flows around the antenna. There are violent shifts in airflow on the surface and around the antenna \citep{upnere2012characterization}. The following equation \ref{sens} shows the nominal expected sensitivity of the telescope without any errors:
 \begin{align}
 \left[\frac{2kT_{sys}}{A_{eff}\sqrt{N(N-1)\tau \Delta \nu}}\right]
 \label{sens},
@@ -28,7 +28,7 @@ As defined in Chapter 1, \textit{calibration} is the process of correcting for t
   \label{images/kat7.png}
 \end{figure}
 
-The KAT-7 is a seven-dish interferometry that was built as an engineering prototype for technologies and techniques in preparation for the 64-dish Karoo Array Telescope (MeerKAT). These instruments are located in the Northern Cape Karoo desert region and are operated remotely from CapeTown. The construction of  KAT-7 began in
+The KAT-7 is a seven-dish interferometry that was built as an engineering prototype for  techniques and technologies in preparation for the 64-dish Karoo Array Telescope (MeerKAT). These instruments are located in the Northern Cape Karoo desert region and are operated remotely from CapeTown. The construction of  KAT-7 began in
 2008 with the writing of the telescope requirements specification and was completed in 2010.  It was operated in engineering mode until 2015  and became fully operational in 2016  \citep{foley2016engineering}. As seen in Table \ref{images/kat7.png}, KAT-7 antennas are extremely close together with baseline ranging between 26 and 185 m \citep{carignan2013kat}. More parameter specifications are presented in the Tables \ref{DSpec} and \ref{DSpec}:
 \begin{table}[H]\centering
 \begin{tabular}{l l }
@@ -132,7 +132,7 @@ During scientific observations, data indexed by time are continuously collected 
 \end{lstlisting}
 \end{tcolorbox}
 
-All components are interfaced to the CAM system via the Karoo Array Telescope Communication Protocol (KATCP), i.e KATCP is responsible for internal communication between CAM components and other subsystems (science data processing, correlator beamformer, etc) \citep{slabber2015overview}. A KATCP interface exposes requests and sensors. To access the sensor information for analysis, users from different subsystems  would  connect to the CAM webserver using Python client and subscribe to sensor data of interest. 
+All the telescope components are interfaced to the CAM system via the Karoo Array Telescope Communication Protocol (KATCP), i.e KATCP is responsible for internal communication between CAM components and other subsystems (science data processing, correlator beamformer, etc) \citep{slabber2015overview}. A KATCP interface exposes requests and sensors. To access the sensor information for analysis, users from different subsystems  would  connect to the CAM webserver using Python client and subscribe to sensor data of interest. 
 
 \subsection{Preparation of training data}\label{prep}
 
@@ -297,7 +297,7 @@ Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
 
  The katdal library can manipulate the HDF5 observation file in many ways, including file format conversion from HDF5 to measurement sets (MS). This option is useful for astronomers using CASA for data calibration and visualization \citep{foley2016engineering}. This conversion also provides an option whereby one flags all channels affected with known radio frequency interference (RFI). Once the observation file has been converted to ms format, hand flagging for unknown RFI is performed inside CASA using the task $\textit{flagdata}$ for H and V cross correlation products. After satisfactory flagging of the data, one then proceeds to the calibration step. 
  
-The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) in the visibility data are almost always the dominant calibration effect, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this dissertation we only focus on the 1GC calibration with an interest in obtaining complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude and phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and stores these in calibration tables.
+The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) are the most dominant calibration effect in the visibility data, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this dissertation we only focus on the 1GC calibration with an interest in obtaining complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude and phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and stores these in calibration tables.
  
 These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is reasonably close to the center of the array and it was known to be particularly stable with no drop-outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factors $J_{i,j}$ into antenna-based components, so one does not see a set of values for each baseline, but rather only one for each antenna ($J_i$) \citep{CosmoAIMS}. 
 
@@ -378,7 +378,9 @@ reference = flux_calibrator
 transfer = gain_calibrator
 fluxscale()
 \end{lstlisting}
+\citep{editioncasa}
 \end{tcolorbox}
+
 A multi-frequency synthesis image deconvolution was carried out using the $\textit{CLEAN}$ CASA task with an image size of  $256 \times 256$ and cell size of $30$ arc seconds. The image rms noise in Figure \ref{pks1613} was measured using the rms noise of the 0 iteration residual image.
 \begin{tcolorbox}
 \begin{lstlisting}
@@ -394,6 +396,7 @@ A multi-frequency synthesis image deconvolution was carried out using the $\text
      mode='mfs',
      usescratch=True)
 \end{lstlisting}
+\citep{editioncasa}
 \end{tcolorbox}
  \begin{figure}[H]
  \centering
@@ -516,10 +519,9 @@ MSE and MAE, which measure the average of the squared and absolute of the errors
 \label{MAE}
 \end{align}.
 
-The aim of this regression exercise is to predict multiple target variables $\widehat{\textbf{Y}}_{t}$  hence it is referred to as multi-output regression. The learned multi-target model will be used afterwards to simultaneously predict the values $\widehat{\textbf{Y}}_{t+1}$  of all target variables of the new incoming unlabeled instances $\textbf{X}_{t+1}$. It has been proven that multi-output regression methods yield better predictive performance and also provide means to
-model the multi-output datasets effectively by considering not only the underlying relationships
+The aim of this regression exercise is to predict multiple target variables $\widehat{\textbf{Y}}_{t}$  hence it is referred to as multi-output regression. The learned model will then be used to  predict multi-output values $\widehat{\textbf{Y}}_{t+1}$  of all target variables of the new incoming unlabelled instances $\textbf{X}_{t+1}$. It has been proven that multi-output regression methods provide means to model the multi-output datasets effectively and produce better predictive results. This method does not only consider  the underlying relationships
 between the features and the corresponding targets but also the relationships between
-the targets, thereby producing simpler models with better computational efficiency. \citep{borchani2015survey} discuss several applications of multi-output regression, including simultaneous estimation of different biophysical parameters from remote sensing images, channel estimation through the prediction of several received signals, etc. In further discussions, it is mentioned that these applications give rise to challenges such as missing data, i.e., when some features or target variables are not observed.
+the targets themselves, thereby producing simpler models with better computational efficiency \citep{borchani2015survey}. \citep{borchani2015survey} discuss several applications of multi-output regression including the challenges such as missing data, i.e., when some features or target variables are not observed.
 
 \subsection{Decision tree}
 \label{Dt}
@@ -528,7 +530,7 @@ Decision tree algorithms are popular methods for machine learning tasks such as 
 For a response variable that
 has classes, the tree algorithm (classification) organizes the dataset into groups by the response based on the similarities of the data, and when the response variable is numeric or continuous, the tree algorithm (regression) uses the data to predict the outcome by fitting the regression model in each of the independent variables \citep{morgan2014classification}.
 
-Decision trees are a simple but powerful form of multi-variable analysis. In effect, they  perform a recursive binary partitioning of the feature space. The term binary refers to the fact that the parent node  will always be split into exactly two child nodes \citep{moisen2008classification}. The term recursive is used to indicate that each child node will, in turn, become a parent node, unless it is a terminal node, as illustrated in Figure \ref{images/DecisionTree}, where the split occurs at the decision node.  
+Decision trees are a simple but powerful form of multi-variable analysis. In effect, they  perform a recursive binary partitioning of the feature space. The process of the parent node splitting into exactly two child nodes is refereed to as binary\citep{moisen2008classification}, and it is said to be recursive if each child node wil, in turn, become a parent node, unless it is a terminal node, as illustrated in Figure \ref{images/DecisionTree}, where the split occurs at the decision node.  
 
 Decision trees are built by growing a tree upside down, starting from the root node. The data sample passes down the tree through a series of splits, or nodes, at which a decision is made on the direction in which to proceed, either the left or right sub-tree, based on a sequence of questions about the features \citep{musicant2007supervised}. The next split or decision made depends on the answers to previous questions. Eventually, a terminal node is reached and the prediction is made.  
 
@@ -539,7 +541,7 @@ Decision trees are built by growing a tree upside down, starting from the root n
   \label{images/DecisionTree}
 \end{figure}
 
-The binary recursive partitioning applies to the fitting of both classification and regression trees. Each node in a tree is split based on its impurity, which is a measure of how badly the samples at that node fits the model defined in equation \ref{model}. Therefore, in regression and classification trees, variables and the locations of the split are
+The binary recursive partitioning can apply to the fitting of both regression and classification trees. Each node in a tree is split based on its impurity, which is a measure of how badly the samples at that node fits the model defined in equation \ref{model}. Therefore, in regression and classification trees, variables and the locations of the split are
 chosen to minimize the impurity of the node at that point. However, the selection criteria of splitting each node are different for these two methods. In our case the for the regression scenario, the splitting rules used to minimize the impurity of each node $c$ is the MSE and MAE as defined in equations \ref{MSE} and \ref{MAE} \citep{morgan2014classification}. The sample mean of the response variable (estimated value $\mu_{c}$) that represents the assigned prediction in each terminal node is defined as: 
 \begin{align}
 \mu_{c}=\frac{1}{N_{c}} \sum_{i\in N_{c}} \textbf{Y}_{i},
@@ -563,9 +565,9 @@ If the impurity measure is the MAE, the information gain is defined by
  \end{align}
  
 For multi-output decision trees that predict multiple continuous target attributes at once, the advantage over building a separate
-regression tree for each target is that the built tree is usually much smaller than the total size of the individual single-target trees for all variables; secondly they identify the dependencies between the different target variables  better.
+regression tree for each target is that the built tree is usually much smaller than the total size of the individual single-target decision trees for all variables; secondly they  identify easily the dependencies between the different target variables.
 
-The building of the multi-output decision trees follows  the same steps as the standard decision tree in Figure \ref{images/DecisionTree}, starting with all instances in the root node, then iteratively finding the optimal split and partitioning the nodes accordingly until a terminal node is reached, given a certain stopping criterion. The only difference  is the redefinition of the impurity measures in equations \ref{MSE} and \ref{MAE} of a node as the sum of the squared error  over a multi-target response. 
+The building of the multi-output decision trees follows  the same steps as the standard decision tree in Figure \ref{images/DecisionTree}, starting with all instances in the root node, then iteratively finding the optimal split and partitioning the nodes accordingly until a terminal node is reached, given a certain stopping criterion as shown in Figure \ref{images/DecisionTree}. The only difference  is the redefinition of the impurity measures in equations \ref{MSE} and \ref{MAE} of a node as the sum of the squared error  over a multi-target response. 
 \begin{align}
 \sum_{k\in d}\frac{1}{N}\left[\sum_{l \in N }\left(\textbf{y}_{k}^{(l)}-\mu^{(l)} \right)^2\right],
 \end{align}
@@ -573,9 +575,9 @@ where $\mu^{(l)}$ denotes the predicted output for the instance $l$ in each node
 of its instances and its defining feature values.
 
 \subsection{Random forest}
-While classification and regression trees are powerful methods in and of themselves, much work has been done in machine learning to improve the predictive ability of these tools by combining separate tree models into what is often called ensemble.
+Much work has been done in machine learning to improve the predictive ability of regression and classification trees by combining separate tree models into what is often called ensemble.
 
-A random forest is a combination (ensemble) of decision tree predictors such that each tree depends on the values of a random vector sampled independently and with the same distribution for all trees in the forest, as shown in Figure \ref{random tree} \citep{breiman2001random}. This algorithm  was introduced by \citep{ho1995random} after having noticed that decision trees were limited in their accuracy owing to their inability to grow to arbitrary complexity. This method was not only more accurate, but was less susceptible to overfitting.
+A random forest is a forest (ensemble) of decision tree predictors such that each tree depends on the values of a random vector sampled independently and with the same distribution for all trees in the forest \citep{breiman2001random}. Figure \ref{random tree} is illustrating how trees are built from randomly sampled data. The random forest algorithm  was introduced by \citep{ho1995random} after having noticed that decision trees were limited in their accuracy especially on large data samples owing to their inability to grow which led to overfitting. The random forest method was found not only to be accurate, but also less susceptible to overfitting.
 
  \begin{figure}[H]
   \centering
@@ -584,23 +586,21 @@ A random forest is a combination (ensemble) of decision tree predictors such tha
   \label{random tree}
 \end{figure}
 
-During the construction of a component decision tree, at each step
-of split selection, a random forest first randomly selects a subset of features, and then carries out the conventional split selection procedure within the selected
-feature subset. Note that the randomness is only introduced into
-the feature selection process, not into the choice of split points on the selected feature. Random forest is an extension of bootstrap aggregating (bagging), where the major difference with bagging is the incorporation of randomized feature selection \citep{zhou2012ensemble}. The operational procedure of bagging is as follows: 
+In random forest, the randomness is only introduced into the feature selection process, not into the choice of split points on the selected features. During the construction of a component decision tree, at each step
+of  the split selection, a random forest first randomly selects a subset of features, and then carries out the split selection procedure for that particular tree within the selected
+feature subset. Random forest are considered as an extension of bootstrap aggregating (bagging), where the major difference with bagging is the incorporation of randomized feature selection \citep{zhou2012ensemble}. The operational procedure of bagging is as follows: 
 
 \begin{itemize}
-\item Given a a set $\textbf{X}$ of size $\textit{N}$.
+\item Given a  set $\textbf{X}$ of size $\textit{N}$.
 \item Generate $\textit{m}$ subsets in vector $\Theta$  of length $\textit{n}$ by randomly selecting data from the set $\textbf{X}$ with replacement \citep{breiman2001random}. 
-\item Run $\textit{k}$ number of trees for each of the $\textit{m}$ sets of $\Theta$ to train the data.
-\item This will generate $\Theta_{\textit{m}}$ sets of trained data.
-\item For the remaining $\textit{n}$ sample, trained trees from the previous two steps can be fitted onto the remaining
-data set of $\textbf{X}_{\textit{n}}$ to estimate the features of the data.
+\item Run $\textit{k}$ number of trees for each of the $\textit{m}$ sets of $\Theta$ to train the data, thereby $\Theta_{\textit{m}}$ sets of trained data  \citep{breiman2001random}.
+\item For the remaining $\textit{n}$ samples, trained trees from the previous two steps can be fitted onto the remaining
+data set of $\textbf{X}_{\textit{n}}$ to estimate the features of the data  \citep{breiman2001random}.
 \end{itemize}
 
-The parameter $\textit{k}$ controls the incorporation of randomness and this results in an increase in the bias. When $\textit{k}$ equals the total number of features, the constructed decision tree is identical to the traditional deterministic decision tree, when $\textit{k}$ = 1, a feature will be selected randomly. The suggested value of $\textit{k}$ is the logarithm of the number of features \citep{breiman2001random}.
+The parameter $\textit{k}$ is the logarithm of the number of features \citep{breiman2001random}. This parameter controls the incorporation of randomness and this results in an increase in the bias. When $\textit{k} =  \text{total\;number\; of\; features}$, then the constructed decision tree will be identical to the traditional deterministic decision tree,  and when $\textit{k}$ = 1, a feature will be selected randomly.
 
-The predictions of the trees that are constructed by the random forest are aggregated (majority voting for classification or averaging for regression) to produce the final output prediction. Suppose the underlying true function we try to learn is $f(\textbf{x})$, and $\textbf{x}$ is sampled according to a distribution p($\textbf{x}$). The output of each decision tree learner can be written as the the true value plus an error item, i.e.,
+The Random forest performs the prediction of its constructed trees by aggregating all the trees, i.e. (majority voting for classification or averaging for regression) to produce the final output. Suppose the underlying true function we try to learn is $f(\textbf{x})$, and $\textbf{x}$ is sampled according to a distribution p($\textbf{x}$). The output of each decision tree learner can be written as the the true value plus an error item, i.e.,
 \begin{align}
 h_{i}(\textbf{x})= f(\textbf{x}) + \epsilon_{i} (\textbf{x}), i = 1, \dots,T.
 \label{hx}
@@ -627,7 +627,7 @@ The two main parameters of a random forest are the number of trees grown and the
 
 \subsection{K-nearest neighbour}
 
-The K-nearest neighbor algorithm is a well known non-parametric algorithm commonly used for regression and classification problems. This algorithm does not make any assumptions about the distribution of the data being evaluated, i.e., the model structure is determined from the data. The learning technique used in K-nearest neigbors is known as the instance-based learning. This technique is based on the memorization of the training dataset and the number of parameters is unbounded and grows with the size of the data. 
+The K-nearest neighbor algorithm is a well known non-parametric algorithm commonly used for regression and classification problems. K-nearest neighbor is considered to be one of the simplest and yet powerful algorithms that does not make any assumptions about the distribution of the data being evaluated. The learning technique used in K-nearest neigbors is known as the instance-based learning. This technique is based on the memorization of the training dataset and the number of parameters is unbounded and grows with the size of the data. 
 
 The intuition underlying nearest neighbor regression is quite straightforward;
 the output predictions are obtained by looking into the memorized examples where the cost of the learning process is 0. The cost is in the computation of the prediction, with the prediction output being the continuous average values (or median) of the values of its K-nearest neighbors. The commonly used measure in K-nearest neighbors is the distance functions , i.e., consider $\mathcal{M}$ the m-dimensional Euclidean space $\mathbb{R}^m$  , a training data set $\textbf{X}=\{\textbf{x}_1,\dots, \textbf{x}_n\} \subset \mathcal{M}$, a query point $q\in \mathcal{M}$, and a distance metric $d:\mathcal{M}^2 \rightarrow \mathbb{R}$. The K-nearest neighbor search is the task of finding  the K closest (w.r.t. $d$ ) points to $q$ from the data set $\textbf{X}$, i.e., we find a set $\textbf{A} \subset \textbf{X}$ for which it holds  that $|\textbf{A}|= K$ and  $d(q,\textbf{x})\leq d(q,\textbf{y})$ $\forall$ $\textbf{x}\in \textbf{A}, \textbf{y}\in \textbf{X} \;\text{or}\; \textbf{A}$ \citep{hyvonen2015fast}. 
@@ -649,18 +649,18 @@ d(\textbf{x},\textbf{y})= \sqrt{\sum_{i=1}^m \left(x_i -y_i \right)^2}
 \begin{figure}[H]
   \centering
     \includegraphics[width=0.5\textwidth]{images/Kn.jpg}
-    \caption{Example of K-nearest neighbor. We have two different target classes white and orange circles and a total of 26 training samples. To predict the target class for the blue circle, considering the K value as three, one needs to calculate the similarity distance using similarity measures such as Euclidean distance \citep{K-NNALGORITHM}.}
+    \caption{Example of K-nearest neighbor. The figure shows  two different target classes orange and white circles, and one blue data point which has an unknown class. From the data points presented, we observe that the total number of the training samples  with known classes is 26. To predict the target class for the blue circle, one consider the K value as three, and calculate the similarity distance using similarity measures such as Euclidean distance \citep{K-NNALGORITHM}.}
   \label{kn}
 \end{figure}
 
 \subsection{Extremely randomized tree}
 
-Extremely randomized tree is another tree-based ensemble method for supervised classification and regression problems. It builds an ensemble of decision trees according to the classical top-down procedure in Figure \ref{random tree}. Its differences from other tree-based ensemble methods (random forest) are that the nodes are being split by choosing a threshold (cut-point) at random, and that it uses the whole training dataset rather than the bootstrap replica to grow the trees.  
+Extremely randomized tree is another tree-based ensemble method for supervised regression and classification problems. It builds an ensemble of decision trees according to the classical top-down procedure in Figure \ref{random tree}. Its differences from other tree-based ensemble methods like random forest are that the nodes are being split by choosing a threshold (cut-point) at random, and that it uses the whole training dataset rather than the bootstrap replica to grow the trees.  
 
-As in random forest, the predictions of the trees are also aggregated to yield the final prediction, by majority vote in classification problems and arithmetic average in regression problems as shown in equation \ref{averageRF}. The explicit randomization of the cut-point and ensemble averaging reduces the variance even more, i.e. $\text{error}=\text{bias} - \text{variance}$ \citep{geurts2006extremely}. 
+As in random forest, the predictions of the trees are also combined to produce the final prediction. This is done through a process of majority voting in classification problems and arithmetic averaging in regression problems as shown in equation \ref{averageRF}. The explicit randomization of the cut-point and ensemble averaging reduces the variance even more, i.e. $\text{error}=\text{bias} - \text{variance}$ \citep{geurts2006extremely}. 
 \section{Training and testing}
 \label{TT}
-The process of training and testing involves feeding a learning algorithm with training data (seen data) to learn from by finding suitable parameters and evaluate its performance using testing data (unseen), as illustrated in Figure \ref{overview}. A fundamental assumption of machine learning is that the training data are representative of the distribution from which future data  will be chosen \citep{witten2016data}. Each instance in the training set contains "target value" and several "attributes" (namely features). 
+The process of training and testing involves feeding a learning algorithm with training data (seen data) to learn from by finding suitable parameters and evaluate its performance using testing data (unseen), as illustrated in Figure \ref{overview}. A fundamental assumption of machine learning is that the distribution of the training data are the representative from which future data will be chosen \citep{witten2016data}. Each instance in the training set contains "target value" and several "attributes" (namely features). 
 
 \begin{figure}[H]
   \centering
