@@ -6,7 +6,7 @@
 
 % Don't change anything above this.
 The applications of machine learning have created an opportunity to deal with complex problems currently encountered in radio astronomy data processing. Calibration is one of the most important data processing steps required to produce high dynamic range images. This process involves the determination of calibration parameters, both instrumental and astronomical, to correct the
-collected data. These parameters include instrumental as well as astronomical parameters. Typically, astronomers use a package such as Common Astronomy Software Applications (CASA) to compute the gain solutions based on regular observations of a known calibrator source. In this work we present applications of machine learning to first generation calibration (1GC), using the KAT-7 telescope environmental and pointing sensor data recorded during observations. Applying machine learning to 1GC, as opposed to calculating the gain solutions in CASA, has shown evidence of reducing computation, as well as accurately predict the 1GC gain solutions and antenna behaviour. These methods are computationally less expensive, however they have not fully learned to generalise  in predicting  accurate 1GC solutions by looking at environmental and pointing sensors. We call this multi-output regression model $\textit{ZCal}$, which is based on random forest, decision trees, extremely randomized trees and K-nearest neighbor algorithms. After the testing and validation of our models, we observe that this model did not learn the entire observational space as it is not stable in predicting 1GC solutions as compared to CASA. The accuracy error obtained during training and testing is $\approx$ $0.01< rms_{e} <0.09$ for gain amplitude per antenna, and $0.2 \; \mathrm{Radians}< rms_{e}<0.5\; \mathrm{Radians}$ for gain phase. This shows that the instrumental parameters used to train our model strongly correlate with gain amplitude effects than phase.  
+collected data. These parameters include instrumental as well as astronomical parameters. Typically, astronomers use a package such as Common Astronomy Software Applications (CASA) to compute the gain solutions based on regular observations of a known calibrator source. In this work we present applications of machine learning to first generation calibration (1GC), using the KAT-7 telescope environmental and pointing sensor data recorded during observations. Applying machine learning to 1GC, as opposed to calculating the gain solutions in CASA, has shown evidence of reducing computation, as well as accurately predict the 1GC gain solutions and antenna behaviour. These methods are computationally less expensive, however they have not fully learned to generalise  in predicting  accurate 1GC solutions by looking at environmental and pointing sensors. We call this multi-output regression model $\textit{ZCal}$, which is based on random forest, decision trees, extremely randomized trees and K-nearest neighbor algorithms. After the testing and validation of our models, we observe that this model did not learn the entire observational space, as it is not stable in predicting 1GC solutions as compared to CASA. The accuracy error obtained during testing of our models on testing data is $\approx$ $0.01< rms_{e} <0.09$ for gain amplitude per antenna, and $0.2 \; \mathrm{Radians}< rms_{e}<0.5\; \mathrm{Radians}$ for gain phase. This shows that the instrumental parameters used to train our model strongly correlate with gain amplitude effects than phase.  
 % At a unviersity like Stellenbosch you *must* produce an abstract in Afrikaans for your masters.
 % At AIMS you are encouraged to repeat the abstract in your mother tongue
 % French, Igbo, Mlagasy, etc. just write it using LaTeX's special
@@ -21,12 +21,12 @@ collected data. These parameters include instrumental as well as astronomical pa
 \vfill
 \newpage
 \section*{Declaration}
-I, the undersigned, hereby declare that the work contained in this research project is my original work, and that any work done by others or by myself previously has been acknowledged and referenced accordingly.
+I, the undersigned, hereby declare that the work contained in this thesis is my original work, and that any work done by others or by myself previously has been acknowledged and referenced accordingly.
 
 % Scan your signature into a small picture called 'signature.png' and insert it
 % above your name and the date:
-\includegraphics[height=2cm]{images/signature.png} \newline \hrule
+\includegraphics[height=2cm]{images/Signature.png} \newline \hrule
 % Your name must be in English Capitalisation with no comma, and the Family name comes last. 
 % Do note the date below. It is called the "deadline".
-Simphiwe Nhlanhla Zitha, 30 May 2018
+Simphiwe Nhlanhla Zitha, 12 November 2018
 
