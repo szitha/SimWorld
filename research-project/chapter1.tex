@@ -95,20 +95,20 @@ radio interferometry has enabled astronomers to make measurements of fine angula
 \subsection{Interferometric visibility}
 In an interferometric array, the measured visibilities  which are the two-dimensional (2D) Fourier transform of the sky's intensity at different baseline coordinates in the absence of instrumental effects, are defined by
 \begin{align}
-V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int A(l,m) I (l,m)e^{-2\pi i(ul+vm)} dl dm,
+V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int A(l,m) I (l,m)e^{-2\pi i(ul+vm)} \mathrm{dl dm},
 \label{Vis}
 \end{align}
 where $(u,v)$ denotes the projected baseline coordinates in the 2D Fourier transform plane  measured in wavelength along the axes in the east-west and north-south direction, and changes with time as the earth rotates  \citep{taylor1999synthesis}. The orthogonal coordinates $(l, m)$ represent the position of a source or the phase reference position. In the 2D analysis $l$ and $m$ are defined as the cosines of the  angles between the direction $(l,m)$ and $(u, v)$. $I(l,m)$ is the intensity distribution of a source and its Fourier transform  ${F}\left\{I\right\}$ represents the amplitude and phase of a sinusoidal component of the intensity profile with spatial frequency $u$ and $v$; $A(l, m)$ represents the effective collecting area of the antennas with respect to the direction of the incoming radiation \citep{thompson2001interferometry}.
 
 To simplify equation \ref{Vis}, the term $A(l,m)$ is most often assumed to be 1 such that the Van Cittert Zernike theorem states, \citep{thompson2017interferometry}:
 \begin{align}
-V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int I (l,m)e^{-2\pi i(ul+vm)} dl dm.
+V(u,v)\approx \mathcal{F}\left\{I\right\}(u,v)=\int \int I (l,m)e^{-2\pi i(ul+vm)} \mathrm{dl dm}.
 \label{V}
 \end{align}
 The measured visibilities $V(u,v)$ and the sky brightness  $I(l,m)$ are Fourier pairs $V(u,v) \rightleftharpoons I(l,m)$, where $\rightleftharpoons$ is the Fourier transformation. The sky
 brightness can readily be recovered from the measured visibilities by an inverse Fourier transform such that we have, 
 \begin{align}
-I^{True}(l,m)\approx \mathcal{F}^{-1}\left\{V\right\}(l,m)=\int \int V (u,v)e^{-2\pi i(ul+vm)} du dv .
+I^{\mathrm{True}}(l,m)\approx \mathcal{F}^{-1}\left\{V\right\}(l,m)=\int \int V (u,v)e^{-2\pi i(ul+vm)} \mathrm{du dv} .
 \end{align}
 Since for every sky's brightness $I$, there exists visibility function $V(u,v)$, the array of antennas with baselines $b=(u_i,v_i)$  measures only certain values in the set of continuous  $(u,v)$ coordinates in the visibility function $V(u,v)$. This measured set of values is given by the \emph{Sampling function}, denoted by \citep{taylor1999synthesis}, \[ S(u,v) =
   \begin{cases}
@@ -117,7 +117,7 @@ Since for every sky's brightness $I$, there exists visibility function $V(u,v)$,
   \end{cases}
 \] for all the baselines. The actual data provided by the array is called  sampled visibilities, denoted by  $S(u,v)\times V(u,v)$. The Fourier transform of these sampled visibilities is the dirty image,
 \begin{align}
-I^{D}(l,m)=\int \int S(u,v)\times V(u,v) e^{-2\pi i(ul+vm)} du dv.
+I^{D}(l,m)=\int \int S(u,v)\times V(u,v) e^{-2\pi i(ul+vm)} \mathrm{du dv}.
 \label{Samp}
 \end{align} 
 Using the $\textit{convolution theorem}$ for Fourier transforms which states that the Fourier transform of the convolution of two functions is the product of their Fourier transforms denoted by 
@@ -138,12 +138,12 @@ representing a point spread function  corresponding to the sampling function $S(
 
 \subsection{Calibration}
 \label{Calib}
-In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality it is not as simple, as shown by equation \ref{V}. The measured visibilities $V^{obs}$ are different from the actual visibilities $V^{True}$ and this is due to instrumental and environmental effects \citep{thompson2017interferometry}. An example of these effects on the signal measured by a radio interferometry include antenna gains (slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and incorrect observation parameters (antenna pointing parameters). Signal effects are classified into two types, direction-independent effects (affecting the signal from all directions equally) and direction-dependent effects (which vary based on the sky position of the signal) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration minimizes the error between observed and predicted (model) visibilities by estimating the correct complex instrumental gain response \citep{grobler2016calibration}. 
+In radio astronomy, ideally one might think that after obtaining the observed visibilities the next step would be to directly retrieve the actual visibilities of the target source and perform imaging. However, in reality it is not as simple, as shown by equation \ref{V}. The measured visibilities $V^{\mathrm{obs}}$ are different from the actual visibilities $V^{\mathrm{True}}$ and this is due to instrumental and environmental effects \citep{thompson2017interferometry}. An example of these effects on the signal measured by a radio interferometry include antenna gains (slowly and fast time-varying instrumental part), atmospheric effects, pointing errors (tracking inaccuracies) and incorrect observation parameters (antenna pointing parameters). Signal effects are classified into two types, direction-independent effects (affecting the signal from all directions equally) and direction-dependent effects (which vary based on the sky position of the signal) \citep{taylor1999synthesis}. These effects can be corrected by estimating the errors associated with the measured visibilities, thereby recovering the true visibilities. This process is called calibration. In its simplest form, calibration minimizes the error between observed and predicted (model) visibilities by estimating the correct complex instrumental gain response \citep{grobler2016calibration}. 
 
-Suppose for baseline pair $(i,j)$, the observed visibility is $V^{obs}_{i,j}(t)$ and the true visibility is $V^{True}_{i,j}(t)$ at observation time $t$. The basic calibration formula is written as,
+Suppose for baseline pair $(i,j)$, the observed visibility is $V^{obs}_{i,j}(t)$ and the true visibility is $V^{\mathrm{True}}_{i,j}(t)$ at observation time $t$. The basic calibration formula is written as,
 
 \begin{align}
-V_{i,j}^{obs}=G_{i,j} V_{i,j}^{true} + \epsilon_{i,j}(t) ,
+V_{i,j}^{\mathrm{obs}}=G_{i,j} V_{i,j}^{\mathrm{True}} + \epsilon_{i,j}(t) ,
 \end{align}
 where $G_{i,j}(t)$ denotes the complex antenna gains for baseline $(i,j)$ as a result of unwanted effects and may vary with time \citep{thompson2001interferometry}. The extra term $ \epsilon_{i,j}(t)$ is a stochastic complex noise \citep{taylor1999synthesis}.
 
@@ -167,16 +167,16 @@ The selection of a good calibrator source in the sky is based on the following d
  
  Note that the sources that are the subject of astronomical investigation will be referred to as "target sources" to distinguish them from calibrator sources \citep{thompson2001interferometry}.
  
-Suppose a target source is observed with measured visibility $V(u,v)^{obs}$ to calibrate the antenna-based complex gain factor $G_{i,j}(t)$ as a function of time and antenna pair $(i,j)$, a point source calibrator is observed for which the measured visibility is, 
+Suppose a target source is observed with measured visibility $V(u,v)^{\mathrm{obs}}$ to calibrate the antenna-based complex gain factor $G_{i,j}(t)$ as a function of time and antenna pair $(i,j)$, a point source calibrator is observed for which the measured visibility is, 
 \begin{align} 
-V(u,v)_{calibrator}&= G_{i,j}(t) S_{\mathrm{calibrator}}\\
-G_{i,j}(t)&= \frac{V(u,v)_{calibrator}}{S_{\mathrm{calibrator}}}
+V(u,v)_{\mathrm{calibrator}}&= G_{i,j}(t) S_{\mathrm{calibrator}}\\
+G_{i,j}(t)&= \frac{V(u,v)_{\mathrm{calibrator}}}{S_{\mathrm{calibrator}}}
 \end{align}
 \citep{thompson2001interferometry},
 where $S$ indicates the flux density of the calibrator. Now to calibrate the visibilities of the target source one can write, 
 \begin{align}
-V(u,v)^{true}&= \frac{V(u,v)^{obs}}{G_{i,j}(t)}\\
-&= V(u,v)^{obs} \times \frac{S_{calibrator}}{V(u,v)_{calibrator}} 
+V(u,v)^{\mathrm{True}}&= \frac{V(u,v)^{\mathrm{obs}}}{G_{i,j}(t)}\\
+&= V(u,v)^{\mathrm{obs}} \times \frac{S_{\mathrm{calibrator}}}{V(u,v)_{\mathrm{calibrator}}} 
 \end{align}
 \citep{thompson2001interferometry}. 
 
@@ -191,7 +191,7 @@ This is the first step in the data reduction process where the received signal i
 \begin{itemize}
 
 \item Bandpass calibration $B$ is used to solve for gain variations
-in frequency  \citep{CosmoAIMS}. These variation in frequency arises as a result of non-uniform filter passbands or other frequency-dependent effects during signal transmission. These frequency-dependent effects usually vary on time-scales much longer than the time-dependent effects. The CASA task that solves these frequency-dependant complex gains is called $\textit{bandpass}$. This is done by observing a strong calibrator source with known model visibilities and spectrum characteristics for sufficient time to reach the required accuracy \citep{taylor1999synthesis}.
+in frequency \citep{editioncasa}. These variations in frequency arise as a result of non-uniform filter passbands or other frequency-dependent effects during signal transmission. These frequency-dependent effects usually vary on long time-scales. The CASA task that solves these frequency-dependant complex gains is called $\textit{bandpass}$. This is done by observing a strong calibrator source with known model visibilities and spectrum characteristics for sufficient time to reach the required accuracy \citep{taylor1999synthesis}.
 
 \item Delay calibration $K$ is used to correct for phase delay errors. The arriving signal does not propagate to all the antennas at the same time. Delay calibration equalizes these propagation differences on individual signal paths at the input of the correlator and removes the largest phase difference across the observing band \citep{taylor1999synthesis}.   
 
