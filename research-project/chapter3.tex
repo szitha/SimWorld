@@ -29,7 +29,7 @@ As defined in Chapter 1, \textit{calibration} is the process of correcting for t
 \end{figure}
 
 The KAT-7 is a seven-dish interferometry that was built as an engineering prototype for  techniques and technologies in preparation for the 64-dish Karoo Array Telescope (MeerKAT). These instruments are located in the Northern Cape Karoo desert region and are operated remotely from CapeTown. The construction of  KAT-7 began in
-2008 with the writing of the telescope requirements specification and was completed in 2010.  It was operated in engineering mode until 2015  and became fully operational in 2016  \citep{foley2016engineering}. As seen in Table \ref{images/kat7.png}, KAT-7 antennas are extremely close together with baseline ranging between 26 and 185 m \citep{carignan2013kat}. More parameter specifications are presented in the Tables \ref{DSpec} and \ref{DSpec}:
+2008 with the writing of the telescope requirements specification and was completed in 2010.  It was then operated in engineering (commissioning) mode until its shut-down in 2016 \citep{foley2016engineering}. As seen in Table \ref{images/kat7.png}, KAT-7 antennas are extremely close together with baseline ranging between 26 and 185 m \citep{carignan2013kat}. More parameter specifications are presented in the Tables \ref{DSpec} and \ref{DSpec}:
 \begin{table}[H]\centering
 \begin{tabular}{l l }
 \toprule
@@ -433,8 +433,8 @@ The process of training and testing involves feeding a learning algorithm with t
 Referring to Section \ref{prep}, some challenges and difficulties of gathering  a larger data set were encountered  due to faulty radio telescopes leading to observations being conducted with fewer elements in an array, observations with target of interest PKS1613-586 conducted using only the baselines of interest (short or long), KAT-7's lifespan lasting for a short period, and radio frequency interference affecting calibration solutions. The advantage of having a large testing dataset is a more reliable estimate of accuracy, whereas a large training set is more representative of how much data are available for the learning process. 
 
 Despite the challenges mentioned above, we managed to construct a data matrix $\textbf{M}$ of dimension  $1760\times 75$ containing sensor data $\textbf{X}_t\in \mathbb{R}^{1760 \times 47}$ and 1GC calibration solutions $\textbf{Y}_t$ $\in \mathbb{C}^{1760 \times 14}$ from 28 different observations at integration time $\Delta t$ ranging from $1-12$ hours dependending on each observation requirement. Take note that the 14 columns in plane $\mathbb{C}$ represent the amplitude and phase solutions for H,V polarization, i.e. $7 \times 2$; and the 47 columns in plane $\mathbb{R}$ are the number of selected sensors for all the antennas. Since each calibration solution in $\textbf{Y}_t$ is represented as a complex variable \begin{align}
-e^{i\phi}= \cos\phi + i\sin\phi, \label{cx}
-\end{align} for each polarization H $\&$ V. Due to different physical causes on the received signal, we therefore choose to treat the antenna phases and amplitudes separately by splitting equation \ref{cx}, into gain amplitude solutions  $\left|e^{i\phi}\right|$ and gain phase solutions $\phi$ in radians for both H $\&$ V. In every supervised machine learning problem, it is crucial to label the input and output of the dataset before starting the learning process. In our case, since this is a regression problem aiming to predict calibration solutions from sensor data, we therefore label the sensor data as input features and the calibration solutions as output targets.
+Ae^{i\phi}= A(\cos\phi + i\sin\phi), \label{cx}
+\end{align} for each polarization H $\&$ V. Due to different physical causes on the received signal, we therefore choose to treat the antenna phases and amplitudes separately by splitting equation \ref{cx}, into gain amplitude solutions  $\left|Ae^{i\phi}\right|$ and gain phase solutions $\phi$ in radians for both H $\&$ V. In every supervised machine learning problem, it is crucial to label the input and output of the dataset before starting the learning process. In our case, since this is a regression problem aiming to predict calibration solutions from sensor data, we therefore label the sensor data as input features and the calibration solutions as output targets.
     
 \begin{figure}[H]
   \centering
@@ -609,9 +609,7 @@ One of the most attractive features of the K-nearest neighbor algorithm is that 
 \item \textit{p}: denotes the power parameter for the Minkowski metric \citep{pedregosa2011scikit}.
 \end{enumerate}
 
-With the number of iterations $\text{n-iter}=50$ RandomizedSearchCV algorithm used to search through, the best estimator obtained, which is the instantiation
-mechanism of objects and exposes a fit method for learning a model from
-training data for each learning algorithm, is:   
+We used a RandomizedSearchCV algorithm with number of iterations $\text{n-iter}=50$ to obtain the following best estimator for each learning algorithm:   
 \begin{tcolorbox}
 \begin{verbatim}
 
@@ -728,7 +726,7 @@ Random forests and extremely randomized trees are well established ensembles of 
     \caption{Feature importance}
     \label{FI}
 \end{figure}
-Figure \ref{FI} shows the importance of each feature in each learning algorithm i.e. the values with the highest contribution in building an accurate model. One observes that the environmental features air temperature, relative humidity, wind speed, wind direction and air pressure are higher ranked than the pointing sensors. The pointing features are ranked second, with the telescope elevation sensors being higher than the telescope azimuth sensors. 
+Figure \ref{FI} shows the importance of each feature in each learning algorithm i.e. the values with the highest contribution in building an accurate model. One observes that the environmental features such as air temperature, relative humidity, wind speed, wind direction and air pressure are higher ranked than the pointing sensors. The pointing features are ranked second, with the telescope elevation sensors being higher than the telescope azimuth sensors. 
 
 \section{Results}
 
@@ -751,7 +749,7 @@ This section shows the plots of the predictions for the decision tree, random fo
         \caption{Amplitude gain solutions for H-polarization.}
          \label{B}
     \end{subfigure}
-    \caption{Results obtained from the decision tree learning algorithm with randomized search optimization algorithm. (\subref{A}) and (\subref{B})are the predicted gain solutions $\textbf{Y}_{predicted}$ by the decision tree vs the true gain solutions $\textbf{Y}_{true}$ (CASA) for H-polarization. We observe that the decision tree algorithm is performing bad in predicting the H-polarization amplitude and phase gain solutions}
+    \caption{Results obtained from the decision tree learning algorithm with randomized search optimization algorithm. (\subref{A}) and (\subref{B})are the predicted gain solutions $\textbf{Y}_{predicted}$ by the decision tree vs the true gain solutions $\textbf{Y}_{true}$ (CASA) for H-polarization. We observe that the decision tree algorithm is performing badly in predicting the H-polarization amplitude and phase gain solutions}
  \label{BB}
     \end{figure}
   
@@ -973,18 +971,18 @@ Uniform average-V &0.027 & 0.083 & 0.923    & 0.923 \\ \hline
 
 \subsection{Summary of results}
 
-This section report the accuracy measure obtained for each learning algorithm when evaluating on testing dataset. In every model there are four plots, each for gain amplitude and gain phase H $\&$ V-polarization. The $y-axis$ in each subplot is the predicted gain amplitude and gain phase solutions using the testing sensor data, and the $x-axis$ is the ground truth gain amplitude and gain phase solution. Note that the two-cluster grouping of points in the predicted vs ground truth amplitude plots in Figures \ref{B1}, \ref{B2}, \ref{B3}, \ref{B4}, \ref{B5}, \ref{B6}, \ref{B7} are due to the sinusoidal variation of the gain amplitude solutions as shown in Figure \ref{amp}. We tested our models using using the appropriate regression evaluation methods: RMSE, RMAE, $R^2$ score and the explained variance. The evaluation results obtained from the extremely randomized trees, random forest, and K-nearest neighbor are accurate with H-polarization RMSE of $\approx 0.3 \;\mathrm{Radians}$   and V-polarization of $\approx 0.2 \;\mathrm{Radians}$ for phase gain solution prediction as shown in Figures \ref{A2}, \ref{A3}, \ref{A4}, \ref{A5}, \ref{A6}, \ref{A7}, \ref{A7}. We observe that the amplitude gain solution prediction has better accuracy for random forest and extremely randomized tree on H $\&$ V polarization with RMSE error being $\approx 0.02$, much less than the phase gain solution prediction, as shown in Figures \ref{B2}, \ref{B3}, \ref{B6}, \ref{B7}. We further observe that most of the predictions stay near the ground truth values with a coefficient of determination $R^2$ score converging to 1 for Random forest, extremely randomized trees and K-nearest neighbors with few outlying points that can be due to errors in calibration solution generation and radio frequency interference. On the other we observe that the decision tree algorithm is performing in predicting the amplitude and phase gain solutions for H and V polarization. This is likely due to overfitting of the model. 
+This section report the accuracy measure obtained for each learning algorithm when evaluating on testing dataset. In every model there are four plots, each for gain amplitude and gain phase H $\&$ V-polarization. The $y$ axis in each subplot is the predicted gain amplitude and gain phase solutions using the testing sensor data, and the $x$ axis is the ground truth gain amplitude and gain phase solution. Note that the two-cluster grouping of points in the predicted vs ground truth amplitude plots in Figures \ref{B1}, \ref{B2}, \ref{B3}, \ref{B4}, \ref{B5}, \ref{B6}, \ref{B7} are due to the sinusoidal variation of the gain amplitude solutions as shown in Figure \ref{amp}. We tested our models using using the appropriate regression evaluation methods: RMSE, RMAE, $R^2$ score and the explained variance. The evaluation results obtained from the extremely randomized trees, random forest, and K-nearest neighbor are accurate with H-polarization RMSE of $\approx 0.3 \;\mathrm{rad}$   and V-polarization of $\approx 0.2 \;\mathrm{rad}$ for phase gain solution prediction as shown in Figures \ref{A2}, \ref{A3}, \ref{A4}, \ref{A5}, \ref{A6}, \ref{A7}, \ref{A7}. We observe that the amplitude gain solution prediction has better accuracy for random forest and extremely randomized tree on H $\&$ V polarization with RMSE error being $\approx 0.02$, much less than the phase gain solution prediction, as shown in Figures \ref{B2}, \ref{B3}, \ref{B6}, \ref{B7}. We further observe that most of the predictions stay near the ground truth values with a coefficient of determination $R^2$ score converging to 1 for Random forest, extremely randomized trees and K-nearest neighbors with few outlying points that can be due to errors in calibration solution generation and radio frequency interference. On the other we observe that the decision tree algorithm is performing poorly in predicting the amplitude and phase gain solutions for H and V polarization. This is likely due to overfitting of the model. 
 
 
  %When fitting a straight line(slope) between the predicted and the true we  observe there is only few outlying points.
 \subsection{Validating on new dataset}
 
-Once one is satisfied with the performance of the learning algorithms in predicting the calibration solutions accurately from the testing dataset, in this section new sensor data extracted from new (unseen) KAT-7 observations with the phase calibrator source PKS1623-586 can be used to predict the calibration solutions. This process is called model validation. Since the model was trained on normalized data, one first normalizes the new sensor data with mean $\mu$ and standard deviation $\sigma$ obtained from the normalization of the training dataset.
+Once one is satisfied with the performance of the learning algorithms in predicting the calibration solutions accurately from the testing dataset, in this section new sensor data extracted from new (unseen) KAT-7 observations with the phase calibrator source PKS1623-586. This process is called model validation. Since the model was trained on normalized data, one first normalizes the new sensor data with mean $\mu$ and standard deviation $\sigma$ obtained from the normalization of the training dataset.
 \begin{align}
 \text{scaled-sensor data}= \frac{\text{sensor data}- \mu}{\sigma}
 \end{align}
 
-One makes use of a three-observation dataset to perform the unbiased evaluation of the final model fit. These are a subset of the Circinus X-1 KAT-7 commissioning observations taken from December 2011 - June 2012. In each validation dataset, one compares the performance of decision tree, random forest, K-nearest neighbor and extremely randomized trees. One compares these results with gain amplitude and phase calibration solutions obtained from CASA 1GC for H $\&$ V-polarization. 
+We make use of a three-observation dataset to perform the unbiased evaluation of the final model fit. These are a subset of the Circinus X-1 KAT-7 commissioning observations taken from December 2011 - June 2012. In each validation dataset, we compare the performance of decision tree, random forest, K-nearest neighbor and extremely randomized trees. we compare these results with gain amplitude and phase calibration solutions obtained from CASA 1GC for H $\&$ V-polarization. 
 
 %\subsubsection{Observation test-1}
 %In this section, the plot results obtained from the validation dataset-1 vs CASA solutions. From dataset-1, one observes that the decision tree perfectly predicts the gain phase calibration solutions similar to CASA in Figure \ref{obs1} better than the other models in Figures \ref{obs2}, \ref{obs3}, \ref{obs4}. In the gain amplitude prediction one observes that only random forest and extremely randomized trees perform better, as shown in Figures \ref{ra1} and \ref{ea1}. 
@@ -1090,7 +1088,7 @@ This section gives the plot results obtained from the validation observation.  E
      \label{ea2}
 \end{figure}
 
-For dataset-1, one observes that the random forest, extremely randomized trees and the K-nearest neighbors have not fully learned to generalise in predicting the gain amplitude calibration solutions than phase. We observe that these model's predictions fail in some part of the samples and successfully predict  well in other. However, the extremely randomized trees algorithm is performing better than the rest as shown in Figure \ref{obs8} and \ref{ea2}.
+For dataset-1, one observes that the random forest, extremely randomized trees and the K-nearest neighbors have not fully learned to generalise in predicting the gain amplitude and phase calibration solutions when compared to CASA. We observe that these model's predictions fail in some part of the samples and successfully predict  well in other. However, the extremely randomized trees algorithm is performing better than the rest as shown in Figure \ref{obs8} and \ref{ea2}.
 
 \subsubsection{Observation test-2}
 In this section, the plot results obtained from the validation dataset-2 vs 1GC CASA solutions are given. 
@@ -1098,20 +1096,20 @@ In this section, the plot results obtained from the validation dataset-2 vs 1GC 
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/DCPhasegain773.eps}
-    \caption{This figure shows the response of the decision tree learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The decision tree algorithm is failing to predict the gain phase solutions for some antennas and performing well in others as seen for example in antenna 1 where CASA estimated solutions at 150$^\circ$ and the decision tree at -150$^\circ$ with no outliers. We also observe a successful prediction of antenna 5.}
+    \caption{This figure shows the response of the decision tree learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The decision tree algorithm is failing to predict the gain phase solutions for some antennas and performing well in others as seen for example in antenna 1 where CASA estimated solutions at 150$^\circ$ and the decision tree at -150$^\circ$ with no outliers. We also observe that it has simply learned that the reference antenna is flat.}
     \label{obs9}
 \end{figure}
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/DCampgain773.eps}
-    \caption{This figure shows the response of the decision tree learning algorithm in predicting the amplitude gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the the predicted amplitude gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The decision tree algorithm is failing to predict the gain amplitude solutions on the new observation dataset-2. We also observe that it has not learn the sinusoidal behaviour of the amplitude solutions.}
+    \caption{This figure shows the response of the decision tree learning algorithm in predicting the amplitude gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the the predicted amplitude gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The decision tree algorithm is failing to predict the gain amplitude solutions on the new observation dataset-2. We also observe that it has not learned the sinusoidal behaviour of the amplitude solutions.}
      \label{da3}
 \end{figure}
 
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/RFPhasegain773.eps}
-    \caption{This figure shows the response of the random forest learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The random forest algorithm is failing to predict the gain phase solutions for some antennas and slightly performing well in others as seen for example in antenna 1H where CASA estimated solutions at 150$^\circ$ and the random forest at -150$^\circ$. We also observe a successful prediction of antenna 5 solutions.}
+    \caption{This figure shows the response of the random forest learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The random forest algorithm is failing to predict the gain phase solutions for some antennas and slightly performing well in others as seen for example in antenna 1H where CASA estimated solutions at 150$^\circ$ and the random forest at -150$^\circ$.  We also observe that it has simply learned that the reference antenna is flat.}
     \label{obs10}
 \end{figure}
 
@@ -1123,7 +1121,7 @@ In this section, the plot results obtained from the validation dataset-2 vs 1GC 
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/KNNPhasegain773.eps}
-    \caption{This figure shows the response of the K-nearest neighbor learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The K-nearest neighbor algorithm is failing to predict the gain phase solutions, except for antenna 5 which was used as a reference antenna.}
+    \caption{This figure shows the response of the K-nearest neighbor learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The K-nearest neighbor algorithm is failing to predict the gain phase solutions, except for the reference antenna 5, where it learned that it is flat.}
     \label{obs11}
 \end{figure}
 
@@ -1135,7 +1133,7 @@ In this section, the plot results obtained from the validation dataset-2 vs 1GC 
 
 \begin{figure}[H]
     \includegraphics[ height=13cm, width=16cm]{images/EXTPhasegain773.eps}
-    \caption{This figure shows the response of the extremely randomized tree learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The extremely randomized tree algorithm is failing to predict the gain phase solutions for some antennas and slightly performing well in others as seen for example in antenna 1H where CASA estimated solutions at 150$^\circ$ and the extremely randomized tree at -150$^\circ$. We also observe a successful prediction of antenna 5 solutions.}
+    \caption{This figure shows the response of the extremely randomized tree learning algorithm in predicting the H $\&$ V phase gain solutions for the calibrator PKS1613-586 from the validation dataset-2. In each subplot we compare the predicted phase gain solutions (where H polarization is represented by red and V-polarization is represented by yellow) with the CASA generated phase gain solutions (where H polarization is represented by blue and V-polarization is represented by green). The extremely randomized tree algorithm is failing to predict the gain phase solutions for some antennas and slightly performing well in others as seen for example in antenna 1H where CASA estimated solutions at 150$^\circ$ and the extremely randomized tree at -150$^\circ$. We also observe that it has simply learned that the reference antenna is flat.}
     \label{obs12}
 \end{figure}
 
