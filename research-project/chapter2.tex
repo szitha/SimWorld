@@ -272,12 +272,12 @@ measures the proportion to which the predictor accounts for the variation of the
 MSE and MAE, which measure the average of the squared and absolute of the errors between the the observed values $\textbf{Y}_{t}$ and the predicted $\widehat{\textbf{Y}}_{t}$. For accurate prediction of the predictor, the value of MSE and MAE should converge to zero \citep{james2013introduction}. 
 
 \begin{align}
-\text{MSE}\left(\textbf{Y}_{t},\widehat{\textbf{Y}}_{t} \right)=\frac{1}{d_{samples}} \sum_{k} (\textbf{Y}_{t}-\widehat{\textbf{Y}}_{t})^2_{k}
+\text{MSE}\left(\textbf{Y}_{t},\widehat{\textbf{Y}}_{t} \right)=\frac{1}{d_\mathrm{samples}} \sum_{k} (\textbf{Y}_{t}-\widehat{\textbf{Y}}_{t})^2_{k}
 \label{MSE}
 \end{align}
 
 \begin{align}
-\text{MAE}\left(\textbf{Y}_{t},\widehat{\textbf{Y}}_{t} \right)=\frac{1}{d_{samples}} \sum_{k} \left|\textbf{Y}_{t}-\widehat{\textbf{Y}}_{t}\right|_{k}
+\text{MAE}\left(\textbf{Y}_{t},\widehat{\textbf{Y}}_{t} \right)=\frac{1}{d_\mathrm{samples}} \sum_{k} \left|\textbf{Y}_{t}-\widehat{\textbf{Y}}_{t}\right|_{k}
 \label{MAE}
 \end{align}.
 
