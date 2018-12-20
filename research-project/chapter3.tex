@@ -299,7 +299,7 @@ Time_index=numpy.where(np.in1d(numpy.unique(h5df5_timestamps),
  
 The systematic time-dependent complex gain errors denoted by $J_{ij}$ (where $i,j$ represent the baseline of two or more antennas) are the most dominant calibration effect in the visibility data, and a solution for them is necessary before proceeding with any other calibration \citep{ott2013casa}. In this dissertation we only focus on the 1GC calibration with an interest in obtaining complex gain calibration solutions for the phase calibrator PKS1613-586. In the process of 1GC, as explained in chapter 1, the complex gain calibration ($\textit{gaincal}$)  CASA task determines the time-based complex antenna gains solutions $G$ (amplitude and phase) for each polarization H \& V and each spectral window, from the visibility data of the specified phase calibration source PKS1613-586 and stores these in calibration tables.
  
-These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is reasonably close to the center of the array and it was known to be particularly stable with no drop-outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factors $J_{i,j}$ into antenna-based components, so one does not see a set of values for each baseline, but rather only one for each antenna ($J_i$) \citep{CosmoAIMS}. 
+These solutions are calculated based on reference antenna 5 in our case, since it is an antenna that is reasonably close to the center of the array and it was known to be particularly stable with no drop-outs during KAT-7 commissioning \citep{ott2013casa}. The task $\textit{gaincal}$ in CASA factors $J_{i,j}$ into antenna-based components, so one does not see a set of values for each baseline, but rather only one for each antenna ($J_i$) \citep{editioncasa}. 
 
 Since our phase calibrator PKS1613-586 has an unknown flux density, the obtained values of the antenna based amplitude solutions differ from the correct ones by a factor depending only on the true source flux density by 
 
@@ -733,7 +733,7 @@ Figure \ref{FI} shows the importance of each feature in each learning algorithm 
 \subsection{Testing on test-data}
 \label{sec3}
 This section shows the plots of the predictions for the decision tree, random forest, extremely randomised trees and the K-nearest neighbor. The algorithms are run a number of times on the learning sample and tested on the test samples to estimate the prediction errors. 
-\subsection{Decision tree-RUN}
+\subsection{Decision tree training}
 \begin{figure}[H]
    \centering
     \begin{subfigure}[t]{0.52\textheight}
@@ -749,7 +749,7 @@ This section shows the plots of the predictions for the decision tree, random fo
         \caption{Amplitude gain solutions for H-polarization.}
          \label{B}
     \end{subfigure}
-    \caption{Results obtained from the decision tree learning algorithm with randomized search optimization algorithm. (\subref{A}) and (\subref{B})are the predicted gain solutions $\textbf{Y}_{predicted}$ by the decision tree vs the true gain solutions $\textbf{Y}_\mathrm{true}$ (CASA) for H-polarization. We observe that the decision tree algorithm is performing badly in predicting the H-polarization amplitude and phase gain solutions}
+    \caption{Results obtained from the decision tree learning algorithm with randomized search optimization algorithm. (\subref{A}) and (\subref{B})are the predicted gain solutions $\textbf{Y}_\mathrm{predicted}$ by the decision tree vs the true gain solutions $\textbf{Y}_\mathrm{true}$ (CASA) for H-polarization. We observe that the decision tree algorithm is performing badly in predicting the H-polarization amplitude and phase gain solutions}
  \label{BB}
     \end{figure}
   
@@ -768,7 +768,7 @@ This section shows the plots of the predictions for the decision tree, random fo
         \caption{Amplitude gain solutions for V-polarization} 
         \label{B1}
     \end{subfigure}
-    \caption{Results obtained from the decision tree learning algorithm with randomized search optimization algorithm. (\subref{A1}) and (\subref{B1}) are the predicted gain solutions $\textbf{Y}_{predicted}$ by the decision tree vs the true gain solutions $\textbf{Y}_\mathrm{true}$ (CASA) for V-polarization. Similar to H-polarization above, the decision tree algorithm is failing to predict V-polarization amplitude and phase gain solutions.}
+    \caption{Results obtained from the decision tree learning algorithm with randomized search optimization algorithm. (\subref{A1}) and (\subref{B1}) are the predicted gain solutions $\textbf{Y}_\mathrm{predicted}$ by the decision tree vs the true gain solutions $\textbf{Y}_\mathrm{true}$ (CASA) for V-polarization. Similar to H-polarization above, the decision tree algorithm is failing to predict V-polarization amplitude and phase gain solutions.}
  \label{BB1}
     \end{figure}
     
@@ -794,7 +794,7 @@ Uniform average-V &0.043 & 0.109 & 0.831    & 0.831\\\hline
 \caption{The table shows the performance of the decision tree algorithm in predicting the amplitude and phase gain solutions for both H and V polarizations as shown in Figures \ref{BB} and \ref{BB1}. The values shown represent uniform average of all KAT-7 antennas, i.e., all output measures are averaged with uniform weight. Most of the predictions scatter away from the ideal truth values.}
 \end{table}
 
-\subsection{Random forest-RUN}
+\subsection{Random forest training}
 \begin{figure}[H]
    \centering
     \begin{subfigure}[t]{0.52\textheight}
@@ -851,7 +851,7 @@ Uniform average-V &0.028 & 0.088 & 0.916    & 0.917\\ \hline
 \caption{The table shows the performance of the random forest algorithm in predicting the amplitude and phase  gain solutions for both H and V polarizations as shown in Figures \ref{BB2} and \ref{BBB2}. The values shown represent the uniform average of all KAT-7 antennas, i.e., all output measures are averaged with uniform weight. We observe that most of the predictions stay near the ideal truth values with rmse \ref{MSE} and rmae \ref{MAE}  $\approx <$ 0.5, $R^2$ \ref{R2score} and explained variance $V$ \ref{ExV} converging to 1.}
 \end{table}
 
-\subsection{K-nearest neighbor-RUN}
+\subsection{K-nearest neighbor training}
 \begin{figure}[H]
    \centering
     \begin{subfigure}[t]{0.52\textheight}
@@ -911,7 +911,7 @@ Uniform average-V &0.291 & 0.239 & 0.961    & 0. 961\\ \hline
 \end{table}
 
 
-\subsection{Extremely randomized tree-RUN}
+\subsection{Extremely randomized tree training}
 
 \begin{figure}[H]
    \centering
