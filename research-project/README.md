@@ -1,1 +1,1 @@
-This is the AIMS South Africa Structured Masters Research Project LaTeX Template and Guidelines.
+This is a Master's project which looks at machine learning methods to calibrate radio interferometric data. 
